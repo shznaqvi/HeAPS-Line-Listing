@@ -1,0 +1,744 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="callback"
+            type="edu.aku.hassannaqvi.heapslinelisting.ui.sections.AddStreetsActivity" />
+
+        <variable
+            name="streets"
+            type="edu.aku.hassannaqvi.heapslinelisting.models.Streets" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/app_bg_effect"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@null"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ToolbarTheme"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:subtitle="@string/sttitle"
+            app:subtitleTextAppearance="@style/Toolbar.SubtitleText"
+            app:subtitleTextColor="@color/grayLight"
+            app:theme="@style/ActionBarTheme"
+            app:title="@string/app_name"
+            app:titleTextAppearance="@style/Toolbar.TitleText" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:background="@color/rose_angina_color" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/main_grp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <!-- st01  Input-Numeric   -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVst01"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/quesNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/Q_st01" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/st01" />
+
+                        </LinearLayout>
+
+                        <com.edittextpicker.aliazaz.EditTextPicker
+                            android:id="@+id/st01"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/st01"
+                            android:inputType="textCapWords"
+                            android:text="@={streets.st01}"
+                             />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- st02  Input-Numeric   -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVst02"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/quesNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/Q_st03" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/st03" />
+
+                        </LinearLayout>
+
+                        <com.edittextpicker.aliazaz.EditTextPicker
+                            android:id="@+id/st03"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top|start"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:maxLines="10"
+                            android:minLines="5"
+                            android:text="@={streets.st03}"
+                             />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- St04  Radio   -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVSt04"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/quesNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/Q_st04" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/st04" />
+
+                        </LinearLayout>
+
+                        <RadioGroup
+                            android:id="@+id/St04"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <!-- For st0401 (S1 - North) -->
+                            <RadioButton
+                                android:id="@+id/st0401"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st04.equals(`1`)}"
+                                android:onClick="@{()->streets.setSt04(`1`)}"
+                                android:text="@string/st0401" />
+
+                            <!-- For st0402 (S2 – 15° From North) -->
+                            <RadioButton
+                                android:id="@+id/st0402"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st04.equals(`2`)}"
+                                android:onClick="@{()->streets.setSt04(`2`)}"
+                                android:text="@string/st0402" />
+
+                            <!-- For st0403 (S3 – 30° From North) -->
+                            <RadioButton
+                                android:id="@+id/st0403"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st04.equals(`3`)}"
+                                android:onClick="@{()->streets.setSt04(`3`)}"
+                                android:text="@string/st0403" />
+
+                            <!-- For st0404 (S4 – 45° From North) -->
+                            <RadioButton
+                                android:id="@+id/st0404"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st04.equals(`4`)}"
+                                android:onClick="@{()->streets.setSt04(`4`)}"
+                                android:text="@string/st0404" />
+
+                            <!-- For st0405 (S5 – 60° From North) -->
+                            <RadioButton
+                                android:id="@+id/st0405"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st04.equals(`5`)}"
+                                android:onClick="@{()->streets.setSt04(`5`)}"
+                                android:text="@string/st0405" />
+
+                            <!-- For st0406 (S2 – 75° From North) -->
+                            <RadioButton
+                                android:id="@+id/st0406"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st04.equals(`6`)}"
+                                android:onClick="@{()->streets.setSt04(`6`)}"
+                                android:text="@string/st0406" />
+
+                            <!-- For st0407 (S2 – 90° From North (East - West)) -->
+                            <RadioButton
+                                android:id="@+id/st0407"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st04.equals(`7`)}"
+                                android:onClick="@{()->streets.setSt04(`7`)}"
+                                android:text="@string/st0407" />
+
+
+
+
+                            <!--               <RadioButton
+                                               android:id="@+id/St0498"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               android:checked="@{streets.st04.equals(`3`)}"
+                                               android:onClick="@{()->streets.setSt04(`3`)}"
+                                               android:text="@string/st0498" />
+
+                                           <RadioButton
+                                               android:id="@+id/St0499"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               android:checked="@{streets.st04.equals(`99`)}"
+                                               android:onClick="@{()->streets.setSt04(`99`)}"
+                                               android:text="@string/st0499" />-->
+                        </RadioGroup>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <!-- st05 Input-Numeric -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVst05"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/quesNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/Q_st05" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/st05" />
+
+                        </LinearLayout>
+
+                        <com.edittextpicker.aliazaz.EditTextPicker
+                            android:id="@+id/st05"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/st05"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:text="@={streets.st05}"
+                            app:maxValue="120"
+                            app:minValue="20"
+                            app:type="range" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- st06 Input-Numeric -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVst06"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/quesNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/Q_st06" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/st06" />
+
+                        </LinearLayout>
+
+                        <com.edittextpicker.aliazaz.EditTextPicker
+                            android:id="@+id/st06"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/st06"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:text="@={streets.st06}"
+                            app:maxValue="120"
+                            app:minValue="20"
+                            app:type="range" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- St08  Radio   -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVSt08"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/quesNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/Q_st08" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/st08" />
+
+                        </LinearLayout>
+
+                        <RadioGroup
+                            android:id="@+id/St08"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <!-- For st0801 (No Visible Planting On Street) -->
+                            <RadioButton
+                                android:id="@+id/st0801"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st08.equals(`1`)}"
+                                android:onClick="@{()->streets.setSt08(`1`)}"
+                                android:text="@string/st0801" />
+
+                            <!-- For st0802 (Street has Trees) -->
+                            <RadioButton
+                                android:id="@+id/st0802"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st08.equals(`2`)}"
+                                android:onClick="@{()->streets.setSt08(`2`)}"
+                                android:text="@string/st0802" />
+
+                            <!-- For st0803 (Street has small planting but no trees) -->
+                            <RadioButton
+                                android:id="@+id/st0803"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st08.equals(`3`)}"
+                                android:onClick="@{()->streets.setSt08(`3`)}"
+                                android:text="@string/st0803" />
+
+                            <!-- For st0804 (Unknown / Other) -->
+                            <RadioButton
+                                android:id="@+id/st0804"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st08.equals(`4`)}"
+                                android:onClick="@{()->streets.setSt08(`4`)}"
+                                android:text="@string/st0804" />
+
+                        </RadioGroup>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- CardView for ST09 Key Public spaces [Multiple Response] -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVSt09"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Header with Question Number and Text -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/quesNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/Q_st09" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/st09" />
+
+                        </LinearLayout>
+
+                        <!-- Checkbox Group for ST09 Options -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!-- For st0901 -->
+                            <CheckBox
+                                android:id="@+id/checkBoxSt0901"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st0901.equals(`1`)}"
+                                android:onClick="@{() -> streets.setSt0901(streets.st0901.equals(`1`) ? `` : `1`)}"
+                                android:text="@string/st0901" />
+
+                            <!-- For st0902 -->
+                            <CheckBox
+                                android:id="@+id/checkBoxSt0902"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st0902.equals(`1`)}"
+                                android:onClick="@{() -> streets.setSt0902(streets.st0902.equals(`1`) ? `` : `1`)}"
+                                android:text="@string/st0902" />
+
+                            <!-- For st0903 -->
+                            <CheckBox
+                                android:id="@+id/checkBoxSt0903"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st0903.equals(`1`)}"
+                                android:onClick="@{() -> streets.setSt0903(streets.st0903.equals(`1`) ? `` : `1`)}"
+                                android:text="@string/st0903" />
+
+                            <!-- For st0904 -->
+                            <CheckBox
+                                android:id="@+id/checkBoxSt0904"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st0904.equals(`1`)}"
+                                android:onClick="@{() -> streets.setSt0904(streets.st0904.equals(`1`) ? `` : `1`)}"
+                                android:text="@string/st0904" />
+
+                            <!-- For st0905 -->
+                            <CheckBox
+                                android:id="@+id/checkBoxSt0905"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st0905.equals(`1`)}"
+                                android:onClick="@{() -> streets.setSt0905(streets.st0905.equals(`1`) ? `` : `1`)}"
+                                android:text="@string/st0905" />
+
+                            <!-- For st0906 -->
+                            <CheckBox
+                                android:id="@+id/checkBoxSt0906"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st0906.equals(`1`)}"
+                                android:onClick="@{() -> streets.setSt0906(streets.st0906.equals(`1`) ? `` : `1`)}"
+                                android:text="@string/st0906" />
+
+                            <!-- For st0907 -->
+                            <CheckBox
+                                android:id="@+id/checkBoxSt0907"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st0907.equals(`1`)}"
+                                android:onClick="@{() -> streets.setSt0907(streets.st0907.equals(`1`) ? `` : `1`)}"
+                                android:text="@string/st0907" />
+
+                            <!-- For st0908 -->
+                            <CheckBox
+                                android:id="@+id/checkBoxSt0908"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st0908.equals(`1`)}"
+                                android:onClick="@{() -> streets.setSt0908(streets.st0908.equals(`1`) ? `` : `1`)}"
+                                android:text="@string/st0908" />
+
+                            <!-- For st0909 -->
+                            <CheckBox
+                                android:id="@+id/checkBoxSt0909"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st0909.equals(`1`)}"
+                                android:onClick="@{() -> streets.setSt0909(streets.st0909.equals(`1`) ? `` : `1`)}"
+                                android:text="@string/st0909" />
+
+                            <!-- For st0910 -->
+                            <CheckBox
+                                android:id="@+id/checkBoxSt0910"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st0910.equals(`1`)}"
+                                android:onClick="@{() -> streets.setSt0910(streets.st0910.equals(`1`) ? `` : `1`)}"
+                                android:text="@string/st0910" />
+
+                            <!-- For st0911 -->
+                            <CheckBox
+                                android:id="@+id/checkBoxSt0911"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st0911.equals(`1`)}"
+                                android:onClick="@{() -> streets.setSt0911(streets.st0911.equals(`1`) ? `` : `1`)}"
+                                android:text="@string/st0911" />
+
+                            <!-- For st0912 -->
+                            <CheckBox
+                                android:id="@+id/checkBoxSt0912"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st0912.equals(`1`)}"
+                                android:onClick="@{() -> streets.setSt0912(streets.st0912.equals(`1`) ? `` : `1`)}"
+                                android:text="@string/st0912" />
+
+                            <!-- For st0913 -->
+                            <CheckBox
+                                android:id="@+id/checkBoxSt0913"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st0913.equals(`1`)}"
+                                android:onClick="@{() -> streets.setSt0913(streets.st0913.equals(`1`) ? `` : `1`)}"
+                                android:text="@string/st0913" />
+
+                            <!-- For st0914 -->
+                            <CheckBox
+                                android:id="@+id/checkBoxSt0914"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st0914.equals(`1`)}"
+                                android:onClick="@{() -> streets.setSt0914(streets.st0914.equals(`1`) ? `` : `1`)}"
+                                android:text="@string/st0914" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVSt10"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/quesNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/Q_st10" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/st10" />
+
+                        </LinearLayout>
+
+                        <com.edittextpicker.aliazaz.EditTextPicker
+                            android:id="@+id/st10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top|start"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:maxLines="10"
+                            android:minLines="5"
+
+                            android:text="@={streets.st10}" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVSt11"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Question Number and Field Name Row -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <!-- Question Number -->
+                            <TextView
+                                style="@style/quesNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="@string/Q_st11" />
+
+                            <!-- Field Name -->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="@string/st11" />
+
+                        </LinearLayout>
+
+                        <!-- EditText for st11 -->
+                        <EditText
+                            android:id="@+id/st11"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:editable="false"
+                            android:gravity="top"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:maxLines="10"
+                            android:minLines="3"
+                            android:text="@={streets.st11}" />
+
+                        <!-- Button Row -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end">
+
+
+                            <Button
+                                android:id="@+id/frontPhoto"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="15dp"
+                                android:background="@drawable/button_shape_gray"
+                                android:backgroundTint="@color/colorAccent"
+                                android:drawableStart="@drawable/ic_camera"
+                                android:onClick="takePhoto"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp"
+                                android:text="Take Front Photo" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <!--EndButton LinearLayout-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal"
+                    android:padding="24dp">
+
+                    <Button
+                        android:id="@+id/btn_End"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:onClick="@{() -> callback.btnEnd()}"
+                        android:text="Cancel"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btn_Continue"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/capsule"
+                        android:backgroundTint="@color/colorAccent"
+                        android:backgroundTintMode="src_atop"
+                        android:onClick="@{() -> callback.btnContinue()}"
+                        android:text="Save"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

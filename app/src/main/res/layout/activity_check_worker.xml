@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View" />
+
+        <!-- Define your ViewModel instance -->
+        <variable
+            name="viewModel"
+            type="edu.aku.hassannaqvi.heapslinelisting.models.WorkerStatusViewModel" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="edu.aku.hassannaqvi.heapslinelisting.ui.CheckWorkerActivity">
+
+
+    <androidx.cardview.widget.CardView
+        style="@style/cardView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Form" />
+
+            <EditText
+                android:id="@+id/chkForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:minHeight="56dp"
+                android:text="@{viewModel.tagStatuses[0].toString()}"
+
+             />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        style="@style/cardView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
+                <TextView
+                    style="@style/quesNum"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="56dp"
+                    android:text="Family Member" />
+
+            <EditText
+                android:id="@+id/chkFamilyMember"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="@{viewModel.tagStatuses[1].toString()}"
+
+             />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

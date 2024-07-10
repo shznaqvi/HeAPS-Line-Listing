@@ -1,0 +1,386 @@
+<resources>
+    <string name="app_name">HeAPS Line-Listing</string>
+    <!-- Common strings -->
+    <string name="btnDownload" translatable="false">Download Data</string>
+    <string name="btnUpload">Upload Data</string>
+    <string name="promptemail">Email</string>
+    <string name="promptpassword">Password</string>
+    <string name="actionsignin">Login</string>
+    <string name="actionsigninshort">Sign in</string>
+    <string name="splashText"> </string>
+    <string name="checkpendingforms">CHECK PENDING FORMS</string>
+    <string name="startinterview" translatable="false">START INTERVIEW</string>
+    <string name="openHouseholdForm" translatable="false">OPEN HOUSEHOLD FORM</string>
+    <string name="addChild" translatable="false">ADD A CHILD</string>
+    <string name="openbloodform" translatable="false">UPDATE BLOOD INFORMANTION</string>
+    <string name="openstoolform" translatable="false">UPDATE STOOL INFORMANTION</string>
+    <string name="recordssummary">Records Summary</string>
+    <string name="mainmenu">Main Menu</string>
+    <string name="onlyfortesting">ONLY FOR TESTING</string>
+    <string name="database">Database</string>
+    <string name="district">DISTRICT</string>
+    <string name="uc" translatable="false">UC</string>
+    <string name="btnSave" translatable="false">Save</string>
+    <string name="btnEnd" translatable="false">Cancel</string>
+    <string name="signin" translatable="false">SIGN IN</string>
+    <string name="signin_msg">Enter your usename and password to access the app.</string>
+
+    <string name="username" translatable="false">Username</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="newPassword" translatable="false">New Password</string>
+    <string name="confirmPassword" translatable="false">Confirm Password</string>
+    <string name="btnResetPassword">Reset Password</string>
+    <string name="country">Language (Click to change)</string>
+    <string name="pakistan" translatable="false">Pakistan</string>
+    <string name="tajikistan" translatable="false">Tajikistan</string>
+    <string name="btnLogin" translatable="false">Login</string>
+    <string name="btnReset" translatable="false">Reset</string>
+    <string name="btnDownloadData" translatable="false">Download Data</string>
+    <string name="csMAexist" translatable="false">might be already exist</string>
+
+    <string name="netwrok" translatable="false">Network connection not available!</string>
+    <string name="invalidpass" translatable="false">Invalid Password</string>
+    <string name="unameRequired" translatable="false">Username is required.</string>
+    <string name="incorrcetPass" translatable="false">Incorrect Password</string>
+    <string name="downData" translatable="false">Download Data</string>
+    <string name="permission" translatable="false">Permissions Required</string>
+    <string name="warning" translatable="false">Warning</string>
+    <string name="newApp" translatable="false">New App downloaded!!</string>
+    <string name="appVer" translatable="false">App New Version</string>
+    <string name="btnSync">Download Data</string>
+    <string name="downloaded" translatable="false">Downloaded</string>
+    <string name="appDownload" translatable="false">appDownload</string>
+    <string name="newVer" translatable="false">New Version</string>
+    <string name="downloading" translatable="false">Downloading</string>
+    <string name="available" translatable="false">Available</string>
+    <string name="downError" translatable="false">Cant download.. Internet connectivity issue!</string>
+    <string name="backbtn" translatable="false">Press Back again to Exit</string>
+    <string name="noNetwork" translatable="false">No network connection available!</string>
+    <string name="appAvailable" translatable="false">APP is available!</string>
+    <string name="oldAppMsg" translatable="false">App Ver." + " is now available. Your are currently using older Ver."</string>
+    <string name="installNewApp" translatable="false">Install new version to use this app</string>
+    <string name="install" translatable="false">Install</string>
+    <string name="cancel" translatable="false">Cancel</string>
+    <string name="complete" translatable="false">complete</string>
+    <string name="updatingError" translatable="false">Error in updating db!!</string>
+    <string name="updateDbError1" translatable="false">"Sorry. You can\'t go further."</string>
+    <string name="updateDbError2" translatable="false">"Please contact IT Team (Failed to update DB)"</string>
+    <string name="bckbtn" translatable="false">You Cant go back</string>
+    <string name="processing" translatable="false">Processing</string>
+    <string name="confirmation" translatable="false">Confirmation!</string>
+    <string name="confirm">Confirm?</string>
+    <string name="cntbtn" translatable="false">Are you sure, you want to continue - interview</string>
+    <string name="failedUpdateDb" translatable="false">SORRY! Failed to update DB</string>
+    <string name="invalidDate" translatable="false">Invalid date!</string>
+    <string name="ageCalc" translatable="false">"Both Month and Year don\'t be zero!!"</string>
+    <string name="actiondatabase" translatable="false">Database Manager</string>
+    <string name="actionCheckWorker" translatable="false">Check Worker Status</string>
+    <string name="actiondatasync" translatable="false">Sync Data</string>
+    <string name="dkn"> Don’t Know </string>
+    <string name="none"> No one </string>
+    <string name="never"> Never</string>
+    <string name="na"> Applicable /Not Available</string>
+    <string name="nap"> Not Applicable </string>
+    <string name="errorinvalidpassword">This password is too short</string>
+    <string name="errorfieldrequired">This field is required</string>
+    <string name="errorincorrectpassword">This password is incorrect</string>
+    <string name="nav">Not Available </string>
+    <string name="ref"> Refused </string>
+    <string name="other"> Other </string>
+    <string name="specify"> Please explain </string>
+    <string name="year"> Year </string>
+    <string name="month"> Month </string>
+    <string name="weeks"> Week(s) </string>
+    <string name="days"> Day(s) </string>
+    <string name="hours"> Hour(s) </string>
+    <string name="minutes"> Minute(s) </string>
+    <string name="kg"> Kilograms </string>
+    <string name="km"> Kilometers </string>
+    <string name="cm"> cm </string>
+    <string name="in"> Inch </string>
+    <string name="rupees"> Rupees </string>
+    <string name="num"> Number </string>
+    <string name="name"> Name </string>
+
+    <!--Error Messages-->
+    <string name="upd_db_form" translatable="false"> updateDB(Form):\t </string>
+    <string name="upd_db_error" translatable="false"> Updating Database… ERROR! </string>
+    <string name="db_excp_error" translatable="false"> Database Exception... ERROR! </string>
+    <string name="upd_db" translatable="false"> Updating Database...\t </string>
+    <string name="fail_db_upd" translatable="false"> Failed to Update Database! </string>
+    <string name="backPress" translatable="false"> Back Press Not Allowed </string>
+    <string name="invalid_response" translatable="false"> Invalid Response </string>
+    <string name="agecal" translatable="false">ageCal:\t</string>
+    <string name="title_child_dialog" translatable="false">Child Count</string>
+    <string name="message_child_dialog_proceeed" translatable="false">You have entered only %1$s of %2$s Children in the household. \nAre you sure you want to continue now?</string>
+    <string name="message_child_dialog_addmore" translatable="false">You have already entered %1$s Children. \nAre you sure you want to add more Child?</string>
+    <string name="network_conn_error" translatable="false"> Network connection not available ! </string>
+    <string name="no_mother_selected_child_list" translatable="false"> No Mother has been selected. Please select a mother before opening Child List </string>
+    <string name="onitemselected" translatable="false"> onItemSelected(Samples):\t </string>
+    <string name="upd_samples" translatable="false"> updateDB(Samples):\t </string>
+    <string name="upd_anthro" translatable="false"> updateDB(Anthro):\t </string>
+    <string name="folder_not_created" translatable="false"> Folder Not Created </string>
+    <string name="invalid_password" translatable="false"> Invalid Password </string>
+    <string name="username_required" translatable="false"> Username is required. </string>
+    <string name="username_password_same" translatable="false"> Username and Password cannot be same. </string>
+    <string name="incorrect_username_or_password" translatable="false">Incorrect Username or Password</string>
+    <string name="open_hh_form" translatable="false"> Open Household Form </string>
+    <string name="hh_not_found" translatable="false">Household not Found</string>
+    <string name="hh_exists_form" translatable="false"> JSONException(Form): \t </string>
+    <string name="child_info_missing" translatable="false">Please fill child sections before entering this information</string>
+    <string name="open_new_form" translatable="false">OPEN NEW FORM</string>
+    <string name="options" translatable="false">Options</string>
+    <string name="householdidentificationmainheading">Household Identification: </string>
+
+
+    <!-- Street Table -->
+    <string name="add_street">ADD STREET</string>
+    <string name="street_table_title">(Street Table)</string>
+    <string name="serial_no">Serial No.</string>
+    <string name="questions">Questions</string>
+    <string name="answer">Answer</string>
+    <string name="remarks">Remarks</string>
+
+    <!-- Questions with Options -->
+    <string name="bl01">District</string>
+    <string name="bl0101">Karachi</string>
+    <string name="bl0102">Matiari</string>
+    <string name="bl02">Area</string>
+    <string name="bl0201">Dhobi Guard</string>
+    <string name="bl0202">Ghahela</string>
+
+    <string name="bl03">Cluster Code</string> <!--K-01-001 OR M-01-001 -->
+
+    <string name="st01">Street Name</string>
+
+    <string name="st03">Street Description</string>
+
+    <string name="st04">Street Orientation</string>
+    <string name="st0401">S1 - North</string>
+    <string name="st0402">S2 – 15° From North</string>
+    <string name="st0403">S3 – 30° From North</string>
+    <string name="st0404">S4 – 45° From North</string>
+    <string name="st0405">S5 – 60° From North</string>
+    <string name="st0406">S2 – 75° From North</string>
+    <string name="st0407">S2 – 90° From North (East - West)</string>
+
+    <string name="st05">Estimated Urban Canyon Height (m)</string>
+
+    <string name="st06">Estimate Urban Canyon Width (m)</string>
+
+    <string name="st07">Floor Surface</string>
+    <string name="st0701">Concrete</string>
+    <string name="st0702">Unpaved compacted</string>
+    <string name="st0703">Brick paviers</string>
+    <string name="st0704">Asphalt</string>
+    <string name="st0705">Cobblestone</string>
+    <string name="st0706">Gravel</string>
+    <string name="st0707">Dirt</string>
+    <string name="st0708">Interlocking tiles</string>
+
+    <string name="st08">ST08 Planting</string>
+    <string name="st0801">No Visible Planting On Street</string>
+    <string name="st0802">Street has Trees</string>
+    <string name="st0803">Street has small planting but no trees</string>
+    <string name="st0804">Unknown / Other</string>
+
+    <string name="st09">ST09 Key Public spaces [Multiple Response]</string>
+    <string name="st0901">Parks and Gardens</string>
+    <string name="st0902">Shops</string>
+    <string name="st0903">Markets and Bazaars</string>
+    <string name="st0904">Educational Institutions (Schools, Colleges, Universities)</string>
+    <string name="st0905">Healthcare Facilities (Hospitals, Clinics)</string>
+    <string name="st0906">Religious Places (Mosques, Churches, Temples)</string>
+    <string name="st0907">Transportation Hubs (Bus Stations, Train Stations)</string>
+    <string name="st0908">Government Offices (Municipal Offices, Administrative Buildings)</string>
+    <string name="st0909">Community Centers</string>
+    <string name="st0910">Sports Complexes (Stadiums, Sports Arenas)</string>
+    <string name="st0911">Cultural Centers (Museums, Art Centers)</string>
+    <string name="st0912">Libraries</string>
+    <string name="st0913">Recreational Centers (Swimming pools, Gyms, Fitness centers)</string>
+    <string name="st0914">Others</string>
+
+    <string name="st10">ST10 Notes</string>
+
+    <string name="st11">ST11 Streetscape Images</string>
+
+    <string name="st12">ST12 Video Files (to be recorded separately using device or camera)</string>
+
+    <!-- Buildings Table -->
+    <string name="add_building_structures">ADD BUILDING STRUCTURES</string>
+    <string name="buildings_table_title">(Buildings Table)</string>
+    <string name="bg01">BG01 Region</string>
+    <string name="bg0101">Karachi</string>
+    <string name="bg0102">Hyderabad</string>
+
+    <string name="bg02">BG02 Block Name (ID) (populate from previously downloaded blocks)</string>
+
+    <string name="bg03">BG03 Street ID (populate from previously added Streets on device and filter on block selected above)</string>
+
+    <string name="bg04">BG04 Landmark</string>
+
+    <string name="bg05">BG05 Structure/HH Number</string>
+
+    <string name="bg06">BG06 Type of Structure</string>
+    <string name="bg0601">Residential</string>
+    <string name="bg0602">Shop/market/plaza</string>
+    <string name="bg0603">Mosque/church/temple</string>
+    <string name="bg0604">School/college/university</string>
+    <string name="bg0605">Health facility</string>
+    <string name="bg0606">Under construction</string>
+    <string name="bg0607">Others, specify</string>
+    <string name="bg0608">Line Listing Complete (No more structure)</string>
+    <string name="bg0609">Temporarily Stop Listing</string>
+
+    <string name="bg07">BG07 Is this place used for residential purposes?</string>
+    <string name="bg0701">Yes</string>
+    <string name="bg0702">No</string>
+
+    <string name="bg08">BG08 Type of Residence</string>
+    <string name="bg0801">House</string>
+    <string name="bg0802">Apartment</string>
+
+    <string name="bg09">BG09 Does the structure contain more than one household?</string>
+    <string name="bg0901">Yes</string>
+    <string name="bg0902">No</string>
+
+    <string name="bg10">BG10 If yes, how many households are in the structure?</string>
+
+
+    <string name="hh11">Name of the head of the household?</string>
+
+    <string name="hh12">Total number of individuals living in the household, including children</string>
+    <string name="hh12a">Number of males (including boys)</string>
+    <string name="hh12b">Number of females (including girls)</string>
+    <string name="hh12c">How many married women are in the household?</string>
+
+    <string name="hh13">Are there children under the age of five in the household?</string>
+    <string name="hh1301">Yes</string>
+    <string name="hh1302">No</string>
+    <string name="hh13a">Number of children under the age of five</string>
+    <string name="hh14">Are there children aged 12 to 23 months in the household?</string>
+    <string name="hh1401">Yes</string>
+    <string name="hh1402">No</string>
+    <string name="hh14a">If yes, please specify the number of children aged 12 to 23 months</string>
+<!--    <string name="hh12d">Is there any pregnant woman in the household?</string>
+    <string name="hh12d1">Yes</string>
+    <string name="hh12d2">No</string>-->
+    <string name="hh12d">Number of pregnant women in the household</string>
+    <!--<string name="hh12d">Is there any elderly person >60 years in the household?</string>
+    <string name="hh12d1">Yes</string>
+    <string name="hh12d2">No</string>-->
+    <string name="hh12e">Number of elderly people in the household</string>
+    <string name="hh15">Is there any other family living in this household?</string>
+
+
+    <!--   <string name="iStatus">Result of Household Questionnaire Discuss any result not completed with supervisor. interview</string>
+    <string name="iStatusa">Completed</string>
+    <string name="iStatusb">No HH member at home or no competent respondent at home at time of visit  </string>
+    <string name="iStatusc">Entire household absent for extended period of time</string>
+    <string name="iStatusd">Refused</string>
+    <string name="iStatuse">Dwelling vacant or address not a dwelling </string>
+    <string name="iStatusf">Dwelling not found</string>
+    <string name="iStatusg">No child of 06-23 months in this household</string>-->
+
+    <string name="iStatus"> Result of Household Questionnaire interview </string>
+    <string name="iStatusi"> Discuss any result not completed with team leader </string>
+    <string name="iStatus01"> Completed </string>
+    <string name="iStatus02"> No HH member at home or no competent respondent at home at time of visit </string>
+    <string name="iStatus03"> Entire household absent for extended period of time </string>
+    <string name="iStatus04"> Refused </string>
+    <string name="iStatus05"> Dwelling vacant or address not a dwelling </string>
+    <string name="iStatus06"> Dwelling not found </string>
+    <string name="iStatus07"> No child of 06-23 months in this household </string>
+    <string name="iStatus96"> Other (Specify) </string>
+
+
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Login</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="check_pending_forms">CHECK PENDING FORMS</string>
+    <string name="records_summary">Records Summary</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="only_for_testing">ONLY FOR TESTING</string>
+
+    <string name="no"> No </string>
+
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+
+    <string name="contactnum">Contact Number </string>
+    <string name="checkHHpresent"> The name of head of the household corresponds to the line listing data.</string>
+    <string name="newHHheadname"> Name of new head of the household </string>
+
+
+    <!--  <string name="h106">My daily life has been filled with things that interest me</string>
+      <string name="h10699">At no time</string>
+      <string name="h10601">Some of the time</string>
+      <string name="h10602">Less than half of the time</string>
+      <string name="h10603">More than half of the time</string>
+      <string name="h10604">Most of the time</string>
+      <string name="h10605">All of the time</string>
+      <string name="hscore">Scoring Criteria:</string>
+      <string name="hstitle1">Interpretation: Is it recommended to administer the Major Depression (ICD-10) Inventory (Annex 2) if the raw score is below 13 or if the patient has answered 0 or 1 to any of the 5 items. A score below 13 indicates poor wellbeing and is an indication for testing for depression using ICD-10</string>
+      <string name="hstitle2">The World Health Organization- Five Well-Being Index (WHO-5) is a short self-reported measure of current mental well-being. The measure was first introduced in its present listing in 1998 by the WHO Regional Office in Europe as part of the DEPCARE project on well-being measures in primary health care. The WHO-5 consists of five statements, which respondents’ rate according to the scale below (in relation to the past two weeks). All the time = 5, Most of the time = 4, More than half of the time = 3, Less than half of the time = 2, Some of the time = 1, At no time = 0. The total raw score, ranging from 0 to 25, is multiplied by 4 to give the final score, with 0 representing the worst imaginable well-being and 100 representing the best imaginable well-being. The WHO-5 is free of charge and does not require permission to use.</string>
+  -->
+
+    <!-- Question Numbers -->
+    <string name="Q_bl01" translatable="false">BL01</string>
+    <string name="Q_bl02" translatable="false">BL02</string>
+    <string name="Q_st01" translatable="false">ST01</string>
+    <string name="Q_st02" translatable="false">ST02</string>
+    <string name="Q_st03" translatable="false">ST03</string>
+    <string name="Q_st04" translatable="false">ST04</string>
+    <string name="Q_st05" translatable="false">ST05</string>
+    <string name="Q_st06" translatable="false">ST06</string>
+    <string name="Q_st07" translatable="false">ST07</string>
+    <string name="Q_st08" translatable="false">ST08</string>
+    <string name="Q_st09" translatable="false">ST09</string>
+    <string name="Q_st10" translatable="false">ST10</string>
+    <string name="Q_st11" translatable="false">ST11</string>
+    <string name="Q_st12" translatable="false">ST12</string>
+    <string name="Q_bg01" translatable="false">BG01</string>
+    <string name="Q_bg02" translatable="false">BG02</string>
+    <string name="Q_bg03" translatable="false">BG03</string>
+    <string name="Q_bg04" translatable="false">BG04</string>
+    <string name="Q_bg05" translatable="false">BG05</string>
+    <string name="Q_bg06" translatable="false">BG06</string>
+    <string name="Q_bg07" translatable="false">BG07</string>
+    <string name="Q_bg08" translatable="false">BG08</string>
+    <string name="Q_bg09" translatable="false">BG09</string>
+    <string name="Q_bg10" translatable="false">BG10</string>
+
+    <string name="Q_hh11" translatable="false">HH11</string>
+    <string name="Q_hh12" translatable="false">HH12</string>
+    <string name="Q_hh12a" translatable="false">HH12a</string>
+    <string name="Q_hh12b" translatable="false">HH12b</string>
+    <string name="Q_hh12c" translatable="false">HH12c</string>
+    <string name="Q_hh13" translatable="false">HH13</string>
+    <string name="Q_hh1301" translatable="false">HH1301</string>
+    <string name="Q_hh1302" translatable="false">HH1302</string>
+    <string name="Q_hh13a" translatable="false">HH13a</string>
+    <string name="Q_hh14" translatable="false">HH14</string>
+    <string name="Q_hh1401" translatable="false">HH1401</string>
+    <string name="Q_hh1402" translatable="false">HH1402</string>
+    <string name="Q_hh14a" translatable="false">HH14a</string>
+    <string name="Q_hh12d" translatable="false">HH12d</string>
+    <string name="Q_hh12d1" translatable="false">HH12d1</string>
+    <string name="Q_hh12d2" translatable="false">HH12d2</string>
+    <string name="Q_hh12e" translatable="false">HH12e</string>
+    <string name="Q_hh15" translatable="false">HH15</string>
+
+
+    <string name="open_lhw_form">OPEN LHW REGISTRATION FORM</string>
+
+    <string name="lang">English</string>
+    <string name="sttitle">Add Streets</string>
+    <string name="Q_bl04">BL04</string>
+    <string name="bl04">Is this the first tablet being used for the line listing of this PSU?</string>
+    <string name="bl0401">Yes (Tablet A)</string>
+    <string name="bl0402">No (Tablet B)</string>
+    <string name="bl05">Street</string>
+
+
+</resources>

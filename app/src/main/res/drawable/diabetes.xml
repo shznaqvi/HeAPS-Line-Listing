@@ -1,0 +1,17 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Sugar drop body -->
+    <path
+        android:fillColor="#FF9800"
+        android:pathData="M12,2C6.48,2 2,6.48 2,12c0,5.25 4.26,9.51 9.51,9.51c2.79,0 5.33,-1.18 7.11,-3.07C21.35,17.58 22,15.88 22,14C22,9.37 18.63,6 14,6C12.12,6 10.42,6.65 8.56,7.9C10.34,9.79 12.88,11 15.49,11C16.42,11 17.34,10.79 18.18,10.41C19.26,9.95 20.24,9.31 21,8.53C20.2,7.25 19.24,6.16 18.17,5.18C16.31,3.82 14.21,3 12,3z" />
+
+    <!-- Diabetes indicator line -->
+    <path
+        android:pathData="M12,15l0,-6"
+    android:strokeWidth="2"
+    android:strokeColor="#FFFFFF" />
+</vector>

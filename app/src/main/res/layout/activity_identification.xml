@@ -1,0 +1,316 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+         <variable
+            name="listing"
+            type="edu.aku.hassannaqvi.heapslinelisting.models.Listing" />
+        <variable
+            name="callback"
+            type="edu.aku.hassannaqvi.heapslinelisting.ui.IdentificationActivity" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/app_bg_effect"
+        android:orientation="vertical">
+
+        <!-- CUSTOM TOOLBAR -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@null"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ToolbarTheme"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:subtitle="Household Identification"
+            app:subtitleTextAppearance="@style/Toolbar.SubtitleText"
+            app:subtitleTextColor="@color/grayLight"
+            app:theme="@style/ActionBarTheme"
+            app:title="@string/app_name"
+            app:titleTextAppearance="@style/Toolbar.TitleText" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/GrpName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_margin="8dp"
+                    android:visibility="gone">
+
+                    <!-- Bottom TextView (Stretches to max width) -->
+                    <TextView
+                        android:id="@+id/lhwName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/capsule_background"
+                        android:fontFamily="@font/open_sans_condensed_light"
+                        android:gravity="center_vertical"
+                        android:layoutDirection="ltr"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="Stretched Text"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textDirection="ltr"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Top TextView (Wraps content) -->
+                    <TextView
+                        android:id="@+id/distName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/capsule_background"
+                        android:backgroundTint="@color/colorAccent"
+                        android:fontFamily="@font/open_sans_condensed_light"
+                        android:gravity="center_vertical"
+                        android:layoutDirection="ltr"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="Short Text"
+                        android:textColor="@color/white"
+                        android:textDirection="ltr"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+
+                <!-- BL01 - District Spinner -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVDistrict"
+                    style="@style/cardView">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/quesNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/bl01" />
+                        <!--bl01-->
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/district"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bottom"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            style="@style/quesNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/bl02" />
+                        <!--bl02-->
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/area"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:hint="@string/bl02" />
+                    </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- BL03 Cluster Name Input -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVClusterName"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/quesNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/bl03" />
+
+                        <!--bl03 Cluster Code-->
+                        <EditText
+                            android:id="@+id/clusterCode"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:inputType="text" />
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="8dp"
+                            android:backgroundTint="@color/colorAccent"
+                            android:onClick="checkCluster"
+                            android:text="Check"
+                            android:textColor="@color/colorPrimaryDark"/>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+             <!--   &lt;!&ndash; BL05 Cluster Name Input &ndash;&gt;
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVStreet"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/quesNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/bl05" />
+
+                        &lt;!&ndash;bl05 Cluster Code&ndash;&gt;
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/street"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            />
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="8dp"
+                            android:backgroundTint="@color/colorAccent"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:onClick="checkCluster"
+                            android:text="Add Street"/>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>-->
+                
+                
+                <!-- hh03  Radio   -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVbl04"
+                    style="@style/cardView"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/quesNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/Q_bl04" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/bl04" />
+
+                        </LinearLayout>
+
+                        <RadioGroup
+                            android:id="@+id/bl04"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/bl0401"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:checked="@{listing.bl04.equals(`1`)}"
+                                android:onClick="@{()->listing.setBl04(`1`)}"
+                                android:text="@string/bl0401" />
+
+                            <RadioButton
+                                android:id="@+id/bl0402"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:checked="@{listing.bl04.equals(`2`)}"
+                                android:onClick="@{()->listing.setBl04(`2`)}"
+                                android:text="@string/bl0402" />
+                        </RadioGroup>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <!-- EndButton LinearLayout -->
+                <LinearLayout
+                    android:id="@+id/buttonsPanel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal"
+                    android:padding="24dp">
+
+                    <Button
+                        android:id="@+id/btn_End"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:onClick="btnEnd"
+                        android:text="Cancel"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btn_Continue"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/capsule"
+                        android:backgroundTint="@color/colorAccent"
+                        android:backgroundTintMode="src_atop"
+                        android:onClick="btnContinue"
+                        android:text="Start Linelisting"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>
