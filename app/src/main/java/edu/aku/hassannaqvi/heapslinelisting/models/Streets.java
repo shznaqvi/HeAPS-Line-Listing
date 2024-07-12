@@ -1,7 +1,9 @@
 package edu.aku.hassannaqvi.heapslinelisting.models;
 
 
+import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.PROJECT_NAME;
 import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp._EMPTY_;
+import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.selectedCluster;
 
 import android.database.Cursor;
 
@@ -18,13 +20,12 @@ import java.util.Date;
 import java.util.Locale;
 
 import edu.aku.hassannaqvi.heapslinelisting.BR;
-import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts;
 import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts.StreetsTable;
+import edu.aku.hassannaqvi.heapslinelisting.core.MainApp;
 
 public class Streets extends BaseObservable implements Observable {
 
     final String TAG = "Sheets";
-
 
 
     // FIELD VARIABLES for BL group (BL01 - BL02)
@@ -61,7 +62,7 @@ public class Streets extends BaseObservable implements Observable {
     public String st12 = _EMPTY_;
 
     // Additional variables
-    public String projectName = "PROJECT_NAME";
+    public String projectName = PROJECT_NAME;
     public String uid = _EMPTY_;
     public String userName = _EMPTY_;
     public String sysDate = _EMPTY_;
@@ -84,9 +85,6 @@ public class Streets extends BaseObservable implements Observable {
     String streetNum = _EMPTY_;
 
     transient PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
-
-
-   
 
 
     public Streets() {
@@ -117,12 +115,12 @@ public class Streets extends BaseObservable implements Observable {
 
     public void populateMeta() {
         setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
-        setUserName(userName);  // Ensure this is properly set in your application
-        setDeviceId(deviceId);  // Ensure this is properly set in your application
-        setAppver(appver);      // Ensure this is properly set in your application
+        setUserName(MainApp.user.getUserName());  // Ensure this is properly set in your application
+        setDeviceId(MainApp.deviceid);  // Ensure this is properly set in your application
+        setAppver(MainApp.appInfo.getAppVersion());      // Ensure this is properly set in your application
         setProjectName(projectName); // Ensure this is properly set in your application
-        setDistrictID(districtID); // Ensure this is properly set in your application
-        setClusterCode(clusterCode); // Ensure this is properly set in your application
+        setDistrictID(selectedCluster.getDistId()); // Ensure this is properly set in your application
+        setClusterCode(selectedCluster.getClusterCode()); // Ensure this is properly set in your application
     }
 
     // Getters and Setters for basic fields
@@ -164,6 +162,7 @@ public class Streets extends BaseObservable implements Observable {
 
     public void setDistrictID(String districtID) {
         this.districtID = districtID;
+        this.bl01 = districtID;
         notifyPropertyChanged(BR.districtID);
     }
 
@@ -177,6 +176,7 @@ public class Streets extends BaseObservable implements Observable {
         this.clusterCode = ClusterCode;
         notifyPropertyChanged(BR.clusterCode);
     }
+
     // UserName
     public String getUserName() {
         return userName;
@@ -185,12 +185,14 @@ public class Streets extends BaseObservable implements Observable {
     public void setUserName(String userName) {
         this.userName = userName;
     }
- public String getstreetNum() {
+
+    public String getstreetNum() {
         return streetNum;
     }
 
     public void setstreetNum(String streetNum) {
         this.streetNum = streetNum;
+        setSt02(streetNum);
     }
 
     // SysDate
@@ -598,62 +600,6 @@ public class Streets extends BaseObservable implements Observable {
     }
 
 
-    public Streets Hydrate(Cursor cursor) throws JSONException {
-        this.id = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.StreetsTable._ID));
-        this.uid = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_UID));
-        this.projectName = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_PROJECT_NAME));
-        this.districtID = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_DISTRICT_ID));
-        this.clusterCode = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_CLUSTER_CODE));
-
-        this.userName = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_USERNAME));
-        this.sysDate = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_SYSDATE));
-        this.deviceId = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_DEVICEID));
-        this.appver = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_APPVERSION));
-        this.iStatus = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ISTATUS));
-        this.synced = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_SYNCED));
-        this.syncDate = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_SYNCED_DATE));
-        this.gpsLat = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_GPSLAT));
-        this.gpsLng = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_GPSLNG));
-        this.gpsDT = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_GPSDATE));
-        this.gpsAcc = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_GPSACC));
-
-        // BL (1-2)
-        this.bl01 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_BL01));
-        this.bl02 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_BL02));
-
-        // ST (1-12)
-        this.st01 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST01));
-        this.st02 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST02));
-        this.st03 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST03));
-        this.st04 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST04));
-        this.st05 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST05));
-        this.st06 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST06));
-        this.st07 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST07));
-        this.st08 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST08));
-        this.st0901 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0901));
-        this.st0902 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0902));
-        this.st0903 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0903));
-        this.st0904 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0904));
-        this.st0905 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0905));
-        this.st0906 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0906));
-        this.st0907 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0907));
-        this.st0908 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0908));
-        this.st0909 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0909));
-        this.st0910 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0910));
-        this.st0911 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0911));
-        this.st0912 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0912));
-        this.st0913 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0913));
-        this.st0914 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0914));
-        this.st10 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST10));
-        this.st11 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST11));
-        this.st12 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST12));
-
-
-        return this;
-    }
-
-
-
     public JSONObject toJSONObject() throws JSONException {
         JSONObject json = new JSONObject();
 
@@ -670,7 +616,7 @@ public class Streets extends BaseObservable implements Observable {
         json.put(StreetsTable.COLUMN_DEVICEID, this.deviceId);
         json.put(StreetsTable.COLUMN_ISTATUS, this.iStatus);
         json.put(StreetsTable.COLUMN_SYNCED, this.synced);
-        json.put(StreetsTable.COLUMN_SYNCED_DATE, this.syncDate);
+        json.put(StreetsTable.COLUMN_SYNC_DATE, this.syncDate);
         json.put(StreetsTable.COLUMN_APPVERSION, this.appver);
         json.put(StreetsTable.COLUMN_GPSLAT, this.gpsLat);
         json.put(StreetsTable.COLUMN_GPSLNG, this.gpsLng);
@@ -713,6 +659,7 @@ public class Streets extends BaseObservable implements Observable {
     }
 
     public Streets hydrate(Cursor cursor) throws JSONException {
+        this.id = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable._ID));
         this.uid = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_UID));
         this.districtID = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_DISTRICT_ID));
         this.clusterCode = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_CLUSTER_CODE));
@@ -726,7 +673,7 @@ public class Streets extends BaseObservable implements Observable {
         this.gpsDT = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_GPSDATE));
         this.gpsAcc = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_GPSACC));
         this.synced = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_SYNCED));
-        this.syncDate = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_SYNCED_DATE));
+        this.syncDate = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_SYNC_DATE));
         this.iStatus = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ISTATUS));
         this.iStatus96x = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ISTATUS96x));
         this.bl01 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_BL01));
@@ -756,6 +703,10 @@ public class Streets extends BaseObservable implements Observable {
         this.st10 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST10));
         this.st11 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST11));
         this.st12 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST12));
+        this.projectName = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_PROJECT_NAME));
+        this.endTime = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_END_TIME));
+        this.entryType = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ENTRY_TYPE));
+
         return this;
     }
 

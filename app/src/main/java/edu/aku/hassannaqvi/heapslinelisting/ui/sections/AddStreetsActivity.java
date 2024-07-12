@@ -1,5 +1,6 @@
 package edu.aku.hassannaqvi.heapslinelisting.ui.sections;
 
+import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.selectedCluster;
 import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.streets;
 
 import android.content.Intent;
@@ -24,6 +25,7 @@ public class AddStreetsActivity extends AppCompatActivity {
 
     ActivityAddStreetsBinding bi;
     private DatabaseHelper db;
+    private int maxstreet = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +40,16 @@ public class AddStreetsActivity extends AppCompatActivity {
         streets = new Streets();
         bi.setStreets(streets);
         bi.setCallback(this);
+        db = MainApp.appInfo.dbHelper;
 
+
+        maxstreet = db.maxStreetNumber(selectedCluster.getClusterCode());
+        maxstreet++;
+        streets.setstreetNum(String.valueOf(maxstreet));
+
+        bi.streetnum.setText(MainApp.listings.getClusterCode() + "-" + String.format("%02d", maxstreet));
         //   if (MainApp.superuser)
         //         bi.btnContinue.setText("Review Next");
-        db = MainApp.appInfo.dbHelper;
     }
 
     private boolean insertNewRecord() {

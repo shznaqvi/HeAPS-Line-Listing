@@ -34,10 +34,16 @@
         tools:replace="android:allowBackup">
         <activity
             android:name=".ui.sections.AddStructureActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeEnglish1"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.sections.AddStreetsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeEnglish1"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.LoginActivity"
             android:exported="true"

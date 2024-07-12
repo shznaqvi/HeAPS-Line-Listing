@@ -49,11 +49,12 @@ public class AddStructureActivity extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                        if (!MainApp.streets.getUid().equals("")) {
-                            MainApp.streetList.add(MainApp.streets);
-                            MainApp.streetCount++;
-                            populateSpinner();
-                        }
+                        populateSpinner();
+                        /*if (!MainApp.streets.getUid().equals("")) {
+                         *//*  MainApp.streetList.add(MainApp.streets);
+                            MainApp.streetCount++;*//*
+
+                        }*/
                     } else if (result.getResultCode() == Activity.RESULT_CANCELED) {
                         Toast.makeText(AddStructureActivity.this, "No street added.", Toast.LENGTH_SHORT).show();
                     }
@@ -118,11 +119,12 @@ public class AddStructureActivity extends AppCompatActivity {
         bi.street.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (bi.street.getSelectedItemPosition() != 0) {
+                    MainApp.listings.setStreetNum(streetNum.get(bi.street.getSelectedItemPosition()));
 
-                MainApp.listings.setStreetNum(streetNum.get(bi.street.getSelectedItemPosition()));
-
-                bi.hhid.setText(MainApp.listings.getDistrictID() + "-" + MainApp.listings.getClusterCode() + "-" + String.format("%02d", streetNum.get(bi.street.getSelectedItemPosition())) + "-" + MainApp.listings.getTabNo()+MainApp.maxStructure);
-                bi.hhid.setVisibility(View.VISIBLE);
+                    bi.hhid.setText(MainApp.listings.getClusterCode() + "-" + String.format("%02d", Integer.parseInt(streetNum.get(bi.street.getSelectedItemPosition()))) + "\n" + MainApp.listings.getTabNo() + String.format("%03d", MainApp.maxStructure));
+                    bi.hhid.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -135,26 +137,48 @@ public class AddStructureActivity extends AppCompatActivity {
     public void btnContinue() {
         if (!formValidation()) return;
         if (!insertNewRecord()) return;
+        if (updateDB()) {
 
 
-        Intent i = null;
-        if (MainApp.listings.getBg06().equals("8")|| MainApp.listings.getBg06().equals("9")) {
-            i = new Intent(this, MainActivity.class);
+            Intent i = null;
+            if (MainApp.listings.getBg06().equals("8") || MainApp.listings.getBg06().equals("9")) {
+                i = new Intent(this, MainActivity.class);
 
-        } else if (MainApp.listings.getBg07().equals("1")) {
-            i = new Intent(this, FamilyListingActivity.class);
-            MainApp.hhid = 0;
+            } else if (MainApp.listings.getBg07().equals("1")) {
+                i = new Intent(this, FamilyListingActivity.class);
+                MainApp.hhid = 0;
 
-        } else {
-            i = new Intent(this, AddStructureActivity.class);
+            } else {
+                i = new Intent(this, AddStructureActivity.class);
+            }
+
+            startActivity(i);
+
+            Intent returnIntent = new Intent();
+            //  returnIntent.putExtra("requestCode", requestCode);
+            setResult(RESULT_OK, returnIntent);
+            finish();
+        } else
+            Toast.makeText(this, R.string.fail_db_upd, Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean updateDB() {
+        if (MainApp.superuser) return true;
+
+        db = MainApp.appInfo.getDbHelper();
+        long updcount = 0;
+        try {
+            updcount = db.updatesFormColumn(TableContracts.ListingTable.COLUMN_SBG, MainApp.listings.sBGtoString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.d(TAG, R.string.upd_db + e.getMessage());
+            Toast.makeText(this, R.string.upd_db + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
-        startActivity(i);
-
-        Intent returnIntent = new Intent();
-        //  returnIntent.putExtra("requestCode", requestCode);
-        setResult(RESULT_OK, returnIntent);
-        finish();
+        if (updcount > 0) return true;
+        else {
+            Toast.makeText(this, R.string.upd_db_error, Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 
     public void btnEnd() {

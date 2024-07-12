@@ -14,12 +14,16 @@ import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts.UsersTable
 object CreateTable {
 
 
-    const val SQL_CREATE_FORMS = ("CREATE TABLE "
+    const val SQL_CREATE_LISTING = ("CREATE TABLE "
             + ListingTable.TABLE_NAME + "("
             + ListingTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + ListingTable.COLUMN_PROJECT_NAME + " TEXT,"
             + ListingTable.COLUMN_UID + " TEXT,"
+            + ListingTable.COLUMN_STUID + " TEXT,"
             + ListingTable.COLUMN_DISTRICT_ID + " TEXT,"
+            + ListingTable.COLUMN_CLUSTER_CODE + " TEXT,"
+            + ListingTable.COLUMN_STREET_NUMBER + " TEXT,"
+            + ListingTable.COLUMN_HHID + " TEXT,"
             + ListingTable.COLUMN_USERNAME + " TEXT,"
             + ListingTable.COLUMN_SYSDATE + " TEXT,"
             + ListingTable.COLUMN_ISTATUS + " TEXT,"
@@ -31,19 +35,9 @@ object CreateTable {
             + ListingTable.COLUMN_SYNCED + " TEXT,"
             + ListingTable.COLUMN_SYNC_DATE + " TEXT,"
             + ListingTable.COLUMN_APPVERSION + " TEXT,"
-            + ListingTable.COLUMN_BL01 + " TEXT,"
-            + ListingTable.COLUMN_BL02 + " TEXT,"
-            + ListingTable.COLUMN_BG01 + " TEXT,"
-            + ListingTable.COLUMN_BG02 + " TEXT,"
-            + ListingTable.COLUMN_BG03 + " TEXT,"
-            + ListingTable.COLUMN_BG04 + " TEXT,"
-            + ListingTable.COLUMN_BG05 + " TEXT,"
-            + ListingTable.COLUMN_BG06 + " TEXT,"
-            + ListingTable.COLUMN_BG07 + " TEXT,"
-            + ListingTable.COLUMN_BG08 + " TEXT,"
-            + ListingTable.COLUMN_BG09 + " TEXT"
-            + " );"
-            )
+            + ListingTable.COLUMN_SHH + " TEXT,"
+            + ListingTable.COLUMN_SBG + " TEXT"
+            + ");")
 
     const val SQL_CREATE_STREETS = "CREATE TABLE " +
             StreetsTable.TABLE_NAME + " (" +
@@ -79,13 +73,14 @@ object CreateTable {
             StreetsTable.COLUMN_UID + " TEXT, " +
             StreetsTable.COLUMN_DISTRICT_ID + " TEXT, " +
             StreetsTable.COLUMN_CLUSTER_CODE + " TEXT, " +
+            StreetsTable.COLUMN_STREET_NUMBER + " TEXT, " +
             StreetsTable.COLUMN_USERNAME + " TEXT, " +
             StreetsTable.COLUMN_SYSDATE + " TEXT, " +
             StreetsTable.COLUMN_DEVICEID + " TEXT, " +
             StreetsTable.COLUMN_APPVERSION + " TEXT, " +
             StreetsTable.COLUMN_END_TIME + " TEXT, " +
             StreetsTable.COLUMN_SYNCED + " TEXT, " +
-            StreetsTable.COLUMN_SYNCED_DATE + " TEXT, " +
+            StreetsTable.COLUMN_SYNC_DATE + " TEXT, " +
             StreetsTable.COLUMN_ENTRY_TYPE + " TEXT, " +
             StreetsTable.COLUMN_GPSLAT + " TEXT, " +
             StreetsTable.COLUMN_GPSLNG + " TEXT, " +
@@ -94,6 +89,7 @@ object CreateTable {
             StreetsTable.COLUMN_ISTATUS + " TEXT, " +
             StreetsTable.COLUMN_ISTATUS96x + " TEXT" +
             ")"
+
 
     const val SQL_CREATE_ENTRYLOGS = ("CREATE TABLE "
             + EntryLogTable.TABLE_NAME + "("

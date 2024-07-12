@@ -55,7 +55,6 @@ import edu.aku.hassannaqvi.heapslinelisting.adapters.SyncListAdapter;
 import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts;
 import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts.EntryLogTable;
 import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts.ListingTable;
-import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts.UsersTable;
 import edu.aku.hassannaqvi.heapslinelisting.core.MainApp;
 import edu.aku.hassannaqvi.heapslinelisting.database.DatabaseHelper;
 import edu.aku.hassannaqvi.heapslinelisting.databinding.ActivitySyncBinding;
@@ -230,9 +229,9 @@ public class SyncActivity extends AppCompatActivity {
                 select = " * ";
                 filter = " enabled = '1' ";*/
 
-                downloadTables.add(new SyncModel(TableContracts.TableDistricts.TABLE_NAME));
-                downloadTables.add(new SyncModel(UsersTable.TABLE_NAME));
-                downloadTables.add(new SyncModel("versionApp"));
+            downloadTables.add(new SyncModel(TableContracts.ClusterTable.TABLE_NAME));
+            downloadTables.add(new SyncModel(TableContracts.UsersTable.TABLE_NAME));
+            downloadTables.add(new SyncModel("versionApp"));
         /*    } else {
 
                 select = " * ";

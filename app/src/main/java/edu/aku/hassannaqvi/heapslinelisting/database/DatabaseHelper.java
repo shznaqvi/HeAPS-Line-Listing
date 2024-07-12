@@ -37,7 +37,6 @@ import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts.StreetsTabl
 import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts.UsersTable;
 import edu.aku.hassannaqvi.heapslinelisting.core.MainApp;
 import edu.aku.hassannaqvi.heapslinelisting.models.Cluster;
-import edu.aku.hassannaqvi.heapslinelisting.models.Districts;
 import edu.aku.hassannaqvi.heapslinelisting.models.EntryLog;
 import edu.aku.hassannaqvi.heapslinelisting.models.Listing;
 import edu.aku.hassannaqvi.heapslinelisting.models.Streets;
@@ -52,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = PROJECT_NAME + ".db";
     public static final String DATABASE_COPY = PROJECT_NAME + "_copy.db";
     public static final String DATABASE_PASSWORD = IBAHC;
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 1;
     private final String TAG = "DatabaseHelper";
 
     public DatabaseHelper(Context context) {
@@ -63,11 +62,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL(CreateTable.SQL_CREATE_USERS);
-        db.execSQL(CreateTable.SQL_CREATE_DISTRICTS);
+        db.execSQL(CreateTable.SQL_CREATE_CLUSTERS);
         //db.execSQL(CreateTable.SQL_CREATE_CLUSTERS);
         //db.execSQL(CreateTable.SQL_CREATE_RANDOM_HH);
 
-        db.execSQL(CreateTable.SQL_CREATE_FORMS);
+        db.execSQL(CreateTable.SQL_CREATE_LISTING);
         db.execSQL(CreateTable.SQL_CREATE_STREETS);
         db.execSQL(CreateTable.SQL_CREATE_ENTRYLOGS);
         //db.execSQL(CreateTable.SQL_CREATE_CHILD);
@@ -93,75 +92,111 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //ADDITION in DB
-    public Long addListing(Listing listing) throws JSONException {
-        SQLiteDatabase db = this.getWritableDatabase(DATABASE_PASSWORD);
+    public long addListing(Listing listing) throws JSONException {
+        SQLiteDatabase db = null;
+        long newRowId = -1;
+
+
+        db = this.getWritableDatabase(DATABASE_PASSWORD);
+
+        if (db == null) {
+            return newRowId; // Return -1 or handle the error as needed
+        }
+
         ContentValues values = new ContentValues();
         values.put(ListingTable.COLUMN_PROJECT_NAME, listing.getProjectName());
         values.put(ListingTable.COLUMN_UID, listing.getUid());
+        values.put(ListingTable.COLUMN_STUID, listing.getStuid());
         values.put(ListingTable.COLUMN_DISTRICT_ID, listing.getDistrictID());
-
-       // values.put(ListingTable.COLUMN_SNO, listing.getSno());
+        values.put(ListingTable.COLUMN_CLUSTER_CODE, listing.getClusterCode());
+        values.put(ListingTable.COLUMN_STREET_NUMBER, listing.getStreetNum()); // Include street number if applicable
+        values.put(ListingTable.COLUMN_HHID, listing.getHhid());
         values.put(ListingTable.COLUMN_USERNAME, listing.getUserName());
         values.put(ListingTable.COLUMN_SYSDATE, listing.getSysDate());
         values.put(ListingTable.COLUMN_GPSLAT, listing.getGpsLat());
         values.put(ListingTable.COLUMN_GPSLNG, listing.getGpsLng());
         values.put(ListingTable.COLUMN_GPSDATE, listing.getGpsDT());
         values.put(ListingTable.COLUMN_GPSACC, listing.getGpsAcc());
-
-
-     /*   values.put(ListingTable.COLUMN_SSS, listing.sMtoString());
-        values.put(ListingTable.COLUMN_SCB, listing.sNtoString());
-        values.put(ListingTable.COLUMN_IM, listing.sOtoString());*/
-
         values.put(ListingTable.COLUMN_ISTATUS, listing.getiStatus());
-/*
-        values.put(ListingTable.COLUMN_ENTRY_TYPE, listing.getEntryType());
-*/
         values.put(ListingTable.COLUMN_DEVICEID, listing.getDeviceId());
         values.put(ListingTable.COLUMN_APPVERSION, listing.getAppver());
-        values.put(ListingTable.COLUMN_SYNCED, listing.getSynced());
-        values.put(ListingTable.COLUMN_SYNC_DATE, listing.getSyncDate());
 
-        long newRowId;
-        newRowId = db.insertOrThrow(
-                ListingTable.TABLE_NAME,
-                ListingTable.COLUMN_NAME_NULLABLE,
-                values);
+        values.put(ListingTable.COLUMN_SHH, listing.sHHtoString());
+
+
+        // Insert into database
+        newRowId = db.insertOrThrow(ListingTable.TABLE_NAME, null, values);
+
+
+        if (db != null) {
+            db.close(); // Close the database connection
+        }
+
+
         return newRowId;
     }
 
-    public Long addStreet(Streets sheet) throws JSONException {
+
+    public Long addStreet(Streets streets) throws JSONException {
         SQLiteDatabase db = this.getWritableDatabase(DATABASE_PASSWORD);
         ContentValues values = new ContentValues();
 
+        values.put(StreetsTable.COLUMN_PROJECT_NAME, streets.getProjectName());
+        values.put(StreetsTable.COLUMN_UID, streets.getUid());
+        values.put(StreetsTable.COLUMN_DISTRICT_ID, streets.getDistrictID());
+        values.put(StreetsTable.COLUMN_CLUSTER_CODE, streets.getClusterCode());
+        values.put(StreetsTable.COLUMN_STREET_NUMBER, streets.getstreetNum());
+
+        // values.put(StreetsTable.COLUMN_SNO, streets.getSno());
+        values.put(StreetsTable.COLUMN_USERNAME, streets.getUserName());
+        values.put(StreetsTable.COLUMN_SYSDATE, streets.getSysDate());
+        values.put(StreetsTable.COLUMN_GPSLAT, streets.getGpsLat());
+        values.put(StreetsTable.COLUMN_GPSLNG, streets.getGpsLng());
+        values.put(StreetsTable.COLUMN_GPSDATE, streets.getGpsDT());
+        values.put(StreetsTable.COLUMN_GPSACC, streets.getGpsAcc());
+
+
+         /*   values.put(StreetsTable.COLUMN_SSS, streets.sMtoString());
+            values.put(StreetsTable.COLUMN_SCB, streets.sNtoString());
+            values.put(StreetsTable.COLUMN_IM, streets.sOtoString());*/
+
+        values.put(StreetsTable.COLUMN_ISTATUS, streets.getiStatus());
+    /*
+            values.put(StreetsTable.COLUMN_ENTRY_TYPE, streets.getEntryType());
+    */
+        values.put(StreetsTable.COLUMN_DEVICEID, streets.getDeviceId());
+        values.put(StreetsTable.COLUMN_APPVERSION, streets.getAppver());
+        values.put(StreetsTable.COLUMN_SYNCED, streets.getSynced());
+        values.put(StreetsTable.COLUMN_SYNC_DATE, streets.getSyncDate());
+
         // Populate ContentValues with data from the Listing object
-        values.put(StreetsTable.COLUMN_BL01, sheet.bl01);
-        values.put(StreetsTable.COLUMN_BL02, sheet.bl02);
-        values.put(StreetsTable.COLUMN_ST01, sheet.st01);
-        values.put(StreetsTable.COLUMN_ST02, sheet.st02);
-        values.put(StreetsTable.COLUMN_ST03, sheet.st03);
-        values.put(StreetsTable.COLUMN_ST04, sheet.st04);
-        values.put(StreetsTable.COLUMN_ST05, sheet.st05);
-        values.put(StreetsTable.COLUMN_ST06, sheet.st06);
-        values.put(StreetsTable.COLUMN_ST07, sheet.st07);
-        values.put(StreetsTable.COLUMN_ST08, sheet.st08);
-        values.put(StreetsTable.COLUMN_ST0901, sheet.st0901);
-        values.put(StreetsTable.COLUMN_ST0902, sheet.st0902);
-        values.put(StreetsTable.COLUMN_ST0903, sheet.st0903);
-        values.put(StreetsTable.COLUMN_ST0904, sheet.st0904);
-        values.put(StreetsTable.COLUMN_ST0905, sheet.st0905);
-        values.put(StreetsTable.COLUMN_ST0906, sheet.st0906);
-        values.put(StreetsTable.COLUMN_ST0907, sheet.st0907);
-        values.put(StreetsTable.COLUMN_ST0908, sheet.st0908);
-        values.put(StreetsTable.COLUMN_ST0909, sheet.st0909);
-        values.put(StreetsTable.COLUMN_ST0910, sheet.st0910);
-        values.put(StreetsTable.COLUMN_ST0911, sheet.st0911);
-        values.put(StreetsTable.COLUMN_ST0912, sheet.st0912);
-        values.put(StreetsTable.COLUMN_ST0913, sheet.st0913);
-        values.put(StreetsTable.COLUMN_ST0914, sheet.st0914);
-        values.put(StreetsTable.COLUMN_ST10, sheet.st10);
-        values.put(StreetsTable.COLUMN_ST11, sheet.st11);
-        values.put(StreetsTable.COLUMN_ST12, sheet.st12);
+        values.put(StreetsTable.COLUMN_BL01, streets.bl01);
+        values.put(StreetsTable.COLUMN_BL02, streets.bl02);
+        values.put(StreetsTable.COLUMN_ST01, streets.st01);
+        values.put(StreetsTable.COLUMN_ST02, streets.st02);
+        values.put(StreetsTable.COLUMN_ST03, streets.st03);
+        values.put(StreetsTable.COLUMN_ST04, streets.st04);
+        values.put(StreetsTable.COLUMN_ST05, streets.st05);
+        values.put(StreetsTable.COLUMN_ST06, streets.st06);
+        values.put(StreetsTable.COLUMN_ST07, streets.st07);
+        values.put(StreetsTable.COLUMN_ST08, streets.st08);
+        values.put(StreetsTable.COLUMN_ST0901, streets.st0901);
+        values.put(StreetsTable.COLUMN_ST0902, streets.st0902);
+        values.put(StreetsTable.COLUMN_ST0903, streets.st0903);
+        values.put(StreetsTable.COLUMN_ST0904, streets.st0904);
+        values.put(StreetsTable.COLUMN_ST0905, streets.st0905);
+        values.put(StreetsTable.COLUMN_ST0906, streets.st0906);
+        values.put(StreetsTable.COLUMN_ST0907, streets.st0907);
+        values.put(StreetsTable.COLUMN_ST0908, streets.st0908);
+        values.put(StreetsTable.COLUMN_ST0909, streets.st0909);
+        values.put(StreetsTable.COLUMN_ST0910, streets.st0910);
+        values.put(StreetsTable.COLUMN_ST0911, streets.st0911);
+        values.put(StreetsTable.COLUMN_ST0912, streets.st0912);
+        values.put(StreetsTable.COLUMN_ST0913, streets.st0913);
+        values.put(StreetsTable.COLUMN_ST0914, streets.st0914);
+        values.put(StreetsTable.COLUMN_ST10, streets.st10);
+        values.put(StreetsTable.COLUMN_ST11, streets.st11);
+        values.put(StreetsTable.COLUMN_ST12, streets.st12);
 
         // Insert the row into the Sheets table
         long newRowId;
@@ -453,22 +488,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return (int) count;
     }
 
-    public int syncdistrict(JSONArray distList) throws JSONException {
+    public int syncClusters(JSONArray clusters) throws JSONException {
         SQLiteDatabase db = this.getWritableDatabase(DATABASE_PASSWORD);
-        db.delete(TableContracts.TableDistricts.TABLE_NAME, null, null);
+        db.delete(TableContracts.ClusterTable.TABLE_NAME, null, null);
         int insertCount = 0;
-        for (int i = 0; i < distList.length(); i++) {
+        for (int i = 0; i < clusters.length(); i++) {
 
-            JSONObject jsonObjectDist = distList.getJSONObject(i);
+            JSONObject jsonObjectDist = clusters.getJSONObject(i);
 
-            Districts districts = new Districts();
-            districts.sync(jsonObjectDist);
+            Cluster cluster = new Cluster();
+            cluster.sync(jsonObjectDist);
             ContentValues values = new ContentValues();
 
-            values.put(TableContracts.TableDistricts.COLUMN_DISTRICT_NAME, districts.getDistrictName());
-            values.put(TableContracts.TableDistricts.COLUMN_DISTRICT_ID, districts.getDistrictCode());
+            values.put(ClusterTable.COLUMN_DISTRICT_ID, cluster.getDistId());
+            values.put(ClusterTable.COLUMN_CLUSTER_CODE, cluster.getClusterCode());
+            values.put(ClusterTable.COLUMN_DIST_NAME, cluster.getDistName());
+            values.put(ClusterTable.COLUMN_AREA, cluster.getArea());
 
-            long rowID = db.insertOrThrow(TableContracts.TableDistricts.TABLE_NAME, null, values);
+            long rowID = db.insertOrThrow(ClusterTable.TABLE_NAME, null, values);
             if (rowID != -1) insertCount++;
         }
 
@@ -542,7 +579,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
              allFC.add(fc.Hydrate(c));*/
             Log.d(TAG, "getUnsyncedFormHH: " + c.getCount());
             Listing listing = new Listing();
-            allForms.put(listing.Hydrate(c).toJSONObject());
+            allForms.put(listing.hydrate(c).toJSONObject());
 
 
         }
@@ -806,7 +843,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     orderBy                    // The sort order
             );
         while (c.moveToNext()) {
-            listing = new Listing().Hydrate(c);
+            listing = new Listing().hydrate(c);
         }
 
         if (c != null && !c.isClosed()) {
@@ -1034,7 +1071,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
              allFC.add(fc.Hydrate(c));*/
             Log.d(TAG, "getUnsyncedFormHH: " + c.getCount());
             Listing listing = new Listing();
-            allForms.put(listing.Hydrate(c).toJSONObject());
+            allForms.put(listing.hydrate(c).toJSONObject());
 
 
         }
@@ -1078,7 +1115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Listing listing = new Listing();
         while (c.moveToNext()) {
-            listing = (new Listing().Hydrate(c));
+            listing = (new Listing().hydrate(c));
         }
 
         c.close();
@@ -1190,7 +1227,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Listing listing = new Listing();
         while (c.moveToNext()) {
-            listing = (new Listing().Hydrate(c));
+            listing = (new Listing().hydrate(c));
         }
 
         if (c != null && !c.isClosed()) {
@@ -1228,7 +1265,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 orderBy                    // The sort order
         );
         while (c.moveToNext()) {
-            listingByUID = new Listing().Hydrate(c);
+            listingByUID = new Listing().hydrate(c);
 
         }
         if (c != null) {
@@ -1239,7 +1276,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public String getDistrictName(String dist_id) {
+   /* public String getDistrictName(String dist_id) {
         SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
         android.database.Cursor c = null;
         String[] columns = null;
@@ -1272,7 +1309,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             c.close();
         }
 
-        return districts.getDistrictName();    }
+        return districts.getDistrictName();    }*/
 
     public List<Streets> getStreetsByCluster(String clusterCode) throws JSONException {
             SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
@@ -1302,11 +1339,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 e.add(new Streets().hydrate(c));
 
             }
-            if (c != null && !c.isClosed()) {
-                c.close();
-            }
-            return e;
+        if (c != null && !c.isClosed()) {
+            c.close();
+        }
+        return e;
 
 
+    }
+
+    public int maxStreetNumber(String clusterCode) {
+        SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
+        int maxStreetNumber = 0;
+
+        // Define the query to get max street number for the given cluster code
+        String query = "SELECT MAX(" + StreetsTable.COLUMN_STREET_NUMBER + ") AS " + StreetsTable.COLUMN_STREET_NUMBER +
+                " FROM " + StreetsTable.TABLE_NAME +
+                " WHERE " + StreetsTable.COLUMN_CLUSTER_CODE + " = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{clusterCode});
+
+        if (cursor.moveToFirst()) {
+            maxStreetNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_STREET_NUMBER)));
+            cursor.close();
+        } else {
+            maxStreetNumber = 0;
+        }
+
+        return maxStreetNumber;
     }
 }

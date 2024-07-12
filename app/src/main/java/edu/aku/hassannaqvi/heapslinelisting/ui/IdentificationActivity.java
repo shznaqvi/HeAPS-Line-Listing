@@ -4,6 +4,7 @@ package edu.aku.hassannaqvi.heapslinelisting.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,6 @@ import com.validatorcrawler.aliazaz.Validator;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
@@ -25,9 +25,8 @@ import edu.aku.hassannaqvi.heapslinelisting.core.MainApp;
 import edu.aku.hassannaqvi.heapslinelisting.database.DatabaseHelper;
 import edu.aku.hassannaqvi.heapslinelisting.databinding.ActivityIdentificationBinding;
 import edu.aku.hassannaqvi.heapslinelisting.models.Cluster;
-import edu.aku.hassannaqvi.heapslinelisting.models.Districts;
 import edu.aku.hassannaqvi.heapslinelisting.models.Listing;
-import edu.aku.hassannaqvi.heapslinelisting.ui.sections.AddStreetsActivity;
+import edu.aku.hassannaqvi.heapslinelisting.ui.sections.AddStructureActivity;
 
 
 public class IdentificationActivity extends AppCompatActivity {
@@ -58,7 +57,7 @@ public class IdentificationActivity extends AppCompatActivity {
         setSupportActionBar(bi.toolbar);
         populateSpinner();
 
-        bi.btnContinue.setText(R.string.open_hh_form);
+        // bi.btnContinue.setText(R.string.open_hh_form);
         if (MainApp.superuser)
             bi.btnContinue.setText("Review Listing");
    /*     bi.distName.setText(db.getDistrictName(MainApp.user.getDist_id()));
@@ -69,42 +68,69 @@ public class IdentificationActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate(Language): " + Locale.getDefault().getDisplayLanguage());
 
         bi.clusterCode.addTextChangedListener(new TextWatcher() {
+            private boolean isEditing = false;
+            private boolean isDeleting = false;
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //  Log.d(TAG, "beforeTextChanged: charSequence-"+charSequence+" i-"+i+ " i1-"+i1 +" i2-"+i2);
                 c = charSequence.length();
+                isDeleting = i1 > i2;
 
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //if (isEditing) return;
+                isEditing = true;
+
                 c1 = charSequence.length();
                 String txt = charSequence.toString();
                 Log.d(TAG, "onTextChanged: c-" + c + " c1-" + c1 + "\t\t\tCHAR: " + charSequence);
                 Log.d(TAG, "onTextChanged: i-" + i + " i1-" + i1 + " i2-" + i2 + "\t\t\tCHAR: " + charSequence);
                 // K-C01-S01-B001-A/H-HH001
-                if (c == 0 && c1 == 1)
-                    bi.clusterCode.setText(bi.clusterCode.getText().toString() + "-"); // K-
-                if (c == 3 && c1 == 4)
+                if (!isDeleting) {
+                    if (c == 0 && c1 == 1) {
+                        Log.d(TAG, "onTextChanged: added K- ");
+                        bi.clusterCode.setText(bi.clusterCode.getText().toString() + "-"); // K-
+                        bi.clusterCode.setInputType(InputType.TYPE_CLASS_NUMBER);
+                   /* bi.clusterCode.setInputType(InputType.TYPE_CLASS_NUMBER);
+                } else if (isAlphabeticPosition(position)) {
+                    bi.clusterCode.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);*/
+                    } /*else if (c == 3 && c1 == 4) {
+
+                    Log.d(TAG, "onTextChanged: added K-01- ");
                     bi.clusterCode.setText(bi.clusterCode.getText().toString() + "-"); // K-01-
+                }else if (c == 6 && c1 == 5) {
+                    Log.d(TAG, "onTextChanged: Removed K-01 ");
 
-                if (c == 6 && c1 == 5)
                     bi.clusterCode.setText(bi.clusterCode.getText().toString().substring(0, 6)); // K-01
-                if (c == 1 && c1 == 0)
-                    bi.clusterCode.setText(bi.clusterCode.getText().toString().substring(0, 1)); // A
+                }*/
+                } else {
+                    if (c == 2 && c1 == 1) {
 
+                        //bi.clusterCode.setText(bi.clusterCode.getText().toString().substring(0, 1)); // K
+                        bi.clusterCode.setText(""); // K
+                        Log.d(TAG, "onTextChanged: Removed K ");
+                        bi.clusterCode.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
 
-                if (c1 > 1 && charSequence.charAt(1) != '-') {
-                    txt = txt.charAt(0) + "-" + txt.substring(1);
-                    bi.clusterCode.setText(txt);
-                }
+                    } else if (c1 > 1 && charSequence.charAt(1) != '-') {
 
-                if (c1 > 4 && charSequence.charAt(4) != '-') {
-                    txt = txt.substring(0, 4) + "-" + txt.substring(4);
-                    bi.clusterCode.setText(txt);
+                        txt = txt.charAt(0) + "-" + txt.substring(1);
+                        Log.d(TAG, "onTextChanged: txt:  " + txt);
+                        bi.clusterCode.setText(txt);
+                    } else if (c1 > 4 && charSequence.charAt(4) != '-') {
+                        txt = txt.substring(0, 4) + "-" + txt.substring(4);
+                        Log.d(TAG, "onTextChanged: txt:  " + txt);
+
+                        bi.clusterCode.setText(txt);
+                    }
+
                 }
 
                 bi.clusterCode.setSelection(bi.clusterCode.getText().length());
+                isEditing = false;
+
             }
 
             @Override
@@ -175,7 +201,7 @@ public class IdentificationActivity extends AppCompatActivity {
             MainApp.selectedTab = MainApp.selectedArea.getTabNo();
         MainApp.listings.setTabNo(MainApp.selectedTab);
         finish();
-        startActivity(new Intent(this, AddStreetsActivity.class));
+        startActivity(new Intent(this, AddStructureActivity.class));
 
 
     }
@@ -190,17 +216,18 @@ public class IdentificationActivity extends AppCompatActivity {
 
     private void populateSpinner() {
 
-       Collection<Districts> districts = new ArrayList<>();
+
+        //  Collection<Districts> districts = new ArrayList<>();
         distNames = new ArrayList<>();
         distCodes = new ArrayList<>();
 
         distNames.add("...");
         distCodes.add("...");
-
+/*
         for (Districts d : districts) {
             distNames.add(d.getDistrictName());
             distCodes.add(d.getDistrictCode());
-        }
+        }*/
         distNames.add("Karachi");
         distNames.add("Matiari");
         distCodes.add("K");

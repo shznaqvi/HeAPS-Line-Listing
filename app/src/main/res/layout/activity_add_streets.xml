@@ -51,6 +51,31 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <!--Street Number-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVhhid"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <!--// [K-C01-S01-B001]-A/H-HH001-->
+                        <TextView
+                            android:id="@+id/streetnum"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/redLight"
+                            android:fontFamily="@font/allerta_stencil"
+                            android:gravity="center"
+                            android:text="1010-234"
+                            android:textColor="@color/white"
+                            android:textSize="56sp"
+                            android:textStyle="bold" />
+
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
                 <!-- st01  Input-Numeric   -->
                 <androidx.cardview.widget.CardView
@@ -340,6 +365,119 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- ST07 Floor Surface -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVSt07"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Header Section -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/quesNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/Q_st07" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/st07" />
+
+                        </LinearLayout>
+
+                        <!-- RadioGroup for Floor Surface Options -->
+                        <RadioGroup
+                            android:id="@+id/St07"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <!-- Option 1: Concrete -->
+                            <RadioButton
+                                android:id="@+id/st0701"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st07.equals(`1`)}"
+                                android:onClick="@{()->streets.setSt07(`1`)}"
+                                android:text="@string/st0701" />
+
+                            <!-- Option 2: Unpaved compacted -->
+                            <RadioButton
+                                android:id="@+id/st0702"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st07.equals(`2`)}"
+                                android:onClick="@{()->streets.setSt07(`2`)}"
+                                android:text="@string/st0702" />
+
+                            <!-- Option 3: Brick paviers -->
+                            <RadioButton
+                                android:id="@+id/st0703"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st07.equals(`3`)}"
+                                android:onClick="@{()->streets.setSt07(`3`)}"
+                                android:text="@string/st0703" />
+
+                            <!-- Option 4: Asphalt -->
+                            <RadioButton
+                                android:id="@+id/st0704"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st07.equals(`4`)}"
+                                android:onClick="@{()->streets.setSt07(`4`)}"
+                                android:text="@string/st0704" />
+
+                            <!-- Option 5: Cobblestone -->
+                            <RadioButton
+                                android:id="@+id/st0705"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st07.equals(`5`)}"
+                                android:onClick="@{()->streets.setSt07(`5`)}"
+                                android:text="@string/st0705" />
+
+                            <!-- Option 6: Gravel -->
+                            <RadioButton
+                                android:id="@+id/st0706"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st07.equals(`6`)}"
+                                android:onClick="@{()->streets.setSt07(`6`)}"
+                                android:text="@string/st0706" />
+
+                            <!-- Option 7: Dirt -->
+                            <RadioButton
+                                android:id="@+id/st0707"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st07.equals(`7`)}"
+                                android:onClick="@{()->streets.setSt07(`7`)}"
+                                android:text="@string/st0707" />
+
+                            <!-- Option 8: Interlocking tiles -->
+                            <RadioButton
+                                android:id="@+id/st0708"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st07.equals(`8`)}"
+                                android:onClick="@{()->streets.setSt07(`8`)}"
+                                android:text="@string/st0708" />
+
+                        </RadioGroup>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
                 <!-- St08  Radio   -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVSt08"
@@ -453,6 +591,7 @@
                             <!-- For st0901 -->
                             <CheckBox
                                 android:id="@+id/checkBoxSt0901"
+                                android:tag="-1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:checked="@{streets.st0901.equals(`1`)}"
@@ -461,119 +600,144 @@
 
                             <!-- For st0902 -->
                             <CheckBox
+                                android:checked="@{streets.st0902.equals(`2`)}"
+
                                 android:id="@+id/checkBoxSt0902"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{streets.st0902.equals(`1`)}"
-                                android:onClick="@{() -> streets.setSt0902(streets.st0902.equals(`1`) ? `` : `1`)}"
+                                android:onClick="@{() -> streets.setSt0902(streets.st0902.equals(`2`) ? `` : `2`)}"
+                                android:tag="-1"
                                 android:text="@string/st0902" />
 
                             <!-- For st0903 -->
                             <CheckBox
+                                android:checked="@{streets.st0903.equals(`3`)}"
+
                                 android:id="@+id/checkBoxSt0903"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{streets.st0903.equals(`1`)}"
-                                android:onClick="@{() -> streets.setSt0903(streets.st0903.equals(`1`) ? `` : `1`)}"
+                                android:onClick="@{() -> streets.setSt0903(streets.st0903.equals(`3`) ? `` : `3`)}"
+                                android:tag="-1"
                                 android:text="@string/st0903" />
 
                             <!-- For st0904 -->
                             <CheckBox
+                                android:checked="@{streets.st0904.equals(`4`)}"
                                 android:id="@+id/checkBoxSt0904"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{streets.st0904.equals(`1`)}"
-                                android:onClick="@{() -> streets.setSt0904(streets.st0904.equals(`1`) ? `` : `1`)}"
+                                android:onClick="@{() -> streets.setSt0904(streets.st0904.equals(`4`) ? `` : `4`)}"
+                                android:tag="-1"
                                 android:text="@string/st0904" />
 
                             <!-- For st0905 -->
                             <CheckBox
+                                android:checked="@{streets.st0905.equals(`5`)}"
+
                                 android:id="@+id/checkBoxSt0905"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{streets.st0905.equals(`1`)}"
-                                android:onClick="@{() -> streets.setSt0905(streets.st0905.equals(`1`) ? `` : `1`)}"
+                                android:onClick="@{() -> streets.setSt0905(streets.st0905.equals(`5`) ? `` : `5`)}"
+                                android:tag="-1"
                                 android:text="@string/st0905" />
 
                             <!-- For st0906 -->
                             <CheckBox
+                                android:checked="@{streets.st0906.equals(`6`)}"
+
                                 android:id="@+id/checkBoxSt0906"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{streets.st0906.equals(`1`)}"
-                                android:onClick="@{() -> streets.setSt0906(streets.st0906.equals(`1`) ? `` : `1`)}"
+                                android:onClick="@{() -> streets.setSt0906(streets.st0906.equals(`6`) ? `` : `6`)}"
+                                android:tag="-1"
                                 android:text="@string/st0906" />
 
                             <!-- For st0907 -->
                             <CheckBox
+                                android:checked="@{streets.st0907.equals(`7`)}"
+
                                 android:id="@+id/checkBoxSt0907"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{streets.st0907.equals(`1`)}"
-                                android:onClick="@{() -> streets.setSt0907(streets.st0907.equals(`1`) ? `` : `1`)}"
+                                android:onClick="@{() -> streets.setSt0907(streets.st0907.equals(`7`) ? `` : `7`)}"
+                                android:tag="-1"
                                 android:text="@string/st0907" />
 
                             <!-- For st0908 -->
                             <CheckBox
+                                android:checked="@{streets.st0908.equals(`8`)}"
+
                                 android:id="@+id/checkBoxSt0908"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{streets.st0908.equals(`1`)}"
-                                android:onClick="@{() -> streets.setSt0908(streets.st0908.equals(`1`) ? `` : `1`)}"
+                                android:onClick="@{() -> streets.setSt0908(streets.st0908.equals(`8`) ? `` : `8`)}"
+                                android:tag="-1"
                                 android:text="@string/st0908" />
 
                             <!-- For st0909 -->
                             <CheckBox
+                                android:checked="@{streets.st0909.equals(`9`)}"
+
                                 android:id="@+id/checkBoxSt0909"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{streets.st0909.equals(`1`)}"
-                                android:onClick="@{() -> streets.setSt0909(streets.st0909.equals(`1`) ? `` : `1`)}"
+                                android:onClick="@{() -> streets.setSt0909(streets.st0909.equals(`9`) ? `` : `9`)}"
+                                android:tag="-1"
                                 android:text="@string/st0909" />
 
                             <!-- For st0910 -->
                             <CheckBox
+                                android:checked="@{streets.st0910.equals(`10`)}"
+
                                 android:id="@+id/checkBoxSt0910"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{streets.st0910.equals(`1`)}"
-                                android:onClick="@{() -> streets.setSt0910(streets.st0910.equals(`1`) ? `` : `1`)}"
+                                android:onClick="@{() -> streets.setSt0910(streets.st0910.equals(`10`) ? `` : `10`)}"
+                                android:tag="-1"
                                 android:text="@string/st0910" />
 
                             <!-- For st0911 -->
                             <CheckBox
+                                android:checked="@{streets.st0911.equals(`11`)}"
+
                                 android:id="@+id/checkBoxSt0911"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{streets.st0911.equals(`1`)}"
-                                android:onClick="@{() -> streets.setSt0911(streets.st0911.equals(`1`) ? `` : `1`)}"
+                                android:onClick="@{() -> streets.setSt0911(streets.st0911.equals(`11`) ? `` : `11`)}"
+                                android:tag="-1"
                                 android:text="@string/st0911" />
 
                             <!-- For st0912 -->
                             <CheckBox
+                                android:checked="@{streets.st0912.equals(`12`)}"
+
                                 android:id="@+id/checkBoxSt0912"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{streets.st0912.equals(`1`)}"
-                                android:onClick="@{() -> streets.setSt0912(streets.st0912.equals(`1`) ? `` : `1`)}"
+                                android:onClick="@{() -> streets.setSt0912(streets.st0912.equals(`12`) ? `` : `12`)}"
+                                android:tag="-1"
                                 android:text="@string/st0912" />
 
                             <!-- For st0913 -->
                             <CheckBox
+                                android:checked="@{streets.st0913.equals(`13`)}"
+
                                 android:id="@+id/checkBoxSt0913"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{streets.st0913.equals(`1`)}"
-                                android:onClick="@{() -> streets.setSt0913(streets.st0913.equals(`1`) ? `` : `1`)}"
+                                android:onClick="@{() -> streets.setSt0913(streets.st0913.equals(`13`) ? `` : `13`)}"
+                                android:tag="-1"
                                 android:text="@string/st0913" />
 
                             <!-- For st0914 -->
                             <CheckBox
+                                android:checked="@{streets.st0914.equals(`14`)}"
+
                                 android:id="@+id/checkBoxSt0914"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{streets.st0914.equals(`1`)}"
-                                android:onClick="@{() -> streets.setSt0914(streets.st0914.equals(`1`) ? `` : `1`)}"
+                                android:onClick="@{() -> streets.setSt0914(streets.st0914.equals(`14`) ? `` : `14`)}"
+                                android:tag="-1"
                                 android:text="@string/st0914" />
 
 
@@ -617,7 +781,6 @@
                             android:inputType="textMultiLine|textCapSentences"
                             android:maxLines="10"
                             android:minLines="5"
-
                             android:text="@={streets.st10}" />
 
                     </LinearLayout>
@@ -660,8 +823,7 @@
                             android:id="@+id/st11"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:editable="false"
+                            android:enabled="false"
                             android:gravity="top"
                             android:inputType="textMultiLine|textCapSentences"
                             android:maxLines="10"
@@ -675,7 +837,7 @@
                             android:gravity="end">
 
 
-                            <Button
+                            <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/frontPhoto"
 
                                 android:layout_width="wrap_content"

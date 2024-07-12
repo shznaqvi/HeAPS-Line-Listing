@@ -22,7 +22,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import edu.aku.hassannaqvi.heapslinelisting.BR;
-import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts;
 import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts.ListingTable;
 import edu.aku.hassannaqvi.heapslinelisting.core.MainApp;
 
@@ -76,6 +75,7 @@ public class Listing extends BaseObservable implements Observable {
     String projectName = "PROJECT_NAME";
     String id = _EMPTY_;
     String uid = _EMPTY_;
+    String stuid = _EMPTY_;
     String userName = _EMPTY_;
     String sysDate = _EMPTY_;
     String districtID = _EMPTY_;
@@ -166,6 +166,14 @@ public class Listing extends BaseObservable implements Observable {
         this.uid = uid;
     }
 
+    public String getStuid() {
+        return stuid;
+    }
+
+    public void setStuid(String stuid) {
+        this.stuid = stuid;
+    }
+
     // DistrictCode
     @Bindable
     public String getDistrictID() {
@@ -174,6 +182,7 @@ public class Listing extends BaseObservable implements Observable {
 
     public void setDistrictID(String districtID) {
         this.districtID = districtID;
+        this.bl01 = districtID;
         notifyPropertyChanged(BR.districtID);
     }
 
@@ -699,91 +708,124 @@ public class Listing extends BaseObservable implements Observable {
         notifyPropertyChanged(BR.hh15);
     }
 
-    public Listing Hydrate(Cursor cursor) throws JSONException {
+    public Listing hydrate(Cursor cursor) throws JSONException {
+        if (cursor == null) {
+            throw new IllegalArgumentException("Cursor must not be null.");
+        }
+
         this.id = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_ID));
         this.uid = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_UID));
-        this.projectName = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.ListingTable.COLUMN_PROJECT_NAME));
+        this.stuid = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_STUID));
+        this.projectName = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_PROJECT_NAME));
         this.districtID = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_DISTRICT_ID));
-        this.clusterCode = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.ListingTable.COLUMN_CLUSTER_CODE));
+        this.clusterCode = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_CLUSTER_CODE));
         this.hhid = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_HHID));
 
-        this.userName = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.ListingTable.COLUMN_USERNAME));
+        this.userName = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_USERNAME));
         this.sysDate = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_SYSDATE));
-        this.deviceId = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.ListingTable.COLUMN_DEVICEID));
-        this.appver = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.ListingTable.COLUMN_APPVERSION));
+        this.deviceId = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_DEVICEID));
+        this.appver = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_APPVERSION));
         this.iStatus = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_ISTATUS));
         this.synced = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_SYNCED));
-        this.syncDate = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.ListingTable.COLUMN_SYNC_DATE));
+        this.syncDate = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_SYNC_DATE));
         this.gpsLat = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_GPSLAT));
         this.gpsLng = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_GPSLNG));
-        this.gpsDT = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.ListingTable.COLUMN_GPSDATE));
-        this.gpsAcc = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.ListingTable.COLUMN_GPSACC));
+        this.gpsDT = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_GPSDATE));
+        this.gpsAcc = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_GPSACC));
 
-        // BL (1-2)
-        this.bl01 = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.ListingTable.COLUMN_BL01));
-        this.bl02 = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.ListingTable.COLUMN_BL02));
+        // Hydrate sHH fields
+        String sHHJsonString = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_SHH));
+        if (sHHJsonString != null) {
+            sHHHydrate(sHHJsonString);
+        }
 
-
-
-        // BG (1-10)
-        this.bg01 = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_BG01));
-        this.bg02 = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_BG02));
-        this.bg03 = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_BG03));
-        this.bg04 = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.ListingTable.COLUMN_BG04));
-        this.bg05 = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.ListingTable.COLUMN_BG05));
-        this.bg06 = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.ListingTable.COLUMN_BG06));
-        this.bg07 = cursor.getString(cursor.getColumnIndexOrThrow(TableContracts.ListingTable.COLUMN_BG07));
-        this.bg08 = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_BG08));
-        this.bg09 = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_BG09));
-        this.bg10 = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_BG10));
+        // Hydrate sBG fields
+        String sBGJsonString = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_SBG));
+        if (sBGJsonString != null) {
+            sBGHydrate(sBGJsonString);
+        }
 
         return this;
     }
 
 
+    public void sHHHydrate(String jsonString) throws JSONException {
+        Log.d(TAG, "sHHHydrate: " + jsonString);
+        if (jsonString != null) {
+            JSONObject json = new JSONObject(jsonString);
+
+            // HH (11-15 and subcolumns)
+            this.hh11 = json.getString("hh11");
+            this.hh12 = json.getString("hh12");
+            this.hh12a = json.getString("hh12a");
+            this.hh12b = json.getString("hh12b");
+            this.hh12c = json.getString("hh12c");
+            this.hh13 = json.getString("hh13");
+            this.hh1301 = json.getString("hh1301");
+            this.hh1302 = json.getString("hh1302");
+            this.hh13a = json.getString("hh13a");
+            this.hh14 = json.getString("hh14");
+            this.hh1401 = json.getString("hh1401");
+            this.hh1402 = json.getString("hh1402");
+            this.hh14a = json.getString("hh14a");
+            this.hh12d = json.getString("hh12d");
+            this.hh12d1 = json.getString("hh12d1");
+            this.hh12d2 = json.getString("hh12d2");
+            this.hh12e = json.getString("hh12e");
+            this.hh15 = json.getString("hh15");
+        }
+    }
+
+    public void sBGHydrate(String jsonString) throws JSONException {
+        Log.d(TAG, "sBGHydrate: " + jsonString);
+        if (jsonString != null) {
+            JSONObject json = new JSONObject(jsonString);
+
+            // BG (1-10)
+            this.bg01 = json.getString("bg01");
+            this.bg02 = json.getString("bg02");
+            this.bg03 = json.getString("bg03");
+            this.bg04 = json.getString("bg04");
+            this.bg05 = json.getString("bg05");
+            this.bg06 = json.getString("bg06");
+            this.bg07 = json.getString("bg07");
+            this.bg08 = json.getString("bg08");
+            this.bg09 = json.getString("bg09");
+            this.bg10 = json.getString("bg10");
+        }
+    }
 
     public JSONObject toJSONObject() throws JSONException {
         JSONObject json = new JSONObject();
 
-
         // Common fields
         json.put(ListingTable.COLUMN_ID, this.id);
-        json.put(TableContracts.ListingTable.COLUMN_UID, this.uid);
-        json.put(TableContracts.ListingTable.COLUMN_PROJECT_NAME, this.projectName);
+        json.put(ListingTable.COLUMN_UID, this.uid);
+        json.put(ListingTable.COLUMN_STUID, this.stuid);
+        json.put(ListingTable.COLUMN_PROJECT_NAME, this.projectName);
         json.put(ListingTable.COLUMN_DISTRICT_ID, this.districtID);
         json.put(ListingTable.COLUMN_CLUSTER_CODE, this.clusterCode);
-        json.put(TableContracts.ListingTable.COLUMN_HHID, this.hhid);
-        json.put(TableContracts.ListingTable.COLUMN_USERNAME, this.userName);
-        json.put(TableContracts.ListingTable.COLUMN_SYSDATE, this.sysDate);
+        json.put(ListingTable.COLUMN_STREET_NUMBER, this.streetNum);
+        json.put(ListingTable.COLUMN_HHID, this.hhid);
+        json.put(ListingTable.COLUMN_USERNAME, this.userName);
+        json.put(ListingTable.COLUMN_SYSDATE, this.sysDate);
         json.put(ListingTable.COLUMN_DEVICEID, this.deviceId);
         json.put(ListingTable.COLUMN_ISTATUS, this.iStatus);
         json.put(ListingTable.COLUMN_SYNCED, this.synced);
-        json.put(TableContracts.ListingTable.COLUMN_SYNC_DATE, this.syncDate);
-        json.put(TableContracts.ListingTable.COLUMN_APPVERSION, this.appver);
-        json.put(TableContracts.ListingTable.COLUMN_GPSLAT, this.gpsLat);
+        json.put(ListingTable.COLUMN_SYNC_DATE, this.syncDate);
+        json.put(ListingTable.COLUMN_APPVERSION, this.appver);
+        json.put(ListingTable.COLUMN_GPSLAT, this.gpsLat);
         json.put(ListingTable.COLUMN_GPSLNG, this.gpsLng);
         json.put(ListingTable.COLUMN_GPSDATE, this.gpsDT);
-        json.put(TableContracts.ListingTable.COLUMN_GPSACC, this.gpsAcc);
+        json.put(ListingTable.COLUMN_GPSACC, this.gpsAcc);
 
-
-        // Line listing variables (BG group)
-        json.put(ListingTable.COLUMN_BG01, this.bg01);
-        json.put(TableContracts.ListingTable.COLUMN_BG02, this.bg02);
-        json.put(ListingTable.COLUMN_BG03, this.bg03);
-        json.put(TableContracts.ListingTable.COLUMN_BG04, this.bg04);
-        json.put(ListingTable.COLUMN_BG05, this.bg05);
-        json.put(TableContracts.ListingTable.COLUMN_BG06, this.bg06);
-        json.put(TableContracts.ListingTable.COLUMN_BG07, this.bg07);
-        json.put(TableContracts.ListingTable.COLUMN_BG08, this.bg08);
-        json.put(TableContracts.ListingTable.COLUMN_BG09, this.bg09);
-        json.put(TableContracts.ListingTable.COLUMN_BG10, this.bg10);
-
-        // Line listing variables (BL group)
-        json.put(TableContracts.ListingTable.COLUMN_BL01, this.bl01);
-        json.put(TableContracts.ListingTable.COLUMN_BL02, this.bl02);
+        // Convert sHH and sBG groups to JSONObjects
+        json.put(ListingTable.COLUMN_SHH, new JSONObject(sHHtoString()));
+        json.put(ListingTable.COLUMN_SBG, new JSONObject(sBGtoString()));
 
         return json;
     }
+
 
     public void initListing(Cluster selectedCluster) {
         this.setDistrictID(selectedCluster.getClusterCode());
@@ -791,46 +833,46 @@ public class Listing extends BaseObservable implements Observable {
         this.setClusterCode(selectedCluster.getClusterCode());
     }
 
-    public String sBGtoString() throws JSONException {
-        Log.d(TAG, "sBGtoString: ");
-        JSONObject json = new JSONObject();
+    public String sHHtoString() throws JSONException {
+        Log.d(TAG, "sHHtoString: ");
 
-        json.put("bg01", bg01)
-                .put("bg02", bg02)
-                .put("bg03", bg03)
-                .put("bg04", bg04)
-                .put("bg05", bg05)
-                .put("bg06", bg06)
-                .put("bg07", bg07)
-                .put("bg08", bg08)
-                .put("bg09", bg09)
-                .put("bg10", bg10);
+        JSONObject json = new JSONObject();
+        json.put("hh11", hh11);
+        json.put("hh12", hh12);
+        json.put("hh12a", hh12a);
+        json.put("hh12b", hh12b);
+        json.put("hh12c", hh12c);
+        json.put("hh13", hh13);
+        json.put("hh1301", hh1301);
+        json.put("hh1302", hh1302);
+        json.put("hh13a", hh13a);
+        json.put("hh14", hh14);
+        json.put("hh1401", hh1401);
+        json.put("hh1402", hh1402);
+        json.put("hh14a", hh14a);
+        json.put("hh12d", hh12d);
+        json.put("hh12d1", hh12d1);
+        json.put("hh12d2", hh12d2);
+        json.put("hh12e", hh12e);
+        json.put("hh15", hh15);
 
         return json.toString();
     }
 
-    public String sHHtoString() throws JSONException {
-        Log.d(TAG, "sHHtoString: ");
-        JSONObject json = new JSONObject();
+    public String sBGtoString() throws JSONException {
+        Log.d(TAG, "sBGtoString: ");
 
-        json.put("hh11", hh11)
-                .put("hh12", hh12)
-                .put("hh12a", hh12a)
-                .put("hh12b", hh12b)
-                .put("hh12c", hh12c)
-                .put("hh13", hh13)
-                .put("hh1301", hh1301)
-                .put("hh1302", hh1302)
-                .put("hh13a", hh13a)
-                .put("hh14", hh14)
-                .put("hh1401", hh1401)
-                .put("hh1402", hh1402)
-                .put("hh14a", hh14a)
-                .put("hh12d", hh12d)
-                .put("hh12d1", hh12d1)
-                .put("hh12d2", hh12d2)
-                .put("hh12e", hh12e)
-                .put("hh15", hh15);
+        JSONObject json = new JSONObject();
+        json.put("bg01", bg01);
+        json.put("bg02", bg02);
+        json.put("bg03", bg03);
+        json.put("bg04", bg04);
+        json.put("bg05", bg05);
+        json.put("bg06", bg06);
+        json.put("bg07", bg07);
+        json.put("bg08", bg08);
+        json.put("bg09", bg09);
+        json.put("bg10", bg10);
 
         return json.toString();
     }

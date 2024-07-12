@@ -15,7 +15,7 @@
             <item
                 android:id="@+id/action_database"
                 android:title="@string/actiondatabase"
-                android:visible="false"
+                android:visible="true"
                 tools:visible="true" />
             <item
                 android:id="@+id/action_checkWorker"

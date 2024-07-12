@@ -247,7 +247,7 @@ public class LoginActivity extends AppCompatActivity {
         String latestVersionName = sharedPref.getString("versionName", "");
         int latestVersionCode = Integer.parseInt(sharedPref.getString("versionCode", "0"));
 
-        bi.txtinstalldate.setText(bi.txtinstalldate.getText().toString().replace("\n Available on Server: " + latestVersionName + latestVersionCode, "") + "\n Available on Server: " + latestVersionName + latestVersionCode);
+        bi.newApp.setText("Available on Server: " + latestVersionName + latestVersionCode);
 
         if (MainApp.appInfo.getVersionCode() < latestVersionCode) {
             new AlertDialog.Builder(this)
@@ -438,7 +438,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     MainApp.user.setUserName(username);
 
-                    MainApp.admin = username.contains("@") || username.contains("test1234");
+                    MainApp.admin = username.contains("@") || username.contains("test");
                     MainApp.superuser = MainApp.user.getDesignation().contains("Supervisor");
                     Intent iLogin = null;
                     if (MainApp.admin) {

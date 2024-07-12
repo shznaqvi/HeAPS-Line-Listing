@@ -152,6 +152,7 @@
     <string name="bl03">Cluster Code</string> <!--K-01-001 OR M-01-001 -->
 
     <string name="st01">Street Name</string>
+    <string name="st02">Street Number</string>
 
     <string name="st03">Street Description</string>
 

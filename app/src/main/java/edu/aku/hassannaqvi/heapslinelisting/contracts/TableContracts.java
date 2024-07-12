@@ -41,8 +41,10 @@ public class TableContracts {
         public static final String COLUMN_PROJECT_NAME = "projectName";
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_UID = "_uid";
+        public static final String COLUMN_STUID = "_stuid";
         public static final String COLUMN_DISTRICT_ID = "dist_id";
         public static final String COLUMN_CLUSTER_CODE = "clusterCode";
+        public static final String COLUMN_STREET_NUMBER = "streetNum";
         public static final String COLUMN_HHID = "hhid";
         public static final String COLUMN_USERNAME = "username";
         public static final String COLUMN_SYSDATE = "sysdate";
@@ -56,30 +58,13 @@ public class TableContracts {
         public static final String COLUMN_ISTATUS = "iStatus";
         public static final String COLUMN_DEVICEID = "deviceid";
 
-        // BL (1-2)
-        public static final String COLUMN_BL01 = "bl01";
-        public static final String COLUMN_BL02 = "bl02";
-
-
-
-        // BG (1-10)
-        public static final String COLUMN_BG01 = "bg01";
-        public static final String COLUMN_BG02 = "bg02";
-        public static final String COLUMN_BG03 = "bg03";
-        public static final String COLUMN_BG04 = "bg04";
-        public static final String COLUMN_BG05 = "bg05";
-        public static final String COLUMN_BG06 = "bg06";
-        public static final String COLUMN_BG07 = "bg07";
-        public static final String COLUMN_BG08 = "bg08";
-        public static final String COLUMN_BG09 = "bg09";
-        public static final String COLUMN_BG10 = "bg10";
         public static final String COLUMN_SBG = "sBG";
         public static final String COLUMN_SHH = "sHH";
 
     }
 
     public static abstract class StreetsTable implements BaseColumns {
-        public static final String TABLE_NAME = "Sheets";
+        public static final String TABLE_NAME = "Streets";
         public static final String COLUMN_NAME_NULLABLE = "NULLHACK";
         public static final String COLUMN_BL01 = "bl01";
         public static final String COLUMN_BL02 = "bl02";
@@ -120,7 +105,7 @@ public class TableContracts {
         public static final String COLUMN_APPVERSION = "appver";
         public static final String COLUMN_END_TIME = "endTime";
         public static final String COLUMN_SYNCED = "synced";
-        public static final String COLUMN_SYNCED_DATE = "syncDate";
+        public static final String COLUMN_SYNC_DATE = "syncDate";
         public static final String COLUMN_ENTRY_TYPE = "entryType";
         public static final String COLUMN_GPSLAT = "gpsLat";
         public static final String COLUMN_GPSLNG = "gpsLng";
