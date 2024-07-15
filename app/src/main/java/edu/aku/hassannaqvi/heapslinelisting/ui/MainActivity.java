@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding bi;
     SharedPreferences sp;
     private long downloadId;
+    private Handler handler;
+    private Runnable updateTitleRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +116,16 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        handler = new Handler(Looper.getMainLooper());
+        updateTitleRunnable = new Runnable() {
+            @Override
+            public void run() {
+                updateMenuTitle();
+                handler.postDelayed(this, 10000); // 10 seconds interval
+            }
+        };
+        updateMenuTitle(); // Initial update
+        startUpdatingTitle();
 
     }
 
@@ -317,4 +331,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void updateMenuTitle() {
+        String title = String.valueOf(sharedPref.getInt("satelliteCount", 0));
+        bi.icSatelliteLive.setText(title);
+
+    }
+
+    private void startUpdatingTitle() {
+        handler.post(updateTitleRunnable);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(updateTitleRunnable); // Stop updates when activity is destroyed
+    }
 }

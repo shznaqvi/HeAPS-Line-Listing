@@ -126,7 +126,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/bottom"
                         android:orientation="horizontal"
-                        android:visibility="gone">
+                     >
 
                         <TextView
                             style="@style/quesNum"
@@ -240,6 +240,7 @@
                                 style="@style/quesNum"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
+
                                 android:text="@string/Q_bl04" />
 
                             <TextView
@@ -283,6 +284,7 @@
                     android:layout_gravity="end"
                     android:layout_marginTop="24dp"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:padding="24dp">
 
                     <Button

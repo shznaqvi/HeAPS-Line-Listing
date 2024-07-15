@@ -1,6 +1,8 @@
 package edu.aku.hassannaqvi.heapslinelisting.ui;
 
 
+import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.listings;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -8,6 +10,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +21,7 @@ import com.validatorcrawler.aliazaz.Validator;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import edu.aku.hassannaqvi.heapslinelisting.R;
@@ -51,8 +55,8 @@ public class IdentificationActivity extends AppCompatActivity {
         db = MainApp.appInfo.dbHelper;
         MainApp.selectedCluster = new Cluster();
         MainApp.selectedArea = new Listing();
-        MainApp.listings = new Listing();
-        bi.setListing(MainApp.listings);
+        listings = new Listing();
+        bi.setListing(listings);
         st = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime());
         setSupportActionBar(bi.toolbar);
         populateSpinner();
@@ -63,7 +67,7 @@ public class IdentificationActivity extends AppCompatActivity {
    /*     bi.distName.setText(db.getDistrictName(MainApp.user.getDist_id()));
         bi.lhwName.setText(MainApp.user.getFullname());*/
 
-        MainApp.listings = new Listing();
+        //listings = new Listing();
         //populateSpinner();
         Log.d(TAG, "onCreate(Language): " + Locale.getDefault().getDisplayLanguage());
 
@@ -156,20 +160,56 @@ public class IdentificationActivity extends AppCompatActivity {
         MainApp.selectedCluster = db.checkCluster(bi.clusterCode.getText().toString());
 
         if (MainApp.selectedCluster != null) {
-            MainApp.listings.initListing(MainApp.selectedCluster);
+            listings.initListing(MainApp.selectedCluster);
             bi.clusterCode.setError(null); // Clear the error
             MainApp.clusterInfo = MainApp.sharedPref.getString(MainApp.selectedCluster.getClusterCode(), "0|0").split("\\|");
             MainApp.maxStructure = Integer.parseInt(MainApp.clusterInfo[0]);
 
+          /*  if (!MainApp.clusterInfo[0].equals("0")) {
+                //bi.fldGrpCVhh02e.setVisibility(View.GONE);
+                if (MainApp.clusterInfo[1].equals("A")) {
+                    //bi.hh031.setChecked(true);
+                    listings.setHh03("1");
+                    bi.fldGrpCVhh03.setVisibility(View.GONE);
+
+                } else if (MainApp.clusterInfo[1].equals("B")) {
+                    //bi.hh032.setChecked(true);
+                    listings.setHh03("2");
+                    bi.fldGrpCVhh03.setVisibility(View.GONE);
+
+                }
+                selectedTab = listings.getTabNo();
+            } else {
+                bi.hh03.clearCheck();
+                listings.setHh03("");
+                bi.fldGrpCVhh03.setVisibility(View.VISIBLE);
+            }
+            MainApp.selectedTab = MainApp.clusterInfo[1];
+            */
+
+
+            bi.buttonsPanel.setVisibility(View.VISIBLE);
+
             if (!MainApp.clusterInfo[0].equals("0")) {
 
-                MainApp.listings.setTabNo(MainApp.clusterInfo[1]);
-                bi.fldGrpCVbl04.setVisibility(View.GONE);
-                bi.buttonsPanel.setVisibility(View.GONE);
-                MainApp.selectedTab = MainApp.listings.getTabNo();
+
+                // MainApp.listings.setTabNo(MainApp.clusterInfo[1]);
+                if (MainApp.clusterInfo[1].equals("A")) {
+                    //bi.hh031.setChecked(true);
+                    listings.setBl04("1");
+                    MainApp.selectedTab = "A";
+                    bi.fldGrpCVbl04.setVisibility(View.GONE);
+
+                } else if (MainApp.clusterInfo[1].equals("B")) {
+                    //bi.hh032.setChecked(true);
+                    listings.setBl04("2");
+                    MainApp.selectedTab = "B";
+                    bi.fldGrpCVbl04.setVisibility(View.GONE);
+
+                }
             } else {
                 bi.bl04.clearCheck();
-                MainApp.listings.setTabNo("");
+                // MainApp.listings.setTabNo("");
                 bi.fldGrpCVbl04.setVisibility(View.VISIBLE);
                 bi.buttonsPanel.setVisibility(View.VISIBLE);
             }
@@ -189,17 +229,17 @@ public class IdentificationActivity extends AppCompatActivity {
 
         if (!formValidation()) return;
         MainApp.selectedDistrict = distCodes.get(bi.district.getSelectedItemPosition());
-        MainApp.listings.populateMeta();
+        // MainApp.listings.populateMeta();
         // MainApp.selectedCluster = bi.clusterCode.getText().toString();  //<= moved to checkCluster()
         //MainApp.selectedHousehold = bi.bl03.getText().toString();
 
-       // if (!formValidation()) return;
+        // if (!formValidation()) return;
 
-        if (bi.fldGrpCVbl04.getVisibility() == View.VISIBLE)
-            MainApp.selectedTab = bi.bl0401.isChecked() ? "A" : "B";
-        else
-            MainApp.selectedTab = MainApp.selectedArea.getTabNo();
-        MainApp.listings.setTabNo(MainApp.selectedTab);
+//        if (bi.fldGrpCVbl04.getVisibility() == View.VISIBLE)
+//            MainApp.selectedTab = bi.bl0401.isChecked() ? "A" : "B";
+//        else
+//            MainApp.selectedTab = MainApp.selectedArea.getTabNo();
+        // MainApp.listings.setTabNo(MainApp.selectedTab);
         finish();
         startActivity(new Intent(this, AddStructureActivity.class));
 
@@ -234,13 +274,52 @@ public class IdentificationActivity extends AppCompatActivity {
         distCodes.add("M");
         if (MainApp.user.getUserName().contains("test") || MainApp.user.getUserName().contains("dmu")) {
             distNames.add("Test");
-            distCodes.add("9");
+            distCodes.add("T");
         }
         // Apply the adapter to the spinner
         bi.district.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, distNames));
+        // Set an OnItemSelectedListener for the district spinner
+        bi.district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
 
+                if (position == 0) return;
+                MainApp.selectedDistrict = distCodes.get(bi.district.getSelectedItemPosition());
+
+                updateAreaSpinner(MainApp.selectedDistrict);
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
+
+    private void updateAreaSpinner(String districtCode) {
+        List<String> areaNames = new ArrayList<>();
+        areaNames.add("...");
+
+        switch (districtCode) {
+            case "K":
+                areaNames.add("Dhobi Ghat");
+                break;
+            case "M":
+                areaNames.add("Ghahela");
+                break;
+            case "T":
+                areaNames.add("Test Area");
+                break;
+
+        }
+
+        // Apply the adapter to the area spinner
+        bi.area.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, areaNames));
+    }
+
     @Override
     public void onBackPressed() {
         // Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();

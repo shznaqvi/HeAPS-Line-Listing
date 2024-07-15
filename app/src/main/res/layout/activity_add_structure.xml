@@ -11,7 +11,7 @@
             type="edu.aku.hassannaqvi.heapslinelisting.ui.sections.AddStructureActivity" />
 
         <variable
-            name="listing"
+            name="listings"
             type="edu.aku.hassannaqvi.heapslinelisting.models.Listing" />
     </data>
 
@@ -156,8 +156,8 @@
                                 android:id="@+id/bg0601"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{listing.bg06.equals(`1`)}"
-                                android:onClick="@{()->listing.setBg06(`1`)}"
+                                android:checked="@{listings.bg06.equals(`1`)}"
+                                android:onClick="@{()->listings.setBg06(`1`)}"
                                 android:text="@string/bg0601" />
 
                             <!-- For bg0602 (Shop/market/plaza) -->
@@ -165,8 +165,8 @@
                                 android:id="@+id/bg0602"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{listing.bg06.equals(`2`)}"
-                                android:onClick="@{()->listing.setBg06(`2`)}"
+                                android:checked="@{listings.bg06.equals(`2`)}"
+                                android:onClick="@{()->listings.setBg06(`2`)}"
                                 android:text="@string/bg0602" />
 
                             <!-- For bg0603 (Mosque/church/temple) -->
@@ -174,8 +174,8 @@
                                 android:id="@+id/bg0603"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{listing.bg06.equals(`3`)}"
-                                android:onClick="@{()->listing.setBg06(`3`)}"
+                                android:checked="@{listings.bg06.equals(`3`)}"
+                                android:onClick="@{()->listings.setBg06(`3`)}"
                                 android:text="@string/bg0603" />
 
                             <!-- For bg0604 (School/college/university) -->
@@ -183,8 +183,8 @@
                                 android:id="@+id/bg0604"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{listing.bg06.equals(`4`)}"
-                                android:onClick="@{()->listing.setBg06(`4`)}"
+                                android:checked="@{listings.bg06.equals(`4`)}"
+                                android:onClick="@{()->listings.setBg06(`4`)}"
                                 android:text="@string/bg0604" />
 
                             <!-- For bg0605 (Health facility) -->
@@ -192,8 +192,8 @@
                                 android:id="@+id/bg0605"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{listing.bg06.equals(`5`)}"
-                                android:onClick="@{()->listing.setBg06(`5`)}"
+                                android:checked="@{listings.bg06.equals(`5`)}"
+                                android:onClick="@{()->listings.setBg06(`5`)}"
                                 android:text="@string/bg0605" />
 
                             <!-- For bg0606 (Under construction) -->
@@ -201,8 +201,8 @@
                                 android:id="@+id/bg0606"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{listing.bg06.equals(`6`)}"
-                                android:onClick="@{()->listing.setBg06(`6`)}"
+                                android:checked="@{listings.bg06.equals(`6`)}"
+                                android:onClick="@{()->listings.setBg06(`6`)}"
                                 android:text="@string/bg0606" />
 
                             <!-- For bg0607 (Others, specify) -->
@@ -210,26 +210,26 @@
                                 android:id="@+id/bg0607"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{listing.bg06.equals(`7`)}"
-                                android:onClick="@{()->listing.setBg06(`7`)}"
+                                android:checked="@{listings.bg06.equals(`7`)}"
+                                android:onClick="@{()->listings.setBg06(`7`)}"
                                 android:text="@string/bg0607" />
 
-                            <!-- For bg0608 (Line Listing Complete) -->
+                            <!-- For bg0608 (Line Listings Complete) -->
                             <RadioButton
                                 android:id="@+id/bg0608"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{listing.bg06.equals(`8`)}"
-                                android:onClick="@{()->listing.setBg06(`8`)}"
+                                android:checked="@{listings.bg06.equals(`8`)}"
+                                android:onClick="@{()->listings.setBg06(`8`)}"
                                 android:text="@string/bg0608" />
 
-                            <!-- For bg0609 (Temporarily Stop Listing) -->
+                            <!-- For bg0609 (Temporarily Stop Listings) -->
                             <RadioButton
                                 android:id="@+id/bg0609"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{listing.bg06.equals(`9`)}"
-                                android:onClick="@{()->listing.setBg06(`9`)}"
+                                android:checked="@{listings.bg06.equals(`9`)}"
+                                android:onClick="@{()->listings.setBg06(`9`)}"
                                 android:text="@string/bg0609" />
 
                         </RadioGroup>
@@ -282,8 +282,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:checked="@{listing.bg07.equals(`1`)}"
-                                android:onClick="@{()->listing.setBg07(`1`)}"
+                                android:checked="@{listings.bg07.equals(`1`)}"
+                                android:onClick="@{()->listings.setBg07(`1`)}"
                                 android:text="@string/bg0701" />
 
                             <RadioButton
@@ -291,22 +291,24 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:checked="@{listing.bg07.equals(`2`)}"
-                                android:onClick="@{()->listing.setBg07(`2`)}"
+                                android:checked="@{listings.bg07.equals(`2`)}"
+                                android:onClick="@{()->listings.setBg07(`2`)}"
                                 android:text="@string/bg0702" />
 
                         </RadioGroup>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- bg08_layout.xml -->
-
+                <!-- BG08 Type of Residence -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVBg08"
                     style="@style/cardView"
-                    android:visibility="@{listing.bg07.equals(`1`) ? View.VISIBLE : View.GONE}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
 
-                    >
+                    android:visibility="@{listings.getBg07().equals(`2`) ? View.GONE : View.VISIBLE}">
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -329,7 +331,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:text="@string/bg08" />
-
                         </LinearLayout>
 
                         <RadioGroup
@@ -338,30 +339,26 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <!-- For bg0801 (House) -->
                             <RadioButton
                                 android:id="@+id/bg0801"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:checked="@{listing.bg08.equals(`1`)}"
-                                android:onClick="@{()->listing.setBg08(`1`)}"
+                                android:checked="@{listings.bg08.equals(`1`)}"
+                                android:onClick="@{()->listings.setBg08(`1`)}"
                                 android:text="@string/bg0801" />
 
-                            <!-- For bg0802 (Apartment) -->
                             <RadioButton
                                 android:id="@+id/bg0802"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:checked="@{listing.bg08.equals(`2`)}"
-                                android:onClick="@{()->listing.setBg08(`2`)}"
+                                android:checked="@{listings.bg08.equals(`2`)}"
+                                android:onClick="@{()->listings.setBg08(`2`)}"
                                 android:text="@string/bg0802" />
-
                         </RadioGroup>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
-
 
                 <!-- BG10 Number of Households -->
                 <androidx.cardview.widget.CardView
@@ -400,7 +397,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="number"
-                            android:text="@={listing.bg10}" />
+                            android:text="@={listings.bg10}" />
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

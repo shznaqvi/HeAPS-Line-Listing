@@ -1,6 +1,9 @@
 package edu.aku.hassannaqvi.heapslinelisting.ui.sections;
 
 
+import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp._EMPTY_;
+import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.editor;
+import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.listings;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -67,24 +71,39 @@ public class AddStructureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         bi = DataBindingUtil.setContentView(this, R.layout.activity_add_structure);
         bi.setCallback(this);
-        bi.setListing(MainApp.listings);
+        bi.setListings(listings);
         st = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime());
        /* setupSkips();
         setGPS();*/
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
-
+        listings.setBGClear();
         populateSpinner();
 
         MainApp.maxStructure++;
         MainApp.hhid = 0;
 
+        bi.bg07.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (bi.bg0702.isChecked()) {
+                    bi.fldGrpCVBg08.setVisibility(View.GONE);
+                    bi.fldGrpCVbg10.setVisibility(View.GONE);
+                    listings.setBg07(_EMPTY_);
+                    bi.bg08.clearCheck();
+                    listings.setBg10(_EMPTY_);
+                } else {
+                    bi.fldGrpCVBg08.setVisibility(View.VISIBLE);
+                    bi.fldGrpCVbg10.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
     }
 
     private void populateSpinner() {
         // Example list of streets with names and codes
-        List<Streets> streetsList = new ArrayList<>();
+        //List<Streets> streetsList = new ArrayList<>();
 
         // Add more streets as needed
 
@@ -95,14 +114,14 @@ public class AddStructureActivity extends AppCompatActivity {
         streetNum.add("");  // Empty code for default prompt
 
         try {
-            streetsList = db.getStreetsByCluster(MainApp.selectedCluster.getClusterCode());
+            MainApp.streetsList = db.getStreetsByCluster(MainApp.selectedCluster.getClusterCode());
         } catch (JSONException e) {
             e.printStackTrace();
             Log.d(TAG, "ProcessStart: JSONException(Streets): " + e.getMessage());
             Toast.makeText(this, "JSONException(Streets): " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         // Populate streetNames and streetCodes from your list
-        for (Streets street : streetsList) {
+        for (Streets street : MainApp.streetsList) {
             streetNames.add(street.getSt01());
             streetNum.add(street.getstreetNum());
         }
@@ -120,9 +139,10 @@ public class AddStructureActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (bi.street.getSelectedItemPosition() != 0) {
-                    MainApp.listings.setStreetNum(streetNum.get(bi.street.getSelectedItemPosition()));
-
-                    bi.hhid.setText(MainApp.listings.getClusterCode() + "-" + String.format("%02d", Integer.parseInt(streetNum.get(bi.street.getSelectedItemPosition()))) + "\n" + MainApp.listings.getTabNo() + String.format("%03d", MainApp.maxStructure));
+                    MainApp.streets = MainApp.streetsList.get(bi.street.getSelectedItemPosition() - 1);
+                    listings.populateMeta();
+                    listings.setTabNo(MainApp.selectedTab);
+                    bi.hhid.setText(listings.getClusterCode() + "-" + String.format("%02d", Integer.parseInt(streetNum.get(bi.street.getSelectedItemPosition()))) + "\n" + listings.getTabNo() + String.format("%03d", MainApp.maxStructure));
                     bi.hhid.setVisibility(View.VISIBLE);
                 }
             }
@@ -135,29 +155,32 @@ public class AddStructureActivity extends AppCompatActivity {
     }
 
     public void btnContinue() {
-        if (!formValidation()) return;
-        if (!insertNewRecord()) return;
-        if (updateDB()) {
+        if (formValidation()) {
+            MainApp.structureType = listings.getBg08().equals("1") ? "H" : listings.getBg08().equals("1") ? "B" : "";
+            if (bi.bg0608.isChecked() || bi.bg0609.isChecked()) {
+                MainApp.maxStructure--;
+                listings.setBl06("");
+            }
+            editor.putString(MainApp.selectedCluster.getClusterCode(), MainApp.maxStructure + "|" + listings.getTabNo());
+            editor.apply();
 
-
-            Intent i = null;
-            if (MainApp.listings.getBg06().equals("8") || MainApp.listings.getBg06().equals("9")) {
+            Intent i;
+            if (listings.getBg06().equals("8") || listings.getBg06().equals("9")) {
+                if (!insertNewRecord()) return;
                 i = new Intent(this, MainActivity.class);
 
-            } else if (MainApp.listings.getBg07().equals("1")) {
+            } else if (listings.getBg07().equals("1")) {
                 i = new Intent(this, FamilyListingActivity.class);
-                MainApp.hhid = 0;
+                //MainApp.hhid = 0;
 
             } else {
+                if (!insertNewRecord()) return;
                 i = new Intent(this, AddStructureActivity.class);
+
             }
 
             startActivity(i);
 
-            Intent returnIntent = new Intent();
-            //  returnIntent.putExtra("requestCode", requestCode);
-            setResult(RESULT_OK, returnIntent);
-            finish();
         } else
             Toast.makeText(this, R.string.fail_db_upd, Toast.LENGTH_SHORT).show();
     }
@@ -168,7 +191,7 @@ public class AddStructureActivity extends AppCompatActivity {
         db = MainApp.appInfo.getDbHelper();
         long updcount = 0;
         try {
-            updcount = db.updatesFormColumn(TableContracts.ListingTable.COLUMN_SBG, MainApp.listings.sBGtoString());
+            updcount = db.updatesFormColumn(TableContracts.ListingTable.COLUMN_SBG, listings.sBGtoString());
         } catch (JSONException e) {
             e.printStackTrace();
             Log.d(TAG, R.string.upd_db + e.getMessage());
@@ -196,27 +219,36 @@ public class AddStructureActivity extends AppCompatActivity {
     }
 
     private boolean insertNewRecord() {
-        if (!MainApp.listings.getUid().equals("") || MainApp.superuser) return true;
-        MainApp.listings.populateMeta();
+        listings.populateMeta();
         long rowId = 0;
         try {
-            rowId = db.addListing(MainApp.listings);
+            rowId = db.addListing(listings);
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(this, R.string.db_excp_error, Toast.LENGTH_SHORT).show();
             return false;
         }
-        MainApp.listings.setId(String.valueOf(rowId));
+        listings.setId(String.valueOf(rowId));
         if (rowId > 0) {
-            MainApp.listings.setUid(MainApp.listings.getDeviceId() + MainApp.listings.getId());
-            db.updateStreetColumn(TableContracts.ListingTable.COLUMN_UID, MainApp.listings.getUid());
+            listings.setUid(listings.getDeviceId() + listings.getId());
+            db.updateListingColumn(TableContracts.ListingTable.COLUMN_UID, listings.getUid());
+            int updCount = 0;
             try {
-                db.updateStreetColumn(TableContracts.ListingTable.COLUMN_SBG, MainApp.listings.sBGtoString());
+                updCount = db.updateListingColumn(TableContracts.ListingTable.COLUMN_SBG, listings.sBGtoString());
             } catch (JSONException e) {
                 e.printStackTrace();
                 Toast.makeText(this, "JSONException(Listing): ", Toast.LENGTH_SHORT).show();
                 return false;
             }
+
+            if (updCount > 0) {
+
+                editor.putString(MainApp.selectedCluster.getClusterCode(), MainApp.maxStructure + "|" + listings.getTabNo());
+                editor.apply();
+
+                return true;
+            }
+
             return true;
         } else {
             Toast.makeText(this, R.string.upd_db_error, Toast.LENGTH_SHORT).show();

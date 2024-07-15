@@ -120,6 +120,9 @@
         <item name="android:padding">24dp</item>
     </style>
 
+    <style name="menuStyle" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
 
     <style name="labels" parent="@android:style/TextAppearance.Widget.TextView">
         <item name="android:layout_width">match_parent</item>

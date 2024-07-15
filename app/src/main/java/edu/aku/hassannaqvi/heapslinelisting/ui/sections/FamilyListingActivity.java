@@ -1,6 +1,7 @@
 package edu.aku.hassannaqvi.heapslinelisting.ui.sections;
 
 
+import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.listings;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,13 +42,17 @@ public class FamilyListingActivity extends AppCompatActivity {
         st = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime());
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
+        listings.setHHClear();
 
+        MainApp.hhid++;
 
         bi.btnEnd.setVisibility(MainApp.hhid == 1 ? View.GONE : View.VISIBLE);
 
 //        bi.hhid.setText("HFP-" + MainApp.listings.getHh01() + "\n" + MainApp.selectedTab + "-" + String.format("%04d", MainApp.maxStructure) + "-" + String.format("%03d", MainApp.hhid));
-        bi.hhid.setText(MainApp.listings.getDistrictID() + "-" + MainApp.listings.getClusterCode() + "-" + String.format("%02d", MainApp.listings.getStreetNum() + "\n" + MainApp.listings.getTabNo()+MainApp.maxStructure));
-        bi.hhid.setVisibility(View.VISIBLE);        Toast.makeText(this, "Staring Household", Toast.LENGTH_SHORT).show();
+
+        bi.hhid.setText(MainApp.listings.getClusterCode() + "-" + String.format("%02d", Integer.parseInt(MainApp.listings.getStreetNum())) + "\n" + MainApp.listings.getTabNo() + String.format("%03d", MainApp.maxStructure) + "-" + String.format("%02d", MainApp.hhid));
+        bi.hhid.setVisibility(View.VISIBLE);
+        Toast.makeText(this, "Staring Household", Toast.LENGTH_SHORT).show();
 
 
     }
@@ -72,18 +77,65 @@ public class FamilyListingActivity extends AppCompatActivity {
 
 
     public void btnContinue(View view) {
-        if (!formValidation()) return;
-        if (!updateDB())  return;
+        if (formValidation()) {
+
+            if (!insertNewRecord()) return;
+
+
+            Intent i = null;
+            if (MainApp.listings.getHh15().equals("1")) {
+                i = new Intent(this, FamilyListingActivity.class);
+                //MainApp.hhid = 0;
+
+            } else {
+                i = new Intent(this, AddStructureActivity.class);
+            }
+
+            startActivity(i);
+
+            Intent returnIntent = new Intent();
+            //  returnIntent.putExtra("requestCode", requestCode);
+            setResult(RESULT_OK, returnIntent);
             finish();
+        } else
+            Toast.makeText(this, R.string.fail_db_upd, Toast.LENGTH_SHORT).show();
 
 
-}
+    }
 
+    private boolean insertNewRecord() {
+
+        MainApp.listings.populateMeta();
+        long rowId = 0;
+        try {
+            rowId = db.addListing(MainApp.listings);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(this, R.string.db_excp_error, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        MainApp.listings.setId(String.valueOf(rowId));
+        if (rowId > 0) {
+            MainApp.listings.setUid(MainApp.listings.getDeviceId() + MainApp.listings.getId());
+            db.updateListingColumn(TableContracts.ListingTable.COLUMN_UID, MainApp.listings.getUid());
+            try {
+                db.updateListingColumn(TableContracts.ListingTable.COLUMN_SBG, MainApp.listings.sBGtoString());
+                db.updateListingColumn(TableContracts.ListingTable.COLUMN_SHH, MainApp.listings.sHHtoString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "JSONException(Listing): ", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            return true;
+        } else {
+            Toast.makeText(this, R.string.upd_db_error, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
 
     public void btnEnd(View view) {
         bi.hh11.setText("Deleted");
-        bi.hh14a.setText("Deleted");
-        bi.hh13a.setText("00");
+
 
         if (updateDB()) {
             finish();

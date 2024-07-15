@@ -115,6 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(ListingTable.COLUMN_SYSDATE, listing.getSysDate());
         values.put(ListingTable.COLUMN_GPSLAT, listing.getGpsLat());
         values.put(ListingTable.COLUMN_GPSLNG, listing.getGpsLng());
+        values.put(ListingTable.COLUMN_GPSPRO, listing.getGpsProvider());
         values.put(ListingTable.COLUMN_GPSDATE, listing.getGpsDT());
         values.put(ListingTable.COLUMN_GPSACC, listing.getGpsAcc());
         values.put(ListingTable.COLUMN_ISTATUS, listing.getiStatus());
@@ -1359,7 +1360,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, new String[]{clusterCode});
 
         if (cursor.moveToFirst()) {
-            maxStreetNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_STREET_NUMBER)));
+            String maxStreetNumberStr = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_STREET_NUMBER));
+            if (maxStreetNumberStr != null) {
+                maxStreetNumber = Integer.parseInt(maxStreetNumberStr);
+            } else {
+                maxStreetNumber = 0;
+            }
             cursor.close();
         } else {
             maxStreetNumber = 0;

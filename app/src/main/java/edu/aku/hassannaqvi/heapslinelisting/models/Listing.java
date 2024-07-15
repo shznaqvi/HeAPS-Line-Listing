@@ -30,13 +30,13 @@ public class Listing extends BaseObservable implements Observable {
     final String TAG = "Listing";
 
 
-
-
     // FIELD VARIABLES for BL group (BL01 - BL02)
     public String bl01 = _EMPTY_;
     public String bl02 = _EMPTY_;
     public String bl03 = _EMPTY_;
-    public String bl04 = _EMPTY_;
+    public String bl04 = _EMPTY_; // tabno
+    public String bl05 = _EMPTY_; // present at same location
+    public String bl06 = _EMPTY_; // hhid
 
     // FIELD VARIABLES for Building group (BG01 - BG10)
     public String bg01 = _EMPTY_;
@@ -72,7 +72,7 @@ public class Listing extends BaseObservable implements Observable {
     transient PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
 
     // APP VARIABLES
-    String projectName = "PROJECT_NAME";
+    String projectName = PROJECT_NAME;
     String id = _EMPTY_;
     String uid = _EMPTY_;
     String stuid = _EMPTY_;
@@ -95,6 +95,7 @@ public class Listing extends BaseObservable implements Observable {
     String gpsLng = _EMPTY_;
     String gpsDT = _EMPTY_;
     String gpsAcc = _EMPTY_;
+    String gpsProvider = _EMPTY_;
     String iStatus = _EMPTY_;
     String iStatus96x = _EMPTY_;
 
@@ -133,6 +134,40 @@ public class Listing extends BaseObservable implements Observable {
         setDistrictID(selectedDistrict); // Ensure this is properly set in your application
         setClusterCode(selectedCluster.getClusterCode()); // Ensure this is properly set in your application
         setDistrictName(selectedCluster.getDistName()); // Ensure this is properly set in your application
+        setStuid(MainApp.streets.getUid());
+        setStreetNum(MainApp.streets.getstreetNum());
+        setHhid(String.valueOf(MainApp.hhid));
+        setGPS();
+    }
+
+    private void setGPS() {
+        String latitude = MainApp.sharedPref.getString("latitude", "0");
+        String longitude = MainApp.sharedPref.getString("longitude", "0");
+        String accuracy = String.valueOf(MainApp.sharedPref.getFloat("accuracy", 0));
+        long datetime = MainApp.sharedPref.getLong("datetime", 0);
+        String provider = MainApp.sharedPref.getString("provider", "");
+
+        // Convert timestamp to formatted date string
+        String formattedDateTime = getFormattedDateTime(datetime);
+
+        // Display formatted date time in the db
+        setGpsLat(latitude);
+        setGpsLng(longitude);
+        setGpsAcc(accuracy);
+        setGpsDT(formattedDateTime);
+        setGpsProvider(provider);
+    }
+
+    private String getFormattedDateTime(long timestamp) {
+        if (timestamp == 0) return "0";
+        // Create a SimpleDateFormat object with desired date format
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+        // Convert timestamp to Date object
+        Date date = new Date(timestamp);
+
+        // Format the Date object to desired format
+        return sdf.format(date);
     }
 
     // Getters and Setters for basic fields
@@ -346,6 +381,17 @@ public class Listing extends BaseObservable implements Observable {
         notifyPropertyChanged(BR.gpsAcc);
     }
 
+    // GPSProvider
+    @Bindable
+    public String getGpsProvider() {
+        return gpsProvider;
+    }
+
+    public void setGpsProvider(String gpsProvider) {
+        this.gpsProvider = gpsProvider;
+        notifyPropertyChanged(BR.gpsProvider);
+    }
+
     // IStatus
     @Bindable
     public String getiStatus() {
@@ -397,7 +443,30 @@ public class Listing extends BaseObservable implements Observable {
 
     public void setBl04(String bl04) {
         this.bl04 = bl04;
+        setTabNo(bl04.equals("1") ? "A" : bl04.equals("2") ? "B" : "0");
         notifyPropertyChanged(BR.bl04);
+    }
+
+    // bl05
+    @Bindable
+    public String getBl05() {
+        return bl05;
+    }
+
+    public void setBl05(String bl05) {
+        this.bl05 = bl05;
+        notifyPropertyChanged(BR.bl05);
+    }
+
+    // bl06
+    @Bindable
+    public String getBl06() {
+        return bl06;
+    }
+
+    public void setBl06(String bl06) {
+        this.bl06 = bl06;
+        notifyPropertyChanged(BR.bl06);
     }
 
     // bg01
@@ -475,6 +544,7 @@ public class Listing extends BaseObservable implements Observable {
     public void setBg07(String bg07) {
         this.bg07 = bg07;
         notifyPropertyChanged(BR.bg07);
+
     }
 
     // bg08
@@ -730,6 +800,7 @@ public class Listing extends BaseObservable implements Observable {
         this.syncDate = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_SYNC_DATE));
         this.gpsLat = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_GPSLAT));
         this.gpsLng = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_GPSLNG));
+        this.gpsProvider = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_GPSPRO));
         this.gpsDT = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_GPSDATE));
         this.gpsAcc = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_GPSACC));
 
@@ -816,6 +887,7 @@ public class Listing extends BaseObservable implements Observable {
         json.put(ListingTable.COLUMN_APPVERSION, this.appver);
         json.put(ListingTable.COLUMN_GPSLAT, this.gpsLat);
         json.put(ListingTable.COLUMN_GPSLNG, this.gpsLng);
+        json.put(ListingTable.COLUMN_GPSPRO, this.gpsProvider);
         json.put(ListingTable.COLUMN_GPSDATE, this.gpsDT);
         json.put(ListingTable.COLUMN_GPSACC, this.gpsAcc);
 
@@ -875,5 +947,47 @@ public class Listing extends BaseObservable implements Observable {
         json.put("bg10", bg10);
 
         return json.toString();
+    }
+
+    public void setBGClear() {
+        // BG (1-10)
+        setHhid(String.valueOf(MainApp.hhid));
+
+        this.uid = "";
+        this.bg01 = "";
+        this.bg02 = "";
+        this.bg03 = "";
+        this.bg04 = "";
+        this.bg05 = "";
+        this.bg06 = "";
+        this.bg07 = "";
+        this.bg08 = "";
+        this.bg09 = "";
+        this.bg10 = "";
+    }
+
+    public void setHHClear() {
+        // BG (1-10)
+        setHhid(String.valueOf(MainApp.hhid));
+
+        this.uid = "";
+        this.hh11 = "";
+        this.hh12 = "";
+        this.hh12a = "";
+        this.hh12b = "";
+        this.hh12c = "";
+        this.hh13 = "";
+        this.hh1301 = "";
+        this.hh1302 = "";
+        this.hh13a = "";
+        this.hh14 = "";
+        this.hh1401 = "";
+        this.hh1402 = "";
+        this.hh14a = "";
+        this.hh12d = "";
+        this.hh12d1 = "";
+        this.hh12d2 = "";
+        this.hh12e = "";
+        this.hh15 = "";
     }
 }

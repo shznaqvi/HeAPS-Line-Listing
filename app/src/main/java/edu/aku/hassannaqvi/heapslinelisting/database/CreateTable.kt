@@ -30,6 +30,7 @@ object CreateTable {
             + ListingTable.COLUMN_DEVICEID + " TEXT,"
             + ListingTable.COLUMN_GPSLAT + " TEXT,"
             + ListingTable.COLUMN_GPSLNG + " TEXT,"
+            + ListingTable.COLUMN_GPSPRO + " TEXT,"
             + ListingTable.COLUMN_GPSDATE + " TEXT,"
             + ListingTable.COLUMN_GPSACC + " TEXT,"
             + ListingTable.COLUMN_SYNCED + " TEXT,"

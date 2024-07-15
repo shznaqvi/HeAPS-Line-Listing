@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        android:background="@drawable/app_bg_gray"
+        android:background="@drawable/app_bg_gray_dark"
         android:orientation="vertical">
 
         <!-- CUSTOM TOOLBAR -->
@@ -44,17 +44,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
                 <TextView
                     android:id="@+id/hhid"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/grayDark"
+                    android:background="@color/redLight"
                     android:fontFamily="@font/allerta_stencil"
                     android:gravity="center"
-                    android:text="901010101\nA-0234-X"
+                    android:text="1010-234"
                     android:textColor="@color/white"
-                    android:textSize="24sp"
+                    android:textSize="56sp"
                     android:textStyle="bold" />
 
 
@@ -138,16 +137,14 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
+                                android:layout_weight="2"
                                 android:text="@string/hh11" />
 
-                            <EditText
+                            <com.edittextpicker.aliazaz.EditTextPicker
                                 android:id="@+id/hh11"
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz "
-                                android:inputType="textCapWords|textPersonName"
                                 android:text="@={listings.hh11}" />
                         </LinearLayout>
                     </LinearLayout>

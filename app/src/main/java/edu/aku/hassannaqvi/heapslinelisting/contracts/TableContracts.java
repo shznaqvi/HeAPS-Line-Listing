@@ -50,6 +50,7 @@ public class TableContracts {
         public static final String COLUMN_SYSDATE = "sysdate";
         public static final String COLUMN_GPSLAT = "xlt";
         public static final String COLUMN_GPSLNG = "xlg";
+        public static final String COLUMN_GPSPRO = "xpro";
         public static final String COLUMN_GPSDATE = "xdt";
         public static final String COLUMN_GPSACC = "xac";
         public static final String COLUMN_SYNCED = "synced";

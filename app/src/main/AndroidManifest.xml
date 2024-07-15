@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
     <uses-feature android:name="android.hardware.location.gps" />
     <uses-feature
         android:name="android.hardware.camera"
@@ -34,6 +36,12 @@
         tools:replace="android:allowBackup">
         <activity
             android:name=".ui.sections.AddStructureActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeEnglish1"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.sections.FamilyListingActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeEnglish1"
@@ -117,6 +125,12 @@
         <meta-data
             android:name="YEK_TRATS"
             android:value="" />
+
+        <service
+            android:name=".core.location.LocationService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
+
 
 </manifest>

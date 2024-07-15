@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Locale;
 
 import edu.aku.hassannaqvi.heapslinelisting.R;
+import edu.aku.hassannaqvi.heapslinelisting.core.location.LocationService;
 import edu.aku.hassannaqvi.heapslinelisting.models.Cluster;
 import edu.aku.hassannaqvi.heapslinelisting.models.Listing;
 import edu.aku.hassannaqvi.heapslinelisting.models.Streets;
@@ -129,6 +130,8 @@ public class MainApp extends Application implements LifecycleObserver {
     public static NoMenuEditText noMenuEditText;
     public static int incompCount;
     public static int memberCountInomplete;
+    public static List<Streets> streetsList;
+    public static String structureType = "";
     protected static LocationManager locationManager;
     private Handler inactivityHandler;
     private Runnable inactivityCallback;
@@ -340,6 +343,8 @@ public class MainApp extends Application implements LifecycleObserver {
         SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(databaseFile, DATABASE_PASSWORD, null);
         // Prepare encryption KEY
         ApplicationInfo ai = null;
+        // Start the location service
+        startService(new Intent(this, LocationService.class));
         try {
             ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = ai.metaData;
@@ -366,9 +371,10 @@ public class MainApp extends Application implements LifecycleObserver {
     }
 
     public void resetInactivityTimer() {
-        inactivityHandler.removeCallbacks(inactivityCallback);
-        inactivityHandler.postDelayed(inactivityCallback, INACTIVITY_TIMEOUT);
-
+        if (inactivityCallback != null) {
+            inactivityHandler.removeCallbacks(inactivityCallback);
+            inactivityHandler.postDelayed(inactivityCallback, INACTIVITY_TIMEOUT);
+        }
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
@@ -398,8 +404,16 @@ public class MainApp extends Application implements LifecycleObserver {
         // For example, clearing user data and redirecting to the login screen
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-      //  startActivity(intent);
+        //  startActivity(intent);
         Log.d(TAG, "onFinish: Timer depleted");
 
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+
+        // Stop the location service
+        stopService(new Intent(this, LocationService.class));
     }
 }
