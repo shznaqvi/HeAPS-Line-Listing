@@ -1,0 +1,72 @@
+name: Build APK
+
+on:
+  push:
+    tags:
+      - 'v*'  # Triggers the workflow on tags that start with 'v'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', 'gradle.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
+
+      - name: Prepare environment
+        run: sudo apt-get update && sudo apt-get install -y lib32stdc++6
+
+      - name: Set up Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: dependencies
+
+      - name: Build APK
+        run: ./gradlew assembleRelease
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release.apk
+          path: app/build/outputs/apk/release/*.apk
+
+      - name: Bump Version
+        id: bump-version
+        run: |
+          VERSION_FILE=version.properties
+          BUILD=$(grep VERSION_BUILD $VERSION_FILE | cut -d '=' -f2)
+          PATCH=$(grep VERSION_PATCH $VERSION_FILE | cut -d '=' -f2)
+          NUMBER=$(grep VERSION_NUMBER $VERSION_FILE | cut -d '=' -f2)
+          NEW_BUILD=$((BUILD + 1))
+          echo "VERSION_BUILD=$NEW_BUILD" > $VERSION_FILE
+          echo "VERSION_PATCH=$PATCH" >> $VERSION_FILE
+          echo "VERSION_NUMBER=$NUMBER" >> $VERSION_FILE
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add $VERSION_FILE
+          git commit -m "CI: Bump version to $NEW_BUILD"
+          git tag "v$NEW_BUILD"
+          git push origin --tags
+          git push origin
+
+      - name: Upload version.properties
+        uses: actions/upload-artifact@v3
+        with:
+          name: version.properties
+          path: version.properties
