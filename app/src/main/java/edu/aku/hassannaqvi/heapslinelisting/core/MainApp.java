@@ -82,7 +82,7 @@ public class MainApp extends Application implements LifecycleObserver {
     public static int URDU = 1;
     public static File sdDir;
     public static String selectedTab;
-    public static Listing selectedArea;
+    public static String selectedArea;
     public static String[] clusterInfo;
     public static int maxStructure;
     public static int hhid;
@@ -132,6 +132,7 @@ public class MainApp extends Application implements LifecycleObserver {
     public static int memberCountInomplete;
     public static List<Streets> streetsList;
     public static String structureType = "";
+    public static String selectedDistrictnName;
     protected static LocationManager locationManager;
     private Handler inactivityHandler;
     private Runnable inactivityCallback;

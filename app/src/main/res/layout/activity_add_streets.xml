@@ -78,6 +78,13 @@
                 </androidx.cardview.widget.CardView>
 
                 <!-- st01  Input-Numeric   -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_st01" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVst01"
                     style="@style/cardView">
@@ -93,11 +100,7 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_st01" />
+
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -112,12 +115,18 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/st01"
                             android:inputType="textCapWords"
-                            android:text="@={streets.st01}"
-                             />
+                            android:text="@={streets.st01}" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <!-- st02  Input-Numeric   -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_st03" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVst02"
                     style="@style/cardView">
@@ -133,11 +142,6 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_st03" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -154,12 +158,18 @@
                             android:inputType="textMultiLine|textCapSentences"
                             android:maxLines="10"
                             android:minLines="5"
-                            android:text="@={streets.st03}"
-                             />
+                            android:text="@={streets.st03}" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <!-- St04  Radio   -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_st04" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVSt04"
                     style="@style/cardView">
@@ -175,11 +185,7 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_st04" />
+
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -257,8 +263,6 @@
                                 android:text="@string/st0407" />
 
 
-
-
                             <!--               <RadioButton
                                                android:id="@+id/St0498"
                                                android:layout_width="match_parent"
@@ -280,6 +284,13 @@
 
 
                 <!-- st05 Input-Numeric -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/Q_st05" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVst05"
                     style="@style/cardView">
@@ -295,11 +306,7 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_st05" />
+
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -323,6 +330,13 @@
                 </androidx.cardview.widget.CardView>
 
                 <!-- st06 Input-Numeric -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_st06" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVst06"
                     style="@style/cardView">
@@ -338,11 +352,7 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_st06" />
+
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -366,6 +376,14 @@
                 </androidx.cardview.widget.CardView>
 
                 <!-- ST07 Floor Surface -->
+
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_st07" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVSt07"
                     style="@style/cardView">
@@ -382,11 +400,6 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_st07" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -479,6 +492,13 @@
 
 
                 <!-- St08  Radio   -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_st08" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVSt08"
                     style="@style/cardView">
@@ -494,11 +514,6 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_st08" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -553,6 +568,13 @@
                 </androidx.cardview.widget.CardView>
 
                 <!-- CardView for ST09 Key Public spaces [Multiple Response] -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_st09" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVSt09"
                     style="@style/cardView">
@@ -569,11 +591,6 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_st09" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -745,6 +762,13 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_st10" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVSt10"
                     style="@style/cardView">
@@ -760,11 +784,6 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_st10" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -785,6 +804,15 @@
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/Q_st11" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVSt11"
                     style="@style/cardView">
@@ -802,12 +830,6 @@
                             android:orientation="horizontal">
 
                             <!-- Question Number -->
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:text="@string/Q_st11" />
 
                             <!-- Field Name -->
                             <TextView

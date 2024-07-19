@@ -12,6 +12,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -27,6 +28,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -237,6 +239,18 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        // Ensure the EditText is focusable
+        bi.username.setFocusable(true);
+        bi.username.setFocusableInTouchMode(true);
+
+        // Request focus programmatically
+        bi.username.requestFocus();
+
+
+        // Force show the keyboard
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(bi.username, InputMethodManager.SHOW_IMPLICIT);
     }
 
     @Override
@@ -745,6 +759,11 @@ public class LoginActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(event);
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Refresh the UI or do other necessary updates
+    }
 
 }
 

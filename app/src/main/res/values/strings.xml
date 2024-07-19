@@ -241,9 +241,9 @@
     <string name="bg0801">House</string>
     <string name="bg0802">Apartment</string>
 
-    <string name="bg09">BG09 Does the structure contain more than one household?</string>
-    <string name="bg0901">Yes</string>
-    <string name="bg0902">No</string>
+    <string name="bg09">BG09 Is this structure single storey or multi-storey?</string>
+    <string name="bg0901">Single</string>
+    <string name="bg0902">Multi</string>
 
     <string name="bg10">BG10 If yes, how many households are in the structure?</string>
 
@@ -352,6 +352,7 @@
     <string name="Q_bg08" translatable="false">BG08</string>
     <string name="Q_bg09" translatable="false">BG09</string>
     <string name="Q_bg10" translatable="false">BG10</string>
+    <string name="Q_bg11" translatable="false">BG11</string>
 
     <string name="Q_hh11" translatable="false">HH11</string>
     <string name="Q_hh12" translatable="false">HH12</string>
@@ -382,6 +383,7 @@
     <string name="bl0401">Yes (Tablet A)</string>
     <string name="bl0402">No (Tablet B)</string>
     <string name="bl05">Street</string>
+    <string name="bg11">Height of the structure</string>
 
 
 </resources>

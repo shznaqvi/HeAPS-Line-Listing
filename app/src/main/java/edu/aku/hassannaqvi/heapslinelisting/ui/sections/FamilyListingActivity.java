@@ -14,6 +14,8 @@ import androidx.databinding.DataBindingUtil;
 
 import com.validatorcrawler.aliazaz.Validator;
 
+import net.sqlcipher.database.SQLiteException;
+
 import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
@@ -50,7 +52,8 @@ public class FamilyListingActivity extends AppCompatActivity {
 
 //        bi.hhid.setText("HFP-" + MainApp.listings.getHh01() + "\n" + MainApp.selectedTab + "-" + String.format("%04d", MainApp.maxStructure) + "-" + String.format("%03d", MainApp.hhid));
 
-        bi.hhid.setText(MainApp.listings.getClusterCode() + "-" + String.format("%02d", Integer.parseInt(MainApp.listings.getStreetNum())) + "\n" + MainApp.listings.getTabNo() + String.format("%03d", MainApp.maxStructure) + "-" + String.format("%02d", MainApp.hhid));
+        bi.hhid.setText(MainApp.listings.getClusterCode() + "-" + String.format("%02d", Integer.parseInt(MainApp.listings.getStreetNum()))
+                + "\n" + MainApp.listings.getTabNo() + String.format("%03d", MainApp.maxStructure) + "-" + String.format("%02d", MainApp.hhid) + MainApp.listings.getBg08());
         bi.hhid.setVisibility(View.VISIBLE);
         Toast.makeText(this, "Staring Household", Toast.LENGTH_SHORT).show();
 
@@ -109,7 +112,7 @@ public class FamilyListingActivity extends AppCompatActivity {
         long rowId = 0;
         try {
             rowId = db.addListing(MainApp.listings);
-        } catch (JSONException e) {
+        } catch (JSONException | SQLiteException e) {
             e.printStackTrace();
             Toast.makeText(this, R.string.db_excp_error, Toast.LENGTH_SHORT).show();
             return false;
@@ -137,7 +140,7 @@ public class FamilyListingActivity extends AppCompatActivity {
         bi.hh11.setText("Deleted");
 
 
-        if (updateDB()) {
+        if (insertNewRecord()) {
             finish();
             startActivity(new Intent(this, AddStructureActivity.class));
         } else Toast.makeText(this, "Failed to Update Database!", Toast.LENGTH_SHORT).show();

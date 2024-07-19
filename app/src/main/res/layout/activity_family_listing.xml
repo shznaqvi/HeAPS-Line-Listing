@@ -113,6 +113,13 @@
                 </androidx.cardview.widget.CardView>-->
 
                 <!-- hh11  Input   -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_hh11" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh11"
                     style="@style/cardView">
@@ -128,11 +135,6 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_hh11" />
 
                             <TextView
                                 android:layout_width="0dp"
@@ -194,6 +196,13 @@
                 </androidx.cardview.widget.CardView>-->
 
                 <!-- hh12  Input   -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_hh12" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh12"
                     style="@style/cardView">
@@ -209,11 +218,7 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_hh12" />
+
 
                             <TextView
                                 android:layout_width="0dp"
@@ -226,7 +231,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:enabled="false"
                                 android:gravity="center"
                                 android:hint="##"
                                 android:inputType="number"
@@ -241,6 +245,13 @@
                 </androidx.cardview.widget.CardView>
 
                 <!-- hh12a  Input   -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_hh12a" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh12a"
                     style="@style/cardView">
@@ -256,11 +267,7 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_hh12a" />
+
 
                             <TextView
                                 android:layout_width="0dp"
@@ -285,6 +292,13 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_hh12b" />
+
                 <!-- hh12b  Input   -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh12b"
@@ -301,11 +315,6 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_hh12b" />
 
                             <TextView
                                 android:layout_width="0dp"
@@ -331,6 +340,14 @@
                 </androidx.cardview.widget.CardView>
 
                 <!-- hh12c  Input   -->
+
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_hh12c" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh12c"
                     style="@style/cardView">
@@ -345,12 +362,6 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_hh12c" />
 
                             <TextView
                                 android:layout_width="0dp"
@@ -374,7 +385,16 @@
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
+
                 <!-- hh12d  Input   -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_hh12d" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh12d"
                     style="@style/cardView">
@@ -390,11 +410,7 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_hh12d" />
+
 
                             <TextView
                                 android:layout_width="0dp"
@@ -477,6 +493,13 @@
                 </androidx.cardview.widget.CardView>-->
 
                 <!-- hh12e  Input   -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_hh12e" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh12e"
                     style="@style/cardView"
@@ -493,11 +516,6 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_hh12e" />
 
                             <TextView
                                 android:layout_width="0dp"
@@ -697,6 +715,13 @@
                 </androidx.cardview.widget.CardView>-->
 
                 <!-- hh13a  Input-Numeric   -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_hh13a" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh13a"
                     style="@style/cardView"
@@ -713,11 +738,6 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_hh13a" />
 
                             <TextView
                                 android:layout_width="0dp"
@@ -805,6 +825,14 @@
                 </androidx.cardview.widget.CardView>-->
 
                 <!-- hh14a  Input-Numeric   -->
+
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_hh14a" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh14a"
                     style="@style/cardView"
@@ -821,11 +849,6 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_hh14a" />
 
                             <TextView
                                 android:layout_width="0dp"
@@ -852,6 +875,13 @@
                 </androidx.cardview.widget.CardView>
 
                 <!-- hh15  Radio   -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/Q_hh15" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh15"
                     style="@style/cardView"
@@ -868,11 +898,6 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_hh15" />
 
                             <TextView
                                 android:layout_width="match_parent"

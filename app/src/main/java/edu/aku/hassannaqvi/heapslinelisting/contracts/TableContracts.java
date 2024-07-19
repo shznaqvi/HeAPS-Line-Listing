@@ -43,8 +43,10 @@ public class TableContracts {
         public static final String COLUMN_UID = "_uid";
         public static final String COLUMN_STUID = "_stuid";
         public static final String COLUMN_DISTRICT_ID = "dist_id";
+        public static final String COLUMN_AREA = "area";
         public static final String COLUMN_CLUSTER_CODE = "clusterCode";
         public static final String COLUMN_STREET_NUMBER = "streetNum";
+        public static final String COLUMN_STRUCTURE_NUMBER = "structureNum";
         public static final String COLUMN_HHID = "hhid";
         public static final String COLUMN_USERNAME = "username";
         public static final String COLUMN_SYSDATE = "sysdate";

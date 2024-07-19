@@ -181,6 +181,8 @@
                                     android:radius="2dp"
                                     android:singleLine="true"
                                     android:textColor="@color/colorPrimary"
+                                    android:focusable="true"
+                                    android:focusableInTouchMode="true"
                                     android:textSize="18sp" />
 
                                 <TextView
@@ -204,6 +206,8 @@
                                         android:layout_gravity="center_horizontal"
                                         android:layout_margin="2dp"
                                         android:layout_weight="8"
+                                        android:focusable="true"
+                                        android:focusableInTouchMode="true"
                                         android:background="@color/white"
                                         android:drawableStart="@drawable/ic_lock_close"
                                         android:drawablePadding="8dp"

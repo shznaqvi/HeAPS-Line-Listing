@@ -52,23 +52,24 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/bl05" />
+                <!-- BL05 Cluster Name Input -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVStreet"
+                    style="@style/cardView">
 
-                   <!-- BL05 Cluster Name Input -->
-                 <androidx.cardview.widget.CardView
-                     android:id="@+id/fldGrpCVStreet"
-                     style="@style/cardView">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bottom"
+                        android:orientation="horizontal">
 
-                     <LinearLayout
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:background="@drawable/bottom"
-                         android:orientation="horizontal">
 
-                         <TextView
-                             style="@style/quesNum"
-                             android:layout_width="wrap_content"
-                             android:layout_height="match_parent"
-                             android:text="@string/bl05" />
 
                          <!--bl05 Cluster Code-->
                          <androidx.appcompat.widget.AppCompatSpinner
@@ -117,6 +118,12 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_bg06" />
                 <!-- bg06 Type of Structure -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVbg06"
@@ -133,11 +140,7 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_bg06" />
+
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -220,7 +223,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:checked="@{listings.bg06.equals(`8`)}"
-                                android:onClick="@{()->listings.setBg06(`8`)}"
+                                android:onClick="@{()->listings.setBg06(`8`) + bg07.clearCheck()}"
                                 android:text="@string/bg0608" />
 
                             <!-- For bg0609 (Temporarily Stop Listings) -->
@@ -228,21 +231,27 @@
                                 android:id="@+id/bg0609"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="@{listings.bg06.equals(`9`)}"
-                                android:onClick="@{()->listings.setBg06(`9`)}"
+                                android:checked="@{listings.bg06.equals(`9`) }"
+                                android:onClick="@{()->listings.setBg06(`9`) + bg07.clearCheck()}"
                                 android:text="@string/bg0609" />
 
                         </RadioGroup>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_bg07" />
                 <!-- bg07 Is Residential -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVbg07"
                     style="@style/cardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
+                    android:visibility="@{listings.bg06.equals(`8`) || listings.bg06.equals(`9`)? View.GONE : View.VISIBLE}">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -255,11 +264,7 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_bg07" />
+
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -272,7 +277,8 @@
                             android:id="@+id/bg07"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="@{bg0608.checked ? View.GONE : View.VISIBLE}">
 
                             <!-- For Residential - Yes -->
 
@@ -292,22 +298,27 @@
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:checked="@{listings.bg07.equals(`2`)}"
-                                android:onClick="@{()->listings.setBg07(`2`)}"
+                                android:onClick="@{()->listings.setBg07(`2`) + bg08.clearCheck()}"
                                 android:text="@string/bg0702" />
 
                         </RadioGroup>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_bg08" />
                 <!-- BG08 Type of Residence -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVBg08"
                     style="@style/cardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
 
-                    android:visibility="@{listings.getBg07().equals(`2`) ? View.GONE : View.VISIBLE}">
+                    android:visibility="@{listings.bg07.equals(`1`) ? View.VISIBLE  : View.GONE}">
 
 
                     <LinearLayout
@@ -321,11 +332,6 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_bg08" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -344,8 +350,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:checked="@{listings.bg08.equals(`1`)}"
-                                android:onClick="@{()->listings.setBg08(`1`)}"
+                                android:checked="@{listings.bg08.equals(`H`)}"
+                                android:onClick="@{()->listings.setBg08(`H`)}"
                                 android:text="@string/bg0801" />
 
                             <RadioButton
@@ -353,20 +359,29 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:checked="@{listings.bg08.equals(`2`)}"
-                                android:onClick="@{()->listings.setBg08(`2`)}"
+                                android:checked="@{listings.bg08.equals(`A`)}"
+                                android:onClick="@{()->listings.setBg08(`A`)}"
                                 android:text="@string/bg0802" />
                         </RadioGroup>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- BG10 Number of Households -->
+
+                <!-- BG09 Type of Residence -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_bg09" />
+
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/fldGrpCVbg10"
+                    android:id="@+id/fldGrpCVBg09"
                     style="@style/cardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
+                    android:visibility="@{listings.bg08.equals(`H`) ? View.VISIBLE  : View.GONE}">
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -379,11 +394,69 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
+
                             <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="@string/Q_bg10" />
+                                android:text="@string/bg09" />
+                        </LinearLayout>
+
+                        <RadioGroup
+                            android:id="@+id/bg09"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/bg0901"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:checked="@{listings.bg09.equals(`H`)}"
+                                android:onClick="@{()->listings.setBg09(`H`)}"
+                                android:text="@string/bg0901" />
+
+                            <RadioButton
+                                android:id="@+id/bg0902"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:checked="@{listings.bg09.equals(`A`)}"
+                                android:onClick="@{()->listings.setBg09(`A`)}"
+                                android:text="@string/bg0902" />
+                        </RadioGroup>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <!-- BG10 Number of Households -->
+
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="17dp"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_bg10" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVbg10"
+                    style="@style/cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{listings.bg07.equals(`1`) ? View.VISIBLE  : View.GONE}">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -402,6 +475,50 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- BG11 Number of Households -->
+
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="17dp"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_bg11" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVbg11"
+                    style="@style/cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/bg11" />
+
+                        </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/etBG11"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:text="@={listings.bg11}" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
                 <!--EndButton LinearLayout-->
                 <LinearLayout

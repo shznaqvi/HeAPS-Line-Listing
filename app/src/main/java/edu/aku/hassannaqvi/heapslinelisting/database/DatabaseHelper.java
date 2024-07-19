@@ -92,7 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //ADDITION in DB
-    public long addListing(Listing listing) throws JSONException {
+    public long addListing(Listing listing) throws JSONException, SQLiteException {
         SQLiteDatabase db = null;
         long newRowId = -1;
 
@@ -108,8 +108,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(ListingTable.COLUMN_UID, listing.getUid());
         values.put(ListingTable.COLUMN_STUID, listing.getStuid());
         values.put(ListingTable.COLUMN_DISTRICT_ID, listing.getDistrictID());
+        values.put(ListingTable.COLUMN_AREA, listing.getArea());
         values.put(ListingTable.COLUMN_CLUSTER_CODE, listing.getClusterCode());
         values.put(ListingTable.COLUMN_STREET_NUMBER, listing.getStreetNum()); // Include street number if applicable
+        values.put(ListingTable.COLUMN_STRUCTURE_NUMBER, listing.getStructureNo());
         values.put(ListingTable.COLUMN_HHID, listing.getHhid());
         values.put(ListingTable.COLUMN_USERNAME, listing.getUserName());
         values.put(ListingTable.COLUMN_SYSDATE, listing.getSysDate());

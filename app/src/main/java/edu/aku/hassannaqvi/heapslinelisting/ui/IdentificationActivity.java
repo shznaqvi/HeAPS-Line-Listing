@@ -54,7 +54,6 @@ public class IdentificationActivity extends AppCompatActivity {
         bi.setCallback(this);
         db = MainApp.appInfo.dbHelper;
         MainApp.selectedCluster = new Cluster();
-        MainApp.selectedArea = new Listing();
         listings = new Listing();
         bi.setListing(listings);
         st = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime());
@@ -164,6 +163,7 @@ public class IdentificationActivity extends AppCompatActivity {
             bi.clusterCode.setError(null); // Clear the error
             MainApp.clusterInfo = MainApp.sharedPref.getString(MainApp.selectedCluster.getClusterCode(), "0|0").split("\\|");
             MainApp.maxStructure = Integer.parseInt(MainApp.clusterInfo[0]);
+            MainApp.selectedTab = MainApp.clusterInfo[1];
 
           /*  if (!MainApp.clusterInfo[0].equals("0")) {
                 //bi.fldGrpCVhh02e.setVisibility(View.GONE);
@@ -196,13 +196,13 @@ public class IdentificationActivity extends AppCompatActivity {
                 // MainApp.listings.setTabNo(MainApp.clusterInfo[1]);
                 if (MainApp.clusterInfo[1].equals("A")) {
                     //bi.hh031.setChecked(true);
-                    listings.setBl04("1");
+                    listings.setTabNo("A");
                     MainApp.selectedTab = "A";
                     bi.fldGrpCVbl04.setVisibility(View.GONE);
 
                 } else if (MainApp.clusterInfo[1].equals("B")) {
                     //bi.hh032.setChecked(true);
-                    listings.setBl04("2");
+                    listings.setTabNo("B");
                     MainApp.selectedTab = "B";
                     bi.fldGrpCVbl04.setVisibility(View.GONE);
 
@@ -235,11 +235,9 @@ public class IdentificationActivity extends AppCompatActivity {
 
         // if (!formValidation()) return;
 
-//        if (bi.fldGrpCVbl04.getVisibility() == View.VISIBLE)
-//            MainApp.selectedTab = bi.bl0401.isChecked() ? "A" : "B";
-//        else
-//            MainApp.selectedTab = MainApp.selectedArea.getTabNo();
-        // MainApp.listings.setTabNo(MainApp.selectedTab);
+        if (bi.fldGrpCVbl04.getVisibility() == View.VISIBLE)
+            MainApp.selectedTab = bi.bl0401.isChecked() ? "A" : "B";
+
         finish();
         startActivity(new Intent(this, AddStructureActivity.class));
 
@@ -286,6 +284,7 @@ public class IdentificationActivity extends AppCompatActivity {
 
                 if (position == 0) return;
                 MainApp.selectedDistrict = distCodes.get(bi.district.getSelectedItemPosition());
+                MainApp.selectedDistrictnName = distNames.get(bi.district.getSelectedItemPosition());
 
                 updateAreaSpinner(MainApp.selectedDistrict);
 
@@ -318,6 +317,25 @@ public class IdentificationActivity extends AppCompatActivity {
 
         // Apply the adapter to the area spinner
         bi.area.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, areaNames));
+
+        bi.area.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+                if (position == 0) return;
+                MainApp.selectedArea = areaNames.get(bi.area.getSelectedItemPosition());
+
+                // updateAreaSpinner(MainApp.selectedArea);
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override

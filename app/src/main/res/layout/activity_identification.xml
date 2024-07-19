@@ -43,6 +43,7 @@
                 android:id="@+id/GrpName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -91,48 +92,56 @@
                         android:textStyle="bold" />
                 </RelativeLayout>
 
-
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/bl01" />
                 <!-- BL01 - District Spinner -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVDistrict"
                     style="@style/cardView">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+
+                            <!--bl01-->
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/district"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/bl02" />
+
+                <androidx.cardview.widget.CardView style="@style/cardView">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bottom"
                         android:orientation="horizontal">
 
-                        <TextView
-                            style="@style/quesNum"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="@string/bl01" />
-                        <!--bl01-->
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/district"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2"
-                            />
-                    </LinearLayout>
 
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bottom"
-                        android:orientation="horizontal"
-                     >
-
-                        <TextView
-                            style="@style/quesNum"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="@string/bl02" />
                         <!--bl02-->
                         <androidx.appcompat.widget.AppCompatSpinner
                             android:id="@+id/area"
@@ -141,9 +150,14 @@
                             android:layout_weight="2"
                             android:hint="@string/bl02" />
                     </LinearLayout>
-                    </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/bl03" />
                 <!-- BL03 Cluster Name Input -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVClusterName"
@@ -155,11 +169,7 @@
                         android:background="@drawable/bottom"
                         android:orientation="horizontal">
 
-                        <TextView
-                            style="@style/quesNum"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="@string/bl03" />
+
 
                         <!--bl03 Cluster Code-->
                         <EditText
@@ -216,9 +226,16 @@
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>-->
-                
-                
+
+
                 <!-- hh03  Radio   -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_bl04" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVbl04"
                     style="@style/cardView"
@@ -236,12 +253,6 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-
-                                android:text="@string/Q_bl04" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -261,8 +272,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:checked="@{listing.bl04.equals(`1`)}"
-                                android:onClick="@{()->listing.setBl04(`1`)}"
+                                android:checked="@{listing.tabNo.equals(`A`)}"
+                                android:onClick="@{()->listing.setTabNo(`A`)}"
                                 android:text="@string/bl0401" />
 
                             <RadioButton
@@ -270,8 +281,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:checked="@{listing.bl04.equals(`2`)}"
-                                android:onClick="@{()->listing.setBl04(`2`)}"
+                                android:checked="@{listing.tabNo.equals(`B`)}"
+                                android:onClick="@{()->listing.setTabNo(`B`)}"
                                 android:text="@string/bl0402" />
                         </RadioGroup>
                     </LinearLayout>

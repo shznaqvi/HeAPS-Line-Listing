@@ -3,8 +3,7 @@ package edu.aku.hassannaqvi.heapslinelisting.models;
 
 import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.PROJECT_NAME;
 import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp._EMPTY_;
-import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.selectedCluster;
-import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.selectedDistrict;
+import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.listings;
 
 import android.database.Cursor;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.util.Log;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.Observable;
-import androidx.databinding.PropertyChangeRegistry;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,14 +28,6 @@ public class Listing extends BaseObservable implements Observable {
     final String TAG = "Listing";
 
 
-    // FIELD VARIABLES for BL group (BL01 - BL02)
-    public String bl01 = _EMPTY_;
-    public String bl02 = _EMPTY_;
-    public String bl03 = _EMPTY_;
-    public String bl04 = _EMPTY_; // tabno
-    public String bl05 = _EMPTY_; // present at same location
-    public String bl06 = _EMPTY_; // hhid
-
     // FIELD VARIABLES for Building group (BG01 - BG10)
     public String bg01 = _EMPTY_;
     public String bg02 = _EMPTY_;
@@ -49,6 +39,14 @@ public class Listing extends BaseObservable implements Observable {
     public String bg08 = _EMPTY_;
     public String bg09 = _EMPTY_;
     public String bg10 = _EMPTY_;
+    public String bg11 = _EMPTY_;
+
+    public String hh01 = _EMPTY_; // interviewer
+    public String hh02 = _EMPTY_; // district name
+    public String hh03 = _EMPTY_; // area name
+    public String hh04 = _EMPTY_; // cluster number
+    public String hh05 = _EMPTY_; // street number
+    public String hh06 = _EMPTY_; // structure number
 
     public String hh11 = _EMPTY_;
     public String hh12 = _EMPTY_;
@@ -69,7 +67,6 @@ public class Listing extends BaseObservable implements Observable {
     public String hh12e = _EMPTY_;
     public String hh15 = _EMPTY_;
 
-    transient PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
 
     // APP VARIABLES
     String projectName = PROJECT_NAME;
@@ -80,11 +77,12 @@ public class Listing extends BaseObservable implements Observable {
     String sysDate = _EMPTY_;
     String districtID = _EMPTY_;
     String districtName = _EMPTY_;
+    String area = _EMPTY_;
     String clusterCode = _EMPTY_;
     String streetNum = _EMPTY_;
-    String area = _EMPTY_;
-    String hhid = _EMPTY_;
     String tabNo = _EMPTY_;
+    String structureNo = _EMPTY_;
+    String hhid = _EMPTY_;
     String deviceId = _EMPTY_;
     String appver = _EMPTY_;
     String endTime = _EMPTY_;
@@ -103,27 +101,7 @@ public class Listing extends BaseObservable implements Observable {
         setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
     }
 
-    synchronized void notifyChange(int propertyId) {
-        if (propertyChangeRegistry == null) {
-            propertyChangeRegistry = new PropertyChangeRegistry();
-        }
-        propertyChangeRegistry.notifyChange(this, propertyId);
-    }
 
-    @Override
-    public synchronized void addOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
-        if (propertyChangeRegistry == null) {
-            propertyChangeRegistry = new PropertyChangeRegistry();
-        }
-        propertyChangeRegistry.add(callback);
-    }
-
-    @Override
-    public synchronized void removeOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
-        if (propertyChangeRegistry != null) {
-            propertyChangeRegistry.remove(callback);
-        }
-    }
 
     public void populateMeta() {
         setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
@@ -131,12 +109,13 @@ public class Listing extends BaseObservable implements Observable {
         setDeviceId(MainApp.deviceid);  // Ensure this is properly set in your application
         setAppver(MainApp.appInfo.getAppVersion());      // Ensure this is properly set in your application
         setProjectName(PROJECT_NAME); // Ensure this is properly set in your application
-        setDistrictID(selectedDistrict); // Ensure this is properly set in your application
-        setClusterCode(selectedCluster.getClusterCode()); // Ensure this is properly set in your application
-        setDistrictName(selectedCluster.getDistName()); // Ensure this is properly set in your application
-        setStuid(MainApp.streets.getUid());
-        setStreetNum(MainApp.streets.getstreetNum());
-        setHhid(String.valueOf(MainApp.hhid));
+        listings.setUserName(MainApp.user.getUserName());
+        listings.setDistrictID(MainApp.selectedDistrict);
+        listings.setDistrictName(MainApp.selectedDistrictnName);
+        listings.setArea(MainApp.selectedArea);
+        listings.setClusterCode(MainApp.selectedCluster.getClusterCode());
+        listings.setStreetNum(MainApp.streets.getstreetNum());
+        listings.setTabNo(MainApp.selectedTab);
         setGPS();
     }
 
@@ -217,8 +196,20 @@ public class Listing extends BaseObservable implements Observable {
 
     public void setDistrictID(String districtID) {
         this.districtID = districtID;
-        this.bl01 = districtID;
+        this.hh02 = districtID;
         notifyPropertyChanged(BR.districtID);
+    }
+
+    // Area
+    @Bindable
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+        setHh03(area);
+        notifyPropertyChanged(BR.area);
     }
 
     // StreetNum
@@ -229,6 +220,7 @@ public class Listing extends BaseObservable implements Observable {
 
     public void setStreetNum(String streetNum) {
         this.streetNum = streetNum;
+        setHh05(streetNum);
         notifyPropertyChanged(BR.streetNum);
     }
     
@@ -240,7 +232,20 @@ public class Listing extends BaseObservable implements Observable {
 
     public void setClusterCode(String clusterCode) {
         this.clusterCode = clusterCode;
+        setHh04(clusterCode);
         notifyPropertyChanged(BR.clusterCode);
+    }
+
+    // StructureNo
+    @Bindable
+    public String getStructureNo() {
+        return structureNo;
+    }
+
+    public void setStructureNo(String structureNo) {
+        this.structureNo = structureNo;
+        setHh06(structureNo);
+        notifyPropertyChanged(BR.structureNo);
     }
 
     // Hhid
@@ -271,6 +276,7 @@ public class Listing extends BaseObservable implements Observable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+        setHh01(userName);
     }
 
     // SysDate
@@ -414,60 +420,7 @@ public class Listing extends BaseObservable implements Observable {
         notifyPropertyChanged(BR.iStatus96x);
     }
 
-    // BL01
-    @Bindable
-    public String getBl01() {
-        return bl01;
-    }
 
-    public void setBl01(String bl01) {
-        this.bl01 = bl01;
-        notifyPropertyChanged(BR.bl01);
-    }
-
-    // BL02
-    @Bindable
-    public String getBl02() {
-        return bl02;
-    }
-
-    public void setBl02(String bl02) {
-        this.bl02 = bl02;
-        notifyPropertyChanged(BR.bl02);
-    }
-
-    @Bindable
-    public String getBl04() {
-        return bl04;
-    }
-
-    public void setBl04(String bl04) {
-        this.bl04 = bl04;
-        setTabNo(bl04.equals("1") ? "A" : bl04.equals("2") ? "B" : "0");
-        notifyPropertyChanged(BR.bl04);
-    }
-
-    // bl05
-    @Bindable
-    public String getBl05() {
-        return bl05;
-    }
-
-    public void setBl05(String bl05) {
-        this.bl05 = bl05;
-        notifyPropertyChanged(BR.bl05);
-    }
-
-    // bl06
-    @Bindable
-    public String getBl06() {
-        return bl06;
-    }
-
-    public void setBl06(String bl06) {
-        this.bl06 = bl06;
-        notifyPropertyChanged(BR.bl06);
-    }
 
     // bg01
     @Bindable
@@ -532,6 +485,7 @@ public class Listing extends BaseObservable implements Observable {
 
     public void setBg06(String bg06) {
         this.bg06 = bg06;
+        setBg07(bg06.equals("8") || bg06.equals("9") ? "" : bg07);
         notifyPropertyChanged(BR.bg06);
     }
 
@@ -543,6 +497,8 @@ public class Listing extends BaseObservable implements Observable {
 
     public void setBg07(String bg07) {
         this.bg07 = bg07;
+        setBg08(bg07.equals("1") ? bg08 : "");
+        setBg10(bg07.equals("1") ? bg10 : "");
         notifyPropertyChanged(BR.bg07);
 
     }
@@ -555,6 +511,7 @@ public class Listing extends BaseObservable implements Observable {
 
     public void setBg08(String bg08) {
         this.bg08 = bg08;
+        setBg09(bg08.equals("H") ? bg08 : "");
         notifyPropertyChanged(BR.bg08);
     }
 
@@ -579,6 +536,77 @@ public class Listing extends BaseObservable implements Observable {
         this.bg10 = bg10;
         notifyPropertyChanged(BR.bg10);
     }
+
+    @Bindable
+    public String getBg11() {
+        return bg11;
+    }
+
+    public void setBg11(String bg11) {
+        this.bg11 = bg11;
+        notifyPropertyChanged(BR.bg11);
+    }
+
+    @Bindable
+    public String getHh01() {
+        return hh01;
+    }
+
+    public void setHh01(String hh01) {
+        this.hh01 = hh01;
+        notifyPropertyChanged(BR.hh01);
+    }
+
+    @Bindable
+    public String getHh02() {
+        return hh02;
+    }
+
+    public void setHh02(String hh02) {
+        this.hh02 = hh02;
+        notifyPropertyChanged(BR.hh02);
+    }
+
+    @Bindable
+    public String getHh03() {
+        return hh03;
+    }
+
+    public void setHh03(String hh03) {
+        this.hh03 = hh03;
+        notifyPropertyChanged(BR.hh03);
+    }
+
+    @Bindable
+    public String getHh04() {
+        return hh04;
+    }
+
+    public void setHh04(String hh04) {
+        this.hh04 = hh04;
+        notifyPropertyChanged(BR.hh04);
+    }
+
+    @Bindable
+    public String getHh05() {
+        return hh05;
+    }
+
+    public void setHh05(String hh05) {
+        this.hh05 = hh05;
+        notifyPropertyChanged(BR.hh05);
+    }
+
+    @Bindable
+    public String getHh06() {
+        return hh06;
+    }
+
+    public void setHh06(String hh06) {
+        this.hh06 = hh06;
+        notifyPropertyChanged(BR.hh06);
+    }
+
 
     // HH11
     @Bindable
@@ -788,7 +816,10 @@ public class Listing extends BaseObservable implements Observable {
         this.stuid = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_STUID));
         this.projectName = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_PROJECT_NAME));
         this.districtID = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_DISTRICT_ID));
+        this.area = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_AREA));
         this.clusterCode = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_CLUSTER_CODE));
+        this.streetNum = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_STREET_NUMBER));
+        this.structureNo = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_STRUCTURE_NUMBER));
         this.hhid = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_HHID));
 
         this.userName = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_USERNAME));
@@ -824,6 +855,13 @@ public class Listing extends BaseObservable implements Observable {
         Log.d(TAG, "sHHHydrate: " + jsonString);
         if (jsonString != null) {
             JSONObject json = new JSONObject(jsonString);
+
+            this.hh01 = json.getString("hh01");
+            this.hh02 = json.getString("hh02");
+            this.hh03 = json.getString("hh03");
+            this.hh04 = json.getString("hh04");
+            this.hh05 = json.getString("hh05");
+            this.hh06 = json.getString("hh06");
 
             // HH (11-15 and subcolumns)
             this.hh11 = json.getString("hh11");
@@ -863,6 +901,7 @@ public class Listing extends BaseObservable implements Observable {
             this.bg08 = json.getString("bg08");
             this.bg09 = json.getString("bg09");
             this.bg10 = json.getString("bg10");
+            this.bg11 = json.getString("bg11");
         }
     }
 
@@ -875,8 +914,10 @@ public class Listing extends BaseObservable implements Observable {
         json.put(ListingTable.COLUMN_STUID, this.stuid);
         json.put(ListingTable.COLUMN_PROJECT_NAME, this.projectName);
         json.put(ListingTable.COLUMN_DISTRICT_ID, this.districtID);
+        json.put(ListingTable.COLUMN_AREA, this.area);
         json.put(ListingTable.COLUMN_CLUSTER_CODE, this.clusterCode);
         json.put(ListingTable.COLUMN_STREET_NUMBER, this.streetNum);
+        json.put(ListingTable.COLUMN_STRUCTURE_NUMBER, this.structureNo);
         json.put(ListingTable.COLUMN_HHID, this.hhid);
         json.put(ListingTable.COLUMN_USERNAME, this.userName);
         json.put(ListingTable.COLUMN_SYSDATE, this.sysDate);
@@ -909,6 +950,14 @@ public class Listing extends BaseObservable implements Observable {
         Log.d(TAG, "sHHtoString: ");
 
         JSONObject json = new JSONObject();
+
+        json.put("hh01", hh01);
+        json.put("hh02", hh02);
+        json.put("hh03", hh03);
+        json.put("hh04", hh04);
+        json.put("hh05", hh05);
+        json.put("hh06", hh06);
+
         json.put("hh11", hh11);
         json.put("hh12", hh12);
         json.put("hh12a", hh12a);
@@ -945,6 +994,7 @@ public class Listing extends BaseObservable implements Observable {
         json.put("bg08", bg08);
         json.put("bg09", bg09);
         json.put("bg10", bg10);
+        json.put("bg11", bg11);
 
         return json.toString();
     }
@@ -964,6 +1014,7 @@ public class Listing extends BaseObservable implements Observable {
         this.bg08 = "";
         this.bg09 = "";
         this.bg10 = "";
+        this.bg11 = "";
     }
 
     public void setHHClear() {
@@ -971,6 +1022,12 @@ public class Listing extends BaseObservable implements Observable {
         setHhid(String.valueOf(MainApp.hhid));
 
         this.uid = "";
+        this.hh01 = "";
+        this.hh02 = "";
+        this.hh03 = "";
+        this.hh04 = "";
+        this.hh05 = "";
+        this.hh06 = "";
         this.hh11 = "";
         this.hh12 = "";
         this.hh12a = "";

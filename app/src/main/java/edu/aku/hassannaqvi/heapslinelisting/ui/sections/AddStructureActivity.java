@@ -1,7 +1,6 @@
 package edu.aku.hassannaqvi.heapslinelisting.ui.sections;
 
 
-import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp._EMPTY_;
 import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.editor;
 import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.listings;
 
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -24,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.validatorcrawler.aliazaz.Validator;
+
+import net.sqlcipher.database.SQLiteException;
 
 import org.json.JSONException;
 
@@ -78,26 +78,27 @@ public class AddStructureActivity extends AppCompatActivity {
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
         listings.setBGClear();
+        listings.setHHClear();
         populateSpinner();
 
         MainApp.maxStructure++;
         MainApp.hhid = 0;
 
-        bi.bg07.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (bi.bg0702.isChecked()) {
-                    bi.fldGrpCVBg08.setVisibility(View.GONE);
-                    bi.fldGrpCVbg10.setVisibility(View.GONE);
-                    listings.setBg07(_EMPTY_);
-                    bi.bg08.clearCheck();
-                    listings.setBg10(_EMPTY_);
-                } else {
-                    bi.fldGrpCVBg08.setVisibility(View.VISIBLE);
-                    bi.fldGrpCVbg10.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+//        bi.bg07.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+//                if (bi.bg0702.isChecked()) {
+//                    bi.fldGrpCVBg08.setVisibility(View.GONE);
+//                    bi.fldGrpCVbg10.setVisibility(View.GONE);
+//                    listings.setBg07(_EMPTY_);
+//                    bi.bg08.clearCheck();
+//                    listings.setBg10(_EMPTY_);
+//                } else {
+//                    bi.fldGrpCVBg08.setVisibility(View.VISIBLE);
+//                    bi.fldGrpCVbg10.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
 
     }
 
@@ -141,7 +142,10 @@ public class AddStructureActivity extends AppCompatActivity {
                 if (bi.street.getSelectedItemPosition() != 0) {
                     MainApp.streets = MainApp.streetsList.get(bi.street.getSelectedItemPosition() - 1);
                     listings.populateMeta();
-                    listings.setTabNo(MainApp.selectedTab);
+                    listings.setStructureNo(String.format("%03d", MainApp.maxStructure));
+
+
+                    // set label in layout
                     bi.hhid.setText(listings.getClusterCode() + "-" + String.format("%02d", Integer.parseInt(streetNum.get(bi.street.getSelectedItemPosition()))) + "\n" + listings.getTabNo() + String.format("%03d", MainApp.maxStructure));
                     bi.hhid.setVisibility(View.VISIBLE);
                 }
@@ -159,9 +163,9 @@ public class AddStructureActivity extends AppCompatActivity {
             MainApp.structureType = listings.getBg08().equals("1") ? "H" : listings.getBg08().equals("1") ? "B" : "";
             if (bi.bg0608.isChecked() || bi.bg0609.isChecked()) {
                 MainApp.maxStructure--;
-                listings.setBl06("");
+                //listings.setBl06("");
             }
-            editor.putString(MainApp.selectedCluster.getClusterCode(), MainApp.maxStructure + "|" + listings.getTabNo());
+            editor.putString(MainApp.selectedCluster.getClusterCode(), MainApp.maxStructure + "|" + MainApp.selectedTab);
             editor.apply();
 
             Intent i;
@@ -223,7 +227,7 @@ public class AddStructureActivity extends AppCompatActivity {
         long rowId = 0;
         try {
             rowId = db.addListing(listings);
-        } catch (JSONException e) {
+        } catch (JSONException | SQLiteException e) {
             e.printStackTrace();
             Toast.makeText(this, R.string.db_excp_error, Toast.LENGTH_SHORT).show();
             return false;
@@ -243,7 +247,7 @@ public class AddStructureActivity extends AppCompatActivity {
 
             if (updCount > 0) {
 
-                editor.putString(MainApp.selectedCluster.getClusterCode(), MainApp.maxStructure + "|" + listings.getTabNo());
+                editor.putString(MainApp.selectedCluster.getClusterCode(), MainApp.maxStructure + "|" + MainApp.selectedTab);
                 editor.apply();
 
                 return true;

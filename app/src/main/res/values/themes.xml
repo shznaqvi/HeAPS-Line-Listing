@@ -378,7 +378,10 @@
     <style name="cardView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
         <item name="android:padding">6dp</item>
         <item name="android:background">@color/whiteOverlay</item>
         <!-- <item name="android:layout_marginRight">15dp</item>
@@ -388,18 +391,21 @@
     </style>
 
     <style name="quesNum">
-        <item name="android:background">@color/colorPrimaryLight</item>
+        <item name="android:background">@drawable/rounded_top_corners</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">11sp</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:paddingStart">4dp</item>
-        <item name="android:paddingEnd">4dp</item>
-        <item name="android:minHeight">52dp</item>
-        <item name="android:minWidth">56dp</item>
-        <item name="android:gravity">center</item>
+        <item name="android:minWidth">96dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:gravity">start</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:minHeight">13dp</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
         <item name="android:typeface">sans</item>
     </style>
+
 
     <style name="info">
         <item name="android:layout_margin">4dp</item>
