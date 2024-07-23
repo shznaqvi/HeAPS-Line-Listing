@@ -1,10 +1,13 @@
 package edu.aku.hassannaqvi.heapslinelisting.ui.sections;
 
 
+import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.hhid;
 import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.listings;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -52,10 +55,34 @@ public class FamilyListingActivity extends AppCompatActivity {
 
 //        bi.hhid.setText("HFP-" + MainApp.listings.getHh01() + "\n" + MainApp.selectedTab + "-" + String.format("%04d", MainApp.maxStructure) + "-" + String.format("%03d", MainApp.hhid));
 
-        bi.hhid.setText(MainApp.listings.getClusterCode() + "-" + String.format("%02d", Integer.parseInt(MainApp.listings.getStreetNum()))
-                + "\n" + MainApp.listings.getTabNo() + String.format("%03d", MainApp.maxStructure) + "-" + String.format("%02d", MainApp.hhid) + MainApp.listings.getBg08());
-        bi.hhid.setVisibility(View.VISIBLE);
+
         Toast.makeText(this, "Staring Household", Toast.LENGTH_SHORT).show();
+
+        bi.fl02.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                //Cluster—Street—Structure—Floors—Apartment—Houehold
+
+                String floor = listings.getFl01();
+                String apartment = listings.getFl02();
+                MainApp.civilID2 = MainApp.civilID + "-" + floor + "-" + apartment + "-" + String.format("%02d", hhid) + MainApp.listings.getBg08();
+
+                bi.hhid.setText(MainApp.civilID2);
+                bi.hhid.setVisibility(View.VISIBLE);
+
+
+            }
+        });
 
 
     }

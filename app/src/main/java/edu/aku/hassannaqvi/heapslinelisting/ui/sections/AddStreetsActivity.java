@@ -67,7 +67,14 @@ public class AddStreetsActivity extends AppCompatActivity {
         if (rowId > 0) {
             streets.setUid(streets.getDeviceId() + streets.getId());
             db.updateStreetColumn(TableContracts.StreetsTable.COLUMN_UID, streets.getUid());
-            return true;
+            try {
+                db.updateStreetColumn(TableContracts.StreetsTable.COLUMN_SST, streets.sSTtoString());
+                return true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "JSONException(Listing): ", Toast.LENGTH_SHORT).show();
+                return false;
+            }
         } else {
             Toast.makeText(this, R.string.upd_db_error, Toast.LENGTH_SHORT).show();
             return false;

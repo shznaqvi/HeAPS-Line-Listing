@@ -3,6 +3,7 @@ package edu.aku.hassannaqvi.heapslinelisting.ui.sections;
 
 import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.editor;
 import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.listings;
+import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.selectedCluster;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -123,7 +124,7 @@ public class AddStructureActivity extends AppCompatActivity {
         }
         // Populate streetNames and streetCodes from your list
         for (Streets street : MainApp.streetsList) {
-            streetNames.add(street.getSt01());
+            streetNames.add("Street #" + street.getstreetNum());
             streetNum.add(street.getstreetNum());
         }
 
@@ -143,6 +144,15 @@ public class AddStructureActivity extends AppCompatActivity {
                     MainApp.streets = MainApp.streetsList.get(bi.street.getSelectedItemPosition() - 1);
                     listings.populateMeta();
                     listings.setStructureNo(String.format("%03d", MainApp.maxStructure));
+
+
+                    //Cluster—Street—Structure—Floors—Apartment—Houehold
+
+                    String cluster = selectedCluster.getClusterCode();
+                    String street = String.format("%02d", Integer.parseInt(listings.getStreetNum()));
+                    String structure = listings.getTabNo() + String.format("%03d", MainApp.maxStructure);
+
+                    MainApp.civilID = cluster + "-" + street + "\n" + structure;
 
 
                     // set label in layout

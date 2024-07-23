@@ -47,31 +47,7 @@ object CreateTable {
             StreetsTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             StreetsTable.COLUMN_BL01 + " TEXT, " +
             StreetsTable.COLUMN_BL02 + " TEXT, " +
-            StreetsTable.COLUMN_ST01 + " TEXT, " +
-            StreetsTable.COLUMN_ST02 + " TEXT, " +
-            StreetsTable.COLUMN_ST03 + " TEXT, " +
-            StreetsTable.COLUMN_ST04 + " TEXT, " +
-            StreetsTable.COLUMN_ST05 + " TEXT, " +
-            StreetsTable.COLUMN_ST06 + " TEXT, " +
-            StreetsTable.COLUMN_ST07 + " TEXT, " +
-            StreetsTable.COLUMN_ST08 + " TEXT, " +
-            StreetsTable.COLUMN_ST0901 + " TEXT, " +
-            StreetsTable.COLUMN_ST0902 + " TEXT, " +
-            StreetsTable.COLUMN_ST0903 + " TEXT, " +
-            StreetsTable.COLUMN_ST0904 + " TEXT, " +
-            StreetsTable.COLUMN_ST0905 + " TEXT, " +
-            StreetsTable.COLUMN_ST0906 + " TEXT, " +
-            StreetsTable.COLUMN_ST0907 + " TEXT, " +
-            StreetsTable.COLUMN_ST0908 + " TEXT, " +
-            StreetsTable.COLUMN_ST0909 + " TEXT, " +
-            StreetsTable.COLUMN_ST0910 + " TEXT, " +
-            StreetsTable.COLUMN_ST0911 + " TEXT, " +
-            StreetsTable.COLUMN_ST0912 + " TEXT, " +
-            StreetsTable.COLUMN_ST0913 + " TEXT, " +
-            StreetsTable.COLUMN_ST0914 + " TEXT, " +
-            StreetsTable.COLUMN_ST10 + " TEXT, " +
-            StreetsTable.COLUMN_ST11 + " TEXT, " +
-            StreetsTable.COLUMN_ST12 + " TEXT, " +
+            StreetsTable.COLUMN_SST + " TEXT, " +
             StreetsTable.COLUMN_PROJECT_NAME + " TEXT, " +
             StreetsTable.COLUMN_UID + " TEXT, " +
             StreetsTable.COLUMN_DISTRICT_ID + " TEXT, " +

@@ -83,7 +83,7 @@
             android:name=".database.AndroidManager"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.lists.FormsReportPending"
             android:exported="false"

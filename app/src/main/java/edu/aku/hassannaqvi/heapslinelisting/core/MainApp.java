@@ -133,6 +133,8 @@ public class MainApp extends Application implements LifecycleObserver {
     public static List<Streets> streetsList;
     public static String structureType = "";
     public static String selectedDistrictnName;
+    public static String civilID;
+    public static String civilID2;
     protected static LocationManager locationManager;
     private Handler inactivityHandler;
     private Runnable inactivityCallback;

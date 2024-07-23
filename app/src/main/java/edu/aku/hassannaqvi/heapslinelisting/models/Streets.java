@@ -6,11 +6,11 @@ import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp._EMPTY_;
 import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.selectedCluster;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.Observable;
-import androidx.databinding.PropertyChangeRegistry;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +39,17 @@ public class Streets extends BaseObservable implements Observable {
     public String st03 = _EMPTY_;
     public String st04 = _EMPTY_;
     public String st05 = _EMPTY_;
+    public String st0501 = _EMPTY_;
+    public String st0502 = _EMPTY_;
+    public String st0503 = _EMPTY_;
+    public String st0504 = _EMPTY_;
+    public String st0505 = _EMPTY_;
     public String st06 = _EMPTY_;
+    public String st0601 = _EMPTY_;
+    public String st0602 = _EMPTY_;
+    public String st0603 = _EMPTY_;
+    public String st0604 = _EMPTY_;
+    public String st0605 = _EMPTY_;
     public String st07 = _EMPTY_;
     public String st08 = _EMPTY_;
     // String variables for ST09 options
@@ -83,13 +93,9 @@ public class Streets extends BaseObservable implements Observable {
     String districtID = _EMPTY_;
     String clusterCode = _EMPTY_;
     String streetNum = _EMPTY_;
+/*
 
     transient PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
-
-
-    public Streets() {
-        setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
-    }
 
     synchronized void notifyChange(int propertyId) {
         if (propertyChangeRegistry == null) {
@@ -112,6 +118,12 @@ public class Streets extends BaseObservable implements Observable {
             propertyChangeRegistry.remove(callback);
         }
     }
+*/
+
+    public Streets() {
+        setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+    }
+
 
     public void populateMeta() {
         setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
@@ -392,6 +404,70 @@ public class Streets extends BaseObservable implements Observable {
         notifyPropertyChanged(BR.st05);
     }
 
+    @Bindable
+    public String getSt0501() {
+        return st0501;
+    }
+
+    public void setSt0501(String st0501) {
+        this.st0501 = st0501;
+        calculateAndSetAverageSt05();
+
+        notifyPropertyChanged(BR.st0501);
+    }
+
+    @Bindable
+    public String getSt0502() {
+        return st0502;
+    }
+
+    public void setSt0502(String st0502) {
+        this.st0502 = st0502;
+        calculateAndSetAverageSt05();
+
+        notifyPropertyChanged(BR.st0502);
+    }
+
+    @Bindable
+    public String getSt0503() {
+        return st0503;
+    }
+
+    public void setSt0503(String st0503) {
+        this.st0503 = st0503;
+        calculateAndSetAverageSt05();
+
+        notifyPropertyChanged(BR.st0503);
+    }
+
+    @Bindable
+    public String getSt0504() {
+        return st0504;
+    }
+
+    public void setSt0504(String st0504) {
+        this.st0504 = st0504;
+        calculateAndSetAverageSt05();
+
+        notifyPropertyChanged(BR.st0504);
+    }
+
+    @Bindable
+    public String getSt0505() {
+        return st0505;
+    }
+
+    public void setSt0505(String st0505) {
+        this.st0505 = st0505;
+        calculateAndSetAverageSt05();
+
+
+        notifyPropertyChanged(BR.st0505);
+    }
+
+    // ST06 Getters and Setters
+
+
     // ST06
     @Bindable
     public String getSt06() {
@@ -401,6 +477,62 @@ public class Streets extends BaseObservable implements Observable {
     public void setSt06(String st06) {
         this.st06 = st06;
         notifyPropertyChanged(BR.st06);
+    }
+
+    @Bindable
+    public String getSt0601() {
+        return st0601;
+    }
+
+    public void setSt0601(String st0601) {
+        this.st0601 = st0601;
+        calculateAndSetAverageSt06();
+
+        notifyPropertyChanged(BR.st0601);
+    }
+
+    @Bindable
+    public String getSt0602() {
+        return st0602;
+    }
+
+    public void setSt0602(String st0602) {
+        this.st0602 = st0602;
+        calculateAndSetAverageSt06();
+        notifyPropertyChanged(BR.st0602);
+    }
+
+    @Bindable
+    public String getSt0603() {
+        return st0603;
+    }
+
+    public void setSt0603(String st0603) {
+        this.st0603 = st0603;
+        calculateAndSetAverageSt06();
+        notifyPropertyChanged(BR.st0603);
+    }
+
+    @Bindable
+    public String getSt0604() {
+        return st0604;
+    }
+
+    public void setSt0604(String st0604) {
+        this.st0604 = st0604;
+        calculateAndSetAverageSt06();
+        notifyPropertyChanged(BR.st0604);
+    }
+
+    @Bindable
+    public String getSt0605() {
+        return st0605;
+    }
+
+    public void setSt0605(String st0605) {
+        this.st0605 = st0605;
+        calculateAndSetAverageSt06();
+        notifyPropertyChanged(BR.st0605);
     }
 
     // ST07
@@ -624,31 +756,7 @@ public class Streets extends BaseObservable implements Observable {
         json.put(StreetsTable.COLUMN_GPSACC, this.gpsAcc);
 
         // Line listing variables (ST group)
-        json.put(StreetsTable.COLUMN_ST01, this.st01);
-        json.put(StreetsTable.COLUMN_ST02, this.st02);
-        json.put(StreetsTable.COLUMN_ST03, this.st03);
-        json.put(StreetsTable.COLUMN_ST04, this.st04);
-        json.put(StreetsTable.COLUMN_ST05, this.st05);
-        json.put(StreetsTable.COLUMN_ST06, this.st06);
-        json.put(StreetsTable.COLUMN_ST07, this.st07);
-        json.put(StreetsTable.COLUMN_ST08, this.st08);
-        json.put(StreetsTable.COLUMN_ST0901, this.st0901);
-        json.put(StreetsTable.COLUMN_ST0902, this.st0902);
-        json.put(StreetsTable.COLUMN_ST0903, this.st0903);
-        json.put(StreetsTable.COLUMN_ST0904, this.st0904);
-        json.put(StreetsTable.COLUMN_ST0905, this.st0905);
-        json.put(StreetsTable.COLUMN_ST0906, this.st0906);
-        json.put(StreetsTable.COLUMN_ST0907, this.st0907);
-        json.put(StreetsTable.COLUMN_ST0908, this.st0908);
-        json.put(StreetsTable.COLUMN_ST0909, this.st0909);
-        json.put(StreetsTable.COLUMN_ST0910, this.st0910);
-        json.put(StreetsTable.COLUMN_ST0911, this.st0911);
-        json.put(StreetsTable.COLUMN_ST0912, this.st0912);
-        json.put(StreetsTable.COLUMN_ST0913, this.st0913);
-        json.put(StreetsTable.COLUMN_ST0914, this.st0914);
-        json.put(StreetsTable.COLUMN_ST10, this.st10);
-        json.put(StreetsTable.COLUMN_ST11, this.st11);
-        json.put(StreetsTable.COLUMN_ST12, this.st12);
+        json.put(StreetsTable.COLUMN_SST, new JSONObject(sSTtoString()));
 
 
         // Line listing variables (BL group)
@@ -678,36 +786,169 @@ public class Streets extends BaseObservable implements Observable {
         this.iStatus96x = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ISTATUS96x));
         this.bl01 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_BL01));
         this.bl02 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_BL02));
-        this.st01 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST01));
-        this.st02 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST02));
-        this.st03 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST03));
-        this.st04 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST04));
-        this.st05 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST05));
-        this.st06 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST06));
-        this.st07 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST07));
-        this.st08 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST08));
-        this.st0901 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0901));
-        this.st0902 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0902));
-        this.st0903 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0903));
-        this.st0904 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0904));
-        this.st0905 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0905));
-        this.st0906 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0906));
-        this.st0907 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0907));
-        this.st0908 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0908));
-        this.st0909 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0909));
-        this.st0910 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0910));
-        this.st0911 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0911));
-        this.st0912 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0912));
-        this.st0913 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0913));
-        this.st0914 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST0914));
-        this.st10 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST10));
-        this.st11 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST11));
-        this.st12 = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ST12));
+
+        sStHydrate(cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_SST)));
+
+
         this.projectName = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_PROJECT_NAME));
         this.endTime = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_END_TIME));
         this.entryType = cursor.getString(cursor.getColumnIndexOrThrow(StreetsTable.COLUMN_ENTRY_TYPE));
 
         return this;
     }
+
+    public void sStHydrate(String jsonString) throws JSONException {
+        Log.d(TAG, "sStHydrate: " + jsonString);
+
+        if (jsonString != null) {
+            JSONObject json = new JSONObject(jsonString);
+
+            this.st01 = json.optString("st01");
+            this.st02 = json.optString("st02");
+            this.st03 = json.optString("st03");
+            this.st04 = json.optString("st04");
+            this.st05 = json.optString("st05");
+            this.st0501 = json.optString("st0501");
+            this.st0502 = json.optString("st0502");
+            this.st0503 = json.optString("st0503");
+            this.st0504 = json.optString("st0504");
+            this.st0505 = json.optString("st0505");
+            this.st06 = json.optString("st06");
+            this.st0601 = json.optString("st0601");
+            this.st0602 = json.optString("st0602");
+            this.st0603 = json.optString("st0603");
+            this.st0604 = json.optString("st0604");
+            this.st0605 = json.optString("st0605");
+            this.st07 = json.optString("st07");
+            this.st08 = json.optString("st08");
+            this.st0901 = json.optString("st0901");
+            this.st0902 = json.optString("st0902");
+            this.st0903 = json.optString("st0903");
+            this.st0904 = json.optString("st0904");
+            this.st0905 = json.optString("st0905");
+            this.st0906 = json.optString("st0906");
+            this.st0907 = json.optString("st0907");
+            this.st0908 = json.optString("st0908");
+            this.st0909 = json.optString("st0909");
+            this.st0910 = json.optString("st0910");
+            this.st0911 = json.optString("st0911");
+            this.st0912 = json.optString("st0912");
+            this.st0913 = json.optString("st0913");
+            this.st0914 = json.optString("st0914");
+            this.st10 = json.optString("st10");
+            this.st11 = json.optString("st11");
+            this.st12 = json.optString("st12");
+        }
+    }
+
+    public String sSTtoString() throws JSONException {
+        Log.d(TAG, "toJSONString: ");
+
+        JSONObject json = new JSONObject();
+
+        json.put("st01", st01);
+        json.put("st02", st02);
+        json.put("st03", st03);
+        json.put("st04", st04);
+        json.put("st05", st05);
+        json.put("st0501", st0501);
+        json.put("st0502", st0502);
+        json.put("st0503", st0503);
+        json.put("st0504", st0504);
+        json.put("st0505", st0505);
+        json.put("st06", st06);
+        json.put("st0601", st0601);
+        json.put("st0602", st0602);
+        json.put("st0603", st0603);
+        json.put("st0604", st0604);
+        json.put("st0605", st0605);
+        json.put("st07", st07);
+        json.put("st08", st08);
+        json.put("st0901", st0901);
+        json.put("st0902", st0902);
+        json.put("st0903", st0903);
+        json.put("st0904", st0904);
+        json.put("st0905", st0905);
+        json.put("st0906", st0906);
+        json.put("st0907", st0907);
+        json.put("st0908", st0908);
+        json.put("st0909", st0909);
+        json.put("st0910", st0910);
+        json.put("st0911", st0911);
+        json.put("st0912", st0912);
+        json.put("st0913", st0913);
+        json.put("st0914", st0914);
+        json.put("st10", st10);
+        json.put("st11", st11);
+        json.put("st12", st12);
+
+        return json.toString();
+    }
+
+
+    private int parseValue(String value) {
+        if (value == null || value.isEmpty()) {
+            return 0;
+        }
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    public void calculateAndSetAverageSt05() {
+        // Initialize total and count
+        int total = 0;
+        int count = 0;
+
+
+        // Calculate total and count non-empty variables
+        total += parseValue(st0501);
+        count += st0501.isEmpty() ? 0 : 1;
+        total += parseValue(st0502);
+        count += st0502.isEmpty() ? 0 : 1;
+        total += parseValue(st0503);
+        count += st0503.isEmpty() ? 0 : 1;
+        total += parseValue(st0504);
+        count += st0504.isEmpty() ? 0 : 1;
+        total += parseValue(st0505);
+        count += st0505.isEmpty() ? 0 : 1;
+
+        // Calculate average
+        double average = count > 0 ? (double) total / count : 0;
+
+        // Convert average to string and set to st05
+        setSt05(String.valueOf(average));
+    }
+
+    public void calculateAndSetAverageSt06() {
+        // Array of values for st0601 to st0605
+        int[] values = {
+                parseValue(st0601),
+                parseValue(st0602),
+                parseValue(st0603),
+                parseValue(st0604),
+                parseValue(st0605)
+        };
+
+        int total = 0;
+        int count = 0;
+
+        // Calculate total and count of non-zero values
+        for (int value : values) {
+            if (value != 0) {  // Only include non-zero values
+                total += value;
+                count++;
+            }
+        }
+
+        // Calculate average
+        String avgSt06 = count > 0 ? String.valueOf((double) total / count) : "0";
+
+        // Set the average value
+        setSt06(avgSt06);
+    }
+
 
 }

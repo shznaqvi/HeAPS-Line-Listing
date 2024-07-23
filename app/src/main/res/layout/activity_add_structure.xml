@@ -412,8 +412,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:checked="@{listings.bg09.equals(`H`)}"
-                                android:onClick="@{()->listings.setBg09(`H`)}"
+                                android:checked="@{listings.bg09.equals(`1`)}"
+                                android:onClick="@{()->listings.setBg09(`1`)}"
                                 android:text="@string/bg0901" />
 
                             <RadioButton
@@ -421,13 +421,55 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:checked="@{listings.bg09.equals(`A`)}"
-                                android:onClick="@{()->listings.setBg09(`A`)}"
+                                android:checked="@{listings.bg09.equals(`2`)}"
+                                android:onClick="@{()->listings.setBg09(`2`)}"
                                 android:text="@string/bg0902" />
                         </RadioGroup>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- BG09a Number of Floors -->
+
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="17dp"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_bg09a" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVbg09a"
+                    style="@style/cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/bg09a" />
+
+                        </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/etBG09a"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:text="@={listings.bg09a}" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
                 <!-- BG10 Number of Households -->
 
@@ -510,15 +552,64 @@
 
                         </LinearLayout>
 
-                        <EditText
-                            android:id="@+id/etBG11"
+
+                        <com.edittextpicker.aliazaz.EditTextPicker
+                            android:id="@+id/bg11"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:hint="@string/bg11"
                             android:inputType="number"
-                            android:text="@={listings.bg11}" />
+                            android:maxLength="3"
+                            android:text="@={listings.bg11}"
+                            app:maxValue="30"
+                            app:minValue="3"
+                            app:type="range" />
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
+
+                <!-- bg11 existing question -->
+
+                <!-- Distance from Opposite Building Question -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_bg12" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVbg12"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/bg12" />
+                        </LinearLayout>
+
+                        <com.edittextpicker.aliazaz.EditTextPicker
+                            android:id="@+id/bg12"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top|start"
+                            android:inputType="numberDecimal"
+                            android:text="@={listings.bg12}" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
 
                 <!--EndButton LinearLayout-->
                 <LinearLayout

@@ -155,6 +155,14 @@
     <string name="st02">Street Number</string>
 
     <string name="st03">Street Description</string>
+    <string name="st0301">Narrow</string>
+    <string name="st0302">Congested</string>
+    <string name="st0303">Connecting</string>
+    <string name="st0304">Wide</string>
+    <string name="st0305">One Way</string>
+    <string name="st0306">Two Way</string>
+    <string name="st0307">Other/Unknown</string>
+
 
     <string name="st04">Street Orientation</string>
     <string name="st0401">S1 - North</string>
@@ -169,7 +177,7 @@
 
     <string name="st06">Estimate Urban Canyon Width (m)</string>
 
-    <string name="st07">Floor Surface</string>
+    <string name="st07">Street Floor Surface</string>
     <string name="st0701">Concrete</string>
     <string name="st0702">Unpaved compacted</string>
     <string name="st0703">Brick paviers</string>
@@ -239,11 +247,12 @@
 
     <string name="bg08">BG08 Type of Residence</string>
     <string name="bg0801">House</string>
-    <string name="bg0802">Apartment</string>
+    <string name="bg0802">Apartment Building</string>
 
     <string name="bg09">BG09 Is this structure single storey or multi-storey?</string>
     <string name="bg0901">Single</string>
     <string name="bg0902">Multi</string>
+    <string name="bg09a">How many floors are in this structure?</string>
 
     <string name="bg10">BG10 If yes, how many households are in the structure?</string>
 
@@ -351,9 +360,13 @@
     <string name="Q_bg07" translatable="false">BG07</string>
     <string name="Q_bg08" translatable="false">BG08</string>
     <string name="Q_bg09" translatable="false">BG09</string>
+    <string name="Q_bg09a" translatable="false">BG09a</string>
     <string name="Q_bg10" translatable="false">BG10</string>
     <string name="Q_bg11" translatable="false">BG11</string>
+    <string name="Q_bg12" translatable="false">BG12</string>
 
+    <string name="Q_fl01" translatable="false">FL01</string>
+    <string name="Q_fl02" translatable="false">FL02</string>
     <string name="Q_hh11" translatable="false">HH11</string>
     <string name="Q_hh12" translatable="false">HH12</string>
     <string name="Q_hh12a" translatable="false">HH12a</string>
@@ -384,6 +397,9 @@
     <string name="bl0402">No (Tablet B)</string>
     <string name="bl05">Street</string>
     <string name="bg11">Height of the structure</string>
+    <string name="bg12">Distance from opposite structure </string>
+    <string name="fl01">Floor number</string>
+    <string name="fl02">Apartment number</string>
 
 
 </resources>

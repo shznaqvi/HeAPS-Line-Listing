@@ -1,5 +1,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -77,49 +78,49 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- st01  Input-Numeric   -->
-                <TextView
-                    style="@style/quesNum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="14dp"
-                    android:text="@string/Q_st01" />
+                <!--    &lt;!&ndash; st01  Input-Numeric   &ndash;&gt;
+                    <TextView
+                        style="@style/quesNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="14dp"
+                        android:text="@string/Q_st01" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/fldGrpCVst01"
-                    style="@style/cardView">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/fldGrpCVst01"
+                        style="@style/cardView">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bottom"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
-
-
-                            <TextView
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="@string/st01" />
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bottom"
+                                android:orientation="horizontal">
 
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:text="@string/st01" />
+
+                            </LinearLayout>
+
+                            <com.edittextpicker.aliazaz.EditTextPicker
+                                android:id="@+id/st01"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/st01"
+                                android:inputType="textCapWords"
+                                android:text="@={streets.st01}" />
                         </LinearLayout>
+                    </androidx.cardview.widget.CardView>-->
 
-                        <com.edittextpicker.aliazaz.EditTextPicker
-                            android:id="@+id/st01"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/st01"
-                            android:inputType="textCapWords"
-                            android:text="@={streets.st01}" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <!-- st02  Input-Numeric   -->
+                <!-- st03  Input-Numeric   -->
                 <TextView
                     style="@style/quesNum"
                     android:layout_width="wrap_content"
@@ -128,7 +129,7 @@
                     android:text="@string/Q_st03" />
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/fldGrpCVst02"
+                    android:id="@+id/fldGrpCVst03"
                     style="@style/cardView">
 
                     <LinearLayout
@@ -142,7 +143,6 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -150,17 +150,77 @@
 
                         </LinearLayout>
 
-                        <com.edittextpicker.aliazaz.EditTextPicker
-                            android:id="@+id/st03"
+                        <RadioGroup
+                            android:id="@+id/radioGroupStreetDescription"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="top|start"
-                            android:inputType="textMultiLine|textCapSentences"
-                            android:maxLines="10"
-                            android:minLines="5"
-                            android:text="@={streets.st03}" />
+                            android:layout_height="wrap_content">
+
+                            <!-- For st0301 (Narrow) -->
+                            <RadioButton
+                                android:id="@+id/st0301"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st03.equals(`1`)}"
+                                android:onClick="@{()->streets.setSt03(`1`)}"
+                                android:text="@string/st0301" />
+
+                            <!-- For st0302 (Congested) -->
+                            <RadioButton
+                                android:id="@+id/st0302"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st03.equals(`2`)}"
+                                android:onClick="@{()->streets.setSt03(`2`)}"
+                                android:text="@string/st0302" />
+
+                            <!-- For st0303 (Connecting) -->
+                            <RadioButton
+                                android:id="@+id/st0303"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st03.equals(`3`)}"
+                                android:onClick="@{()->streets.setSt03(`3`)}"
+                                android:text="@string/st0303" />
+
+                            <!-- For st0304 (Wide) -->
+                            <RadioButton
+                                android:id="@+id/st0304"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st03.equals(`4`)}"
+                                android:onClick="@{()->streets.setSt03(`4`)}"
+                                android:text="@string/st0304" />
+
+                            <!-- For st0305 (One Way) -->
+                            <RadioButton
+                                android:id="@+id/st0305"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st03.equals(`5`)}"
+                                android:onClick="@{()->streets.setSt03(`5`)}"
+                                android:text="@string/st0305" />
+
+                            <!-- For st0306 (Two Way) -->
+                            <RadioButton
+                                android:id="@+id/st0306"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st03.equals(`6`)}"
+                                android:onClick="@{()->streets.setSt03(`6`)}"
+                                android:text="@string/st0306" />
+
+                            <!-- For st0307 (Other/Unknown) -->
+                            <RadioButton
+                                android:id="@+id/st0307"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st03.equals(`7`)}"
+                                android:onClick="@{()->streets.setSt03(`7`)}"
+                                android:text="@string/st0307" />
+                        </RadioGroup>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
 
                 <!-- St04  Radio   -->
                 <TextView
@@ -283,97 +343,7 @@
                 </androidx.cardview.widget.CardView>
 
 
-                <!-- st05 Input-Numeric -->
-                <TextView
-                    style="@style/quesNum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/Q_st05" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/fldGrpCVst05"
-                    style="@style/cardView">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bottom"
-                            android:orientation="horizontal">
-
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="@string/st05" />
-
-                        </LinearLayout>
-
-                        <com.edittextpicker.aliazaz.EditTextPicker
-                            android:id="@+id/st05"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/st05"
-                            android:inputType="number"
-                            android:maxLength="3"
-                            android:text="@={streets.st05}"
-                            app:maxValue="120"
-                            app:minValue="20"
-                            app:type="range" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <!-- st06 Input-Numeric -->
-                <TextView
-                    style="@style/quesNum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="14dp"
-                    android:text="@string/Q_st06" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/fldGrpCVst06"
-                    style="@style/cardView">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bottom"
-                            android:orientation="horizontal">
-
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="@string/st06" />
-
-                        </LinearLayout>
-
-                        <com.edittextpicker.aliazaz.EditTextPicker
-                            android:id="@+id/st06"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/st06"
-                            android:inputType="number"
-                            android:maxLength="3"
-                            android:text="@={streets.st06}"
-                            app:maxValue="120"
-                            app:minValue="20"
-                            app:type="range" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
 
                 <!-- ST07 Floor Surface -->
 
@@ -801,6 +771,274 @@
                             android:maxLines="10"
                             android:minLines="5"
                             android:text="@={streets.st10}" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <!-- st05 Input-Numeric -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/Q_st05" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVst05"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/st05" />
+
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <!-- EditText for st0501 -->
+                            <com.edittextpicker.aliazaz.EditTextPicker
+                                android:id="@+id/st0501"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:text="@={streets.st0501}"
+                                app:maxValue="30"
+                                app:minValue="3"
+                                app:type="range" />
+
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray" />
+                            <!-- EditText for st0502 -->
+                            <com.edittextpicker.aliazaz.EditTextPicker
+                                android:id="@+id/st0502"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:text="@={streets.st0502}"
+                                app:maxValue="30"
+                                app:minValue="3"
+                                app:type="range" />
+
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray" />
+                            <!-- EditText for st0503 -->
+                            <com.edittextpicker.aliazaz.EditTextPicker
+                                android:id="@+id/st0503"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:text="@={streets.st0503}"
+                                app:maxValue="30"
+                                app:minValue="3"
+                                app:type="range" />
+
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray" />
+                            <!-- EditText for st0504 -->
+                            <com.edittextpicker.aliazaz.EditTextPicker
+                                android:id="@+id/st0504"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:text="@={streets.st0504}"
+                                app:maxValue="30"
+                                app:minValue="3"
+                                app:type="range" />
+
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray" />
+                            <!-- EditText for st0505 -->
+                            <com.edittextpicker.aliazaz.EditTextPicker
+                                android:id="@+id/st0505"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:text="@={streets.st0505}"
+                                app:maxValue="30"
+                                app:minValue="3"
+                                app:type="range" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="14dp"
+                                android:layout_weight="1"
+                                android:background="@color/colorAccentLightOverlay"
+                                android:gravity="center_horizontal|center_vertical"
+                                android:text="@={streets.st05}"
+                                android:textColor="@color/gray"
+                                tools:text="555" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- st06 Input-Numeric -->
+                <TextView
+                    style="@style/quesNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/Q_st06" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVst06"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/st06" />
+
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <!-- EditText for st0601 -->
+                            <com.edittextpicker.aliazaz.EditTextPicker
+                                android:id="@+id/st0601"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:text="@={streets.st0601}"
+                                app:maxValue="120"
+                                app:minValue="20"
+                                app:type="range" />
+
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray" />
+
+                            <!-- EditText for st0602 -->
+                            <com.edittextpicker.aliazaz.EditTextPicker
+                                android:id="@+id/st0602"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:text="@={streets.st0602}"
+                                app:maxValue="120"
+                                app:minValue="20"
+                                app:type="range" />
+
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray" />
+
+                            <!-- EditText for st0603 -->
+                            <com.edittextpicker.aliazaz.EditTextPicker
+                                android:id="@+id/st0603"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:text="@={streets.st0603}"
+                                app:maxValue="120"
+                                app:minValue="20"
+                                app:type="range" />
+
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray" />
+
+                            <!-- EditText for st0604 -->
+                            <com.edittextpicker.aliazaz.EditTextPicker
+                                android:id="@+id/st0604"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:text="@={streets.st0604}"
+                                app:maxValue="120"
+                                app:minValue="20"
+                                app:type="range" />
+
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray" />
+
+                            <!-- EditText for st0605 -->
+                            <com.edittextpicker.aliazaz.EditTextPicker
+                                android:id="@+id/st0605"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:text="@={streets.st0605}"
+                                app:maxValue="120"
+                                app:minValue="20"
+                                app:type="range" />
+
+                            <!-- TextView for additional information -->
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="14dp"
+                                android:layout_weight="1"
+                                android:background="@color/colorAccentLightOverlay"
+                                android:gravity="center_horizontal|center_vertical"
+                                android:text="@={streets.st06}"
+                                android:textColor="@color/gray"
+                                tools:text="555" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

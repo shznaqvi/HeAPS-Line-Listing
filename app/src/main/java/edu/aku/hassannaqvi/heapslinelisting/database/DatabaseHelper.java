@@ -175,31 +175,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Populate ContentValues with data from the Listing object
         values.put(StreetsTable.COLUMN_BL01, streets.bl01);
         values.put(StreetsTable.COLUMN_BL02, streets.bl02);
-        values.put(StreetsTable.COLUMN_ST01, streets.st01);
-        values.put(StreetsTable.COLUMN_ST02, streets.st02);
-        values.put(StreetsTable.COLUMN_ST03, streets.st03);
-        values.put(StreetsTable.COLUMN_ST04, streets.st04);
-        values.put(StreetsTable.COLUMN_ST05, streets.st05);
-        values.put(StreetsTable.COLUMN_ST06, streets.st06);
-        values.put(StreetsTable.COLUMN_ST07, streets.st07);
-        values.put(StreetsTable.COLUMN_ST08, streets.st08);
-        values.put(StreetsTable.COLUMN_ST0901, streets.st0901);
-        values.put(StreetsTable.COLUMN_ST0902, streets.st0902);
-        values.put(StreetsTable.COLUMN_ST0903, streets.st0903);
-        values.put(StreetsTable.COLUMN_ST0904, streets.st0904);
-        values.put(StreetsTable.COLUMN_ST0905, streets.st0905);
-        values.put(StreetsTable.COLUMN_ST0906, streets.st0906);
-        values.put(StreetsTable.COLUMN_ST0907, streets.st0907);
-        values.put(StreetsTable.COLUMN_ST0908, streets.st0908);
-        values.put(StreetsTable.COLUMN_ST0909, streets.st0909);
-        values.put(StreetsTable.COLUMN_ST0910, streets.st0910);
-        values.put(StreetsTable.COLUMN_ST0911, streets.st0911);
-        values.put(StreetsTable.COLUMN_ST0912, streets.st0912);
-        values.put(StreetsTable.COLUMN_ST0913, streets.st0913);
-        values.put(StreetsTable.COLUMN_ST0914, streets.st0914);
-        values.put(StreetsTable.COLUMN_ST10, streets.st10);
-        values.put(StreetsTable.COLUMN_ST11, streets.st11);
-        values.put(StreetsTable.COLUMN_ST12, streets.st12);
+        values.put(StreetsTable.COLUMN_SST, streets.st01);
+
 
         // Insert the row into the Sheets table
         long newRowId;
