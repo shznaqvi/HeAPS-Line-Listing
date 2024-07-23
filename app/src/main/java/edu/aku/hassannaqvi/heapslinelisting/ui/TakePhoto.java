@@ -63,6 +63,9 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback, Camer
      */
 
     private static final String TAG = "Photo Capture";
+
+    private static final int MAX_HEIGHT = 1080;
+    private static final int MAX_WIDTH = 1920;
     Camera camera;
     Context context;
     LinearLayout btnGrp;
@@ -81,7 +84,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback, Camer
         Intent intent = getIntent();
         picID = intent.getStringExtra("picID");
         picView = intent.getStringExtra("picView");
-        forInfo = intent.getStringExtra("childName");
+        forInfo = intent.getStringExtra("forInfo");
 
         picInfo = findViewById(R.id.picInfo);
         btnGrp = findViewById(R.id.btnGrp);
@@ -185,8 +188,8 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback, Camer
         if (colorEffects.contains(Camera.Parameters.WHITE_BALANCE_AUTO)) {
             parameters.setColorEffect(Camera.Parameters.WHITE_BALANCE_AUTO);
         }
-        //parameters.setPreviewSize(640, 480);
-        //parameters.setPictureSize(640, 480);
+        //parameters.setPreviewSize(MAX_WIDTH, MAX_WIDTH);
+        // parameters.setPictureSize(MAX_WIDTH, MAX_HEIGHT);
         if (focusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
         } else if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
@@ -261,7 +264,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback, Camer
         String date = dateFormat.format(new Date());
 
         //TODO: PhotoID will be sent from calling Activity as StringExtra(). Replace "Cipture"
-        String photoFile = picID + "_" + date + "_" + picView.replace("/", "_") + ".jpg";
+        String photoFile = picID + "_" + date + ".jpg";
 
         String filename = pictureFileDir.getPath() + File.separator + photoFile;
 
@@ -339,10 +342,10 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback, Camer
         File outputPath = getDir(1);
         File actualImage = new File(inputPath + File.separator + inputFile);
         try {
-            File compressedImgFile = new Compressor(this)
+            new Compressor(this)
                     .setDestinationDirectoryPath(outputPath + File.separator)
-//                    .setMaxWidth(2576)
-//                    .setMaxHeight(1932)
+                    .setMaxWidth(MAX_WIDTH)
+                    .setMaxHeight(MAX_HEIGHT)
 //
                     /*      .setMaxWidth(640)
                           .setMaxHeight(480)*/

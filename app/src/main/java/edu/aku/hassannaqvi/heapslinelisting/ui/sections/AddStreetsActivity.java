@@ -5,8 +5,12 @@ import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.streets;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -20,12 +24,36 @@ import edu.aku.hassannaqvi.heapslinelisting.core.MainApp;
 import edu.aku.hassannaqvi.heapslinelisting.database.DatabaseHelper;
 import edu.aku.hassannaqvi.heapslinelisting.databinding.ActivityAddStreetsBinding;
 import edu.aku.hassannaqvi.heapslinelisting.models.Streets;
+import edu.aku.hassannaqvi.heapslinelisting.ui.TakePhoto;
 
 public class AddStreetsActivity extends AppCompatActivity {
 
     ActivityAddStreetsBinding bi;
     private DatabaseHelper db;
     private int maxstreet = 0;
+    private int PhotoSerial = 1;
+    // Declare ActivityResultLauncher
+    private final ActivityResultLauncher<Intent> takePhotoLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    String fileName = result.getData().getStringExtra("FileName");
+                    if (fileName != null) {
+                        // Update the file name in the EditText
+                        EditText st11EditText = findViewById(R.id.st11);
+                        st11EditText.setText(fileName);
+
+                        // Update the PhotoSerial and UI
+                        PhotoSerial++;
+                        bi.st11.setText(bi.st11.getText() + String.valueOf(PhotoSerial) + " - " + fileName + ";\r\n");
+                        Toast.makeText(this, "Photo Taken", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Photo not saved", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(this, "Photo Cancelled", Toast.LENGTH_SHORT).show();
+                }
+            });
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +178,19 @@ public class AddStreetsActivity extends AppCompatActivity {
         startActivity(new Intent(this, EndingActivity.class).putExtra("complete", false));*/
     }
 
+    public void takePhoto(View view) {
+        Intent intent = new Intent(this, TakePhoto.class);
 
+        // Adjust Identification Information to uniquely identify every photo and link to form
+        intent.putExtra("picID", bi.streetnum.getText().toString() + "_" + PhotoSerial);
+
+        // Provide information for which photo is being taken like ChildName
+        intent.putExtra("forInfo", "Street# " + streets.getstreetNum());
+
+        //    intent.putExtra("picView", bi.streetnum.getText().toString() + "_" + PhotoSerial);
+        takePhotoLauncher.launch(intent); // Launch the activity using ActivityResultLauncher
+
+    }
 
 
     @Override

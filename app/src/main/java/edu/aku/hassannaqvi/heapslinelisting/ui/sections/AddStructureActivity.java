@@ -7,6 +7,7 @@ import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.selectedCluster;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteException;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,8 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.validatorcrawler.aliazaz.Validator;
-
-import net.sqlcipher.database.SQLiteException;
 
 import org.json.JSONException;
 
@@ -81,7 +80,7 @@ public class AddStructureActivity extends AppCompatActivity {
         listings.setBGClear();
         listings.setHHClear();
         populateSpinner();
-
+        MainApp.maxstreet = db.maxStreetNumber(selectedCluster.getClusterCode());
         MainApp.maxStructure++;
         MainApp.hhid = 0;
 
@@ -285,6 +284,7 @@ public class AddStructureActivity extends AppCompatActivity {
         setResult(RESULT_CANCELED);
 finish();*/
         // Dont Allow BackPress
+        super.onBackPressed();
         Toast.makeText(this, "Back Press Not Allowed", Toast.LENGTH_SHORT).show();
 
     }

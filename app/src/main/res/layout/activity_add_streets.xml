@@ -1086,8 +1086,7 @@
                             android:enabled="false"
                             android:gravity="top"
                             android:inputType="textMultiLine|textCapSentences"
-                            android:maxLines="10"
-                            android:minLines="3"
+                            android:minLines="5"
                             android:text="@={streets.st11}" />
 
                         <!-- Button Row -->
@@ -1098,7 +1097,7 @@
 
 
                             <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/frontPhoto"
+                                android:id="@+id/btnPhoto"
 
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

@@ -5,6 +5,7 @@ import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.hhid;
 import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.listings;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,8 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.validatorcrawler.aliazaz.Validator;
-
-import net.sqlcipher.database.SQLiteException;
 
 import org.json.JSONException;
 
@@ -198,6 +197,7 @@ public class FamilyListingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
     }
 

@@ -37,7 +37,7 @@ import androidx.lifecycle.ProcessLifecycleOwner;
 
 import com.scottyab.rootbeer.RootBeer;
 
-import net.sqlcipher.database.SQLiteDatabase;
+import net.zetetic.database.sqlcipher.SQLiteDatabase;
 
 import org.json.JSONArray;
 
@@ -135,6 +135,7 @@ public class MainApp extends Application implements LifecycleObserver {
     public static String selectedDistrictnName;
     public static String civilID;
     public static String civilID2;
+    public static int maxstreet;
     protected static LocationManager locationManager;
     private Handler inactivityHandler;
     private Runnable inactivityCallback;
@@ -289,7 +290,8 @@ public class MainApp extends Application implements LifecycleObserver {
             //System.exit(1);
         }
 
-        SQLiteDatabase.loadLibs(this);
+        //SQLiteDatabase.loadLibs(this);
+        System.loadLibrary("sqlcipher");
 
         //Initiate DateTime
         //Initializ App info
@@ -343,7 +345,7 @@ public class MainApp extends Application implements LifecycleObserver {
         File databaseFile = getDatabasePath(DATABASE_NAME);
        /* databaseFile.mkdirs();
         databaseFile.delete();*/
-        SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(databaseFile, DATABASE_PASSWORD, null);
+        SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(databaseFile.getAbsolutePath(), DATABASE_PASSWORD, null, null);
         // Prepare encryption KEY
         ApplicationInfo ai = null;
         // Start the location service

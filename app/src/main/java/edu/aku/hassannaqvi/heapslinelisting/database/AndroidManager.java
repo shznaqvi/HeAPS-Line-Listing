@@ -5,6 +5,7 @@ package edu.aku.hassannaqvi.heapslinelisting.database;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,8 +26,6 @@ import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import net.sqlcipher.Cursor;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
