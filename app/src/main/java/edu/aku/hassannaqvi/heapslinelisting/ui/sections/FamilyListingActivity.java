@@ -57,6 +57,31 @@ public class FamilyListingActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Staring Household", Toast.LENGTH_SHORT).show();
 
+        bi.fl01.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                //Cluster—Street—Structure—Floors—Apartment—Houehold
+                bi.hhid.setVisibility(View.GONE);
+                String floor = listings.getFl01();
+                bi.fl02.setText("");
+                String apartment = listings.getFl02();
+                MainApp.civilID2 = MainApp.civilID + "-" + floor + "-" + apartment + "-" + String.format("%02d", hhid) + MainApp.listings.getBg08();
+
+                bi.hhid.setText(MainApp.civilID2);
+
+
+            }
+        });
         bi.fl02.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -71,15 +96,15 @@ public class FamilyListingActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
 
                 //Cluster—Street—Structure—Floors—Apartment—Houehold
+                if (!listings.getFl02().equals("")) {
+                    String floor = listings.getFl01();
+                    String apartment = listings.getFl02();
+                    MainApp.civilID2 = MainApp.civilID + "-" + floor + "-" + apartment + "-" + String.format("%02d", hhid) + MainApp.listings.getBg08();
 
-                String floor = listings.getFl01();
-                String apartment = listings.getFl02();
-                MainApp.civilID2 = MainApp.civilID + "-" + floor + "-" + apartment + "-" + String.format("%02d", hhid) + MainApp.listings.getBg08();
+                    bi.hhid.setText(MainApp.civilID2);
+                    bi.hhid.setVisibility(View.VISIBLE);
 
-                bi.hhid.setText(MainApp.civilID2);
-                bi.hhid.setVisibility(View.VISIBLE);
-
-
+                }
             }
         });
 

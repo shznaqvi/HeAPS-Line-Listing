@@ -6,7 +6,6 @@ import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.streets;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -39,12 +38,12 @@ public class AddStreetsActivity extends AppCompatActivity {
                     String fileName = result.getData().getStringExtra("FileName");
                     if (fileName != null) {
                         // Update the file name in the EditText
-                        EditText st11EditText = findViewById(R.id.st11);
-                        st11EditText.setText(fileName);
+                 /*       EditText st11EditText = findViewById(R.id.st11);
+                        st11EditText.setText(fileName);*/
 
                         // Update the PhotoSerial and UI
                         PhotoSerial++;
-                        bi.st11.setText(bi.st11.getText() + String.valueOf(PhotoSerial) + " - " + fileName + ";\r\n");
+                        bi.st11.setText(bi.st11.getText() + fileName + ";\r\n");
                         Toast.makeText(this, "Photo Taken", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(this, "Photo not saved", Toast.LENGTH_SHORT).show();
@@ -182,7 +181,8 @@ public class AddStreetsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TakePhoto.class);
 
         // Adjust Identification Information to uniquely identify every photo and link to form
-        intent.putExtra("picID", bi.streetnum.getText().toString() + "_" + PhotoSerial);
+        intent.putExtra("picID", PhotoSerial);
+        intent.putExtra("picView", bi.streetnum.getText().toString());
 
         // Provide information for which photo is being taken like ChildName
         intent.putExtra("forInfo", "Street# " + streets.getstreetNum());

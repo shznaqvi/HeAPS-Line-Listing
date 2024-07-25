@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ import java.util.Date;
 import java.util.List;
 
 import edu.aku.hassannaqvi.heapslinelisting.R;
+import edu.aku.hassannaqvi.heapslinelisting.core.PhotoProcessorFactory;
+import edu.aku.hassannaqvi.heapslinelisting.core.SensorManagerSingleton;
 import id.zelory.compressor.Compressor;
 
 
@@ -75,6 +78,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback, Camer
     TextView picInfo;
     private boolean previewFlag;
     private String tmpFile = null;
+    private SensorManagerSingleton sensorManagerSingleton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,15 +86,15 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback, Camer
         setContentView(R.layout.activity_camera);
 
         Intent intent = getIntent();
-        picID = intent.getStringExtra("picID");
-        picView = intent.getStringExtra("picView");
+        picView = String.format("%02d", intent.getIntExtra("picID", 0));
+        picID = intent.getStringExtra("picView");
         forInfo = intent.getStringExtra("forInfo");
 
         picInfo = findViewById(R.id.picInfo);
         btnGrp = findViewById(R.id.btnGrp);
         btnGrp.setVisibility(View.GONE);
 
-        picInfo.setText(picView + "\r\n For: " + forInfo);
+        picInfo.setText(picID + "_" + picView + "\r\n For: " + forInfo);
 
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
@@ -98,6 +102,8 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback, Camer
         wl.acquire();
         //
 
+        sensorManagerSingleton = SensorManagerSingleton.getInstance(getApplicationContext());
+        sensorManagerSingleton.startListening();
 
         previewFlag = false;
 
@@ -264,14 +270,25 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback, Camer
         String date = dateFormat.format(new Date());
 
         //TODO: PhotoID will be sent from calling Activity as StringExtra(). Replace "Cipture"
-        String photoFile = picID + "_" + date + ".jpg";
+        String photoFile = picID + "_" + picView + "_" + date + ".jpg";
 
         String filename = pictureFileDir.getPath() + File.separator + photoFile;
 
         File pictureFile = new File(filename);
 
         try {
+
+            // Convert byte array to Bitmap
+            Bitmap originalBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+
+            // Overlay north direction on the photo
+            float azimuth = sensorManagerSingleton.getAzimuth();
+            Bitmap bitmapWithOverlay = PhotoProcessorFactory.overlayDirectionOnPhoto(originalBitmap, azimuth, this);
+
+            // Save the modified Bitmap to a file
             FileOutputStream fos = new FileOutputStream(pictureFile);
+            bitmapWithOverlay.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+
             fos.write(data);
             fos.close();
             tmpFile = photoFile;
@@ -410,6 +427,17 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback, Camer
 
     }
 */
+@Override
+protected void onResume() {
+    super.onResume();
+    sensorManagerSingleton.startListening();
+}
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManagerSingleton.stopListening();
+    }
 
     @Override
     public void onBackPressed() {

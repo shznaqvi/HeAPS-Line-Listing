@@ -8,7 +8,7 @@ import static edu.aku.hassannaqvi.heapslinelisting.core.MainApp.sdDir;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.res.AssetManager;
+import android.util.Base64;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -17,402 +17,228 @@ import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
 import java.util.Random;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import edu.aku.hassannaqvi.heapslinelisting.R;
-import edu.aku.hassannaqvi.heapslinelisting.core.CipherSecure;
 import edu.aku.hassannaqvi.heapslinelisting.core.MainApp;
 
 public class PhotoUploadWorker2 extends Worker {
 
-    private final String TAG = "PhotoUploadWorker2()";
+    private static final String TAG = "PhotoUploadWorker2";
     private final Context mContext;
-    private final int photoid;
-    private final String nTitle = PROJECT_NAME + ": Photo Upload";
-    public Boolean errMsg = false;
-    File fileZero;
-    private Data data;
+    private final int photoId;
+    private final String notificationTitle = PROJECT_NAME + ": Photo Upload";
+    private final File fileToUpload;
+    private boolean hasError = false;
+    private Data outputData;
     private HttpsURLConnection urlConnection;
-
-    // private File sdDir;
 
     public PhotoUploadWorker2(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         mContext = context;
-      /*  sdDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), PROJECT_NAME);*/
-
-        fileZero = new File(workerParams.getInputData().getString("filename"));
-        photoid = new Random().nextInt();
-        // sdDir = new File("/storage/emulated/0/Pictures/UenTmkEl2020/uploaded/");
-//        Log.d(TAG, "PhotoUploadWorker: " + sdDir.getAbsolutePath());
-        displayNotification(fileZero.toString(), "Starting...", 100, 0);
+        fileToUpload = new File(workerParams.getInputData().getString("filename"));
+        photoId = new Random().nextInt();
+        displayNotification(fileToUpload.toString(), "Starting...", 100, 0);
     }
-
-    /*
-     * This method is responsible for doing the work
-     * so whatever work that is needed to be performed
-     * we will put it here
-     *
-     * For example, here I am calling the method displayNotification()
-     * It will display a notification
-     * So that we will understand the work is executed
-     * */
 
     @NonNull
     @Override
     public Result doWork() {
-
-
-        /*File directory = new File(mContext.getExternalFilesDir(
-                Environment.DIRECTORY_PICTURES), PROJECT_NAME);*/
-
-        //Log.d("Files", "FileName:" + fileZero.getName());
-/*                    SyncAllPhotos syncAllPhotos = new SyncAllPhotos(file.getName(), this);
-                    syncAllPhotos.execute();*/
-
-        String res = null;
+        String response;
         try {
-            res = uploadPhoto(String.valueOf(new File(sdDir + File.separator + fileZero.getName())));
-
-
+            response = uploadPhoto(String.valueOf(new File(sdDir + File.separator + fileToUpload.getName())));
         } catch (Exception e) {
             Log.d(TAG, "doWork: " + e.getMessage());
-            displayNotification(fileZero.toString(), "Error: " + e.getMessage(), 100, 0);
+            displayNotification(fileToUpload.toString(), "Error: " + e.getMessage(), 100, 0);
 
-            data = new Data.Builder()
-                    .putString("error", "1 " + e.getMessage()).build();
-            return Result.failure(data);
+            outputData = new Data.Builder().putString("error", "1 " + e.getMessage()).build();
+            return Result.failure(outputData);
         } finally {
-            if (errMsg) {
-                return Result.failure(data);
+            if (hasError) {
+                return Result.failure(outputData);
             }
         }
 
-        onPostExecute(res, fileZero.getName());
-        return errMsg ? Result.failure(data) : Result.success(data);
-        //return Result.success(data);
-
+        handlePostUpload(response);
+        return hasError ? Result.failure(outputData) : Result.success(outputData);
     }
 
-
-    /*
-     * The method is doing nothing but only generating
-     * a simple notification
-     * If you are confused about it
-     * you should check the Android Notification Tutorial
-     * */
-    private void displayNotification(String title, String task, int maxProgress, int curProgress) {
+    private void displayNotification(String title, String task, int maxProgress, int currentProgress) {
         NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("simplifiedcoding", nTitle, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel("photo_upload_channel", notificationTitle, NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }
 
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "simplifiedcoding")
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "photo_upload_channel")
                 .setContentTitle(title)
                 .setContentText(task)
-                .setSmallIcon(R.mipmap.ic_launcher);
+                .setSmallIcon(R.drawable.climatechange_app_logo);
 
-        if (curProgress >= maxProgress) {
-
+        if (currentProgress >= maxProgress) {
             notification.setContentTitle("[DONE] " + title);
-
             notification.setTimeoutAfter(3500);
         }
-        notification.setProgress(maxProgress, curProgress, false);
-
-
-        //notificationManager.notify(photoid, notification.build());
-
+        notification.setProgress(maxProgress, currentProgress, false);
+        notificationManager.notify(photoId, notification.build());
     }
 
-    private void moveFile(String inputFile) {
-        Log.d(TAG, "moveFile: " + inputFile);
-        /*sdDir = new File(mContext.getExternalFilesDir(
-                Environment.DIRECTORY_PICTURES), PROJECT_NAME);*/
-        InputStream in = null;
-        OutputStream out = null;
-        File inputPath = sdDir;
-        File outputPath = new File(sdDir + File.separator + "uploaded");
-        try {
-
-            //create output directory if it doesn't exist (not needed, just a precaution)
-            //File dir = getDir(1);
-            if (!outputPath.exists()) {
-                outputPath.mkdirs();
-            }
-
-            in = new FileInputStream(inputPath + File.separator + inputFile);
-            out = new FileOutputStream(outputPath + File.separator + inputFile);
-            Log.d(TAG, "moveFile: (in)" + in);
-            Log.d(TAG, "moveFile: (out)" + out);
-            byte[] buffer = new byte[1024];
-            int read;
-            while ((read = in.read(buffer)) != -1) {
-                out.write(buffer, 0, read);
-            }
-            in.close();
-            in = null;
-
-            // write the output file
-            out.flush();
-            out.close();
-            out = null;
-
-            // delete the original file
-            new File(inputPath + File.separator + inputFile).delete();
-
-        } catch (FileNotFoundException fnfe1) {
-            Log.e("tag", fnfe1.getMessage());
-        } catch (Exception e) {
-            Log.e("tag", e.getMessage());
+    private void moveFile(String fileName) {
+        Log.d(TAG, "moveFile: " + fileName);
+        File source = new File(MainApp.sdDir, fileName);
+        File destinationDir = new File(MainApp.sdDir + File.separator + "uploaded");
+        if (!destinationDir.exists()) {
+            destinationDir.mkdirs();
         }
 
+        File destination = new File(destinationDir, fileName);
+
+        try (InputStream in = new FileInputStream(source);
+             OutputStream out = new FileOutputStream(destination)) {
+
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = in.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesRead);
+            }
+
+            out.flush();
+            source.delete();
+        } catch (IOException e) {
+            Log.e(TAG, "moveFile: " + e.getMessage());
+        }
     }
 
-    private void onPostExecute(String result, String fileName) {
-        displayNotification(fileZero.toString(), "Processing...", 100, 0);
-
-        JSONArray json;
-
+    private void handlePostUpload(String result) {
+        displayNotification(fileToUpload.toString(), "Processing...", 100, 0);
 
         try {
-            Log.d(TAG, "onPostExecute: " + result);
-            // json = new JSONArray(result);
-
-
             JSONObject jsonObject = new JSONObject(result);
 
-            if (jsonObject.getString("status").equals("1") && jsonObject.getString("error").equals("0")) {
+            if ("1".equals(jsonObject.getString("status")) && "0".equals(jsonObject.getString("error"))) {
+                displayNotification(fileToUpload.toString(), "Successfully Uploaded.", 100, 0);
+                outputData = new Data.Builder().putString("message", fileToUpload.getName()).build();
+                hasError = false;
+                moveFile(fileToUpload.getName());
 
-                //TODO:   db.updateUploadedPhoto(jsonObject.getString("id"));  // UPDATE SYNCED
-                displayNotification(fileZero.toString(), "Successfully Uploaded.", 100, 0);
-
-                data = new Data.Builder()
-                        .putString("message", fileName).build();
-                errMsg = false;
-                moveFile(fileName);
-
-
-            } else if (jsonObject.getString("status").equals("2") && jsonObject.getString("error").equals("0")) {
-                displayNotification(fileZero.toString(), "Duplicate file.", 100, 0);
-
-                data = new Data.Builder()
-                        .putString("message", "Duplicate: " + fileName).build();
-                errMsg = false;
-                moveFile(fileName);
-
+            } else if ("2".equals(jsonObject.getString("status")) && "0".equals(jsonObject.getString("error"))) {
+                displayNotification(fileToUpload.toString(), "Duplicate file.", 100, 0);
+                outputData = new Data.Builder().putString("message", "Duplicate: " + fileToUpload.getName()).build();
+                hasError = false;
+                moveFile(fileToUpload.getName());
 
             } else {
-                displayNotification(fileZero.toString(), "Error: " + jsonObject.getString("message"), 100, 0);
-
-                data = new Data.Builder()
-                        .putString("error", jsonObject.getString("message")).build();
-                errMsg = true;
+                displayNotification(fileToUpload.toString(), "Error: " + jsonObject.getString("message"), 100, 0);
+                outputData = new Data.Builder().putString("error", jsonObject.getString("message")).build();
+                hasError = true;
             }
-            //syncStatus.setText(syncStatus.getText() + "\r\nDone uploading +" + syncClass + " data");
-
         } catch (JSONException e) {
-            e.printStackTrace();
-            //syncStatus.setText(syncStatus.getText() + "\r\n" + syncClass + " Sync Failed");
-            displayNotification(fileZero.toString(), "Error: " + result, 100, 0);
-
-            data = new Data.Builder()
-                    .putString("error", "2 " + result).build();
-            errMsg = true;
+            Log.e(TAG, "handlePostUpload: " + e.getMessage());
+            displayNotification(fileToUpload.toString(), "Error: " + result, 100, 0);
+            outputData = new Data.Builder().putString("error", "2 " + result).build();
+            hasError = true;
         }
     }
 
-
     private String uploadPhoto(String filepath) {
-        displayNotification(fileZero.toString(), "Connecting...", 100, 0);
+        displayNotification(fileToUpload.toString(), "Connecting...", 100, 0);
 
         DataOutputStream outputStream = null;
         InputStream inputStream = null;
 
-        String twoHyphens = "--";
         String boundary = "*****" + System.currentTimeMillis() + "*****";
         String lineEnd = "\r\n";
 
-        int bytesRead, bytesAvailable, bufferSize;
-        byte[] buffer;
-        int maxBufferSize = 1024 * 1024;
-
-        String filefield = "image";
-
-        String[] q = filepath.split("/");
-        int idx = q.length - 1;
-
         File file = new File(filepath);
         FileInputStream fileInputStream = null;
-        Log.d(TAG, "uploadPhoto: (" + file.length() + ")" + file);
+        String fileName = file.getName();
+        String filefield = "image";
 
         try {
             fileInputStream = new FileInputStream(file);
 
-            URL url = null;
-
-            InputStream caInput = null;
-            Certificate ca = null;
-            try {
-                CertificateFactory cf = CertificateFactory.getInstance("X.509");
-                AssetManager assetManager = mContext.getAssets();
-                caInput = assetManager.open("star_aku_edu_2024.crt");
-
-
-                ca = cf.generateCertificate(caInput);
-            //    System.out.println("ca=" + ((X509Certificate) ca).getSubjectDN());
-            } catch (CertificateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    caInput.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            try {
-                url = new URL(_PHOTO_UPLOAD_URL);
-            } catch (MalformedURLException e) {
-                Log.d(TAG, "uploadPhoto: " + e.getMessage());
-                return e.getMessage();
-            }
-            Log.d(TAG, "uploadPhoto: " + file);
-
+            URL url = new URL(_PHOTO_UPLOAD_URL);
             urlConnection = (HttpsURLConnection) url.openConnection();
             urlConnection.setSSLSocketFactory(buildSslSocketFactory(mContext));
-
             urlConnection.setDoInput(true);
             urlConnection.setDoOutput(true);
             urlConnection.setUseCaches(false);
-
             urlConnection.setRequestMethod("POST");
             urlConnection.setRequestProperty("Connection", "Keep-Alive");
             urlConnection.setRequestProperty("User-Agent", "Android Multipart HTTP Client 1.0");
-            urlConnection.setRequestProperty("Content-Type", "multipart/listing-data; boundary=" + boundary);
-            urlConnection.connect();
+            urlConnection.setRequestProperty("Content-Type", "application/json");
 
-            Certificate[] certs = urlConnection.getServerCertificates();
+            // Create JSON payload
+            JSONObject jsonPayload = new JSONObject();
+            jsonPayload.put("filename", fileName);
+            jsonPayload.put("image", Base64.encodeToString(getFileBytes(file), Base64.NO_WRAP));
 
-            if (CipherSecure.certIsValid(certs, ca)) {
+            outputStream = new DataOutputStream(urlConnection.getOutputStream());
+            outputStream.writeBytes(jsonPayload.toString());
 
-                outputStream = new DataOutputStream(urlConnection.getOutputStream());
-                outputStream.writeBytes(twoHyphens + boundary + lineEnd);
-                outputStream.writeBytes("Content-Disposition: listing-data; name=\"" + filefield + "\"; filename=\"" + q[idx] + "\"" + lineEnd);
-                outputStream.writeBytes("Content-Type: image/jpeg" + lineEnd);
-                outputStream.writeBytes("Content-Transfer-Encoding: binary" + lineEnd);
-                outputStream.writeBytes(lineEnd);
-
-                bytesAvailable = fileInputStream.available();
-                bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                buffer = new byte[bufferSize];
-                int progress = 0;
-                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-                while (bytesRead > 0) {
-                    Log.d(TAG, "uploadPhoto: " + bytesRead);
-                    Log.d(TAG, "uploadPhoto: " + buffer.length);
-                    outputStream.write(buffer, 0, bufferSize);
-                    bytesAvailable = fileInputStream.available();
-                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-                    progress += bytesRead;
-                    // update progress bar
-                    // publishProgress(progress);
-                    displayNotification(fileZero.toString(), "Connected to server...", 100, Math.round(progress * 100L / file.length()));
-
-                }
-
-                outputStream.writeBytes(lineEnd);
-
-                outputStream.writeBytes(twoHyphens + boundary + lineEnd);
-                outputStream.writeBytes("Content-Disposition: listing-data; name=\"tagname\"" + lineEnd);
-                outputStream.writeBytes("Content-Type: text/plain" + lineEnd);
-                outputStream.writeBytes(lineEnd);
-                outputStream.writeBytes(MainApp.appInfo.getTagName() == null ? "" : MainApp.appInfo.getTagName());  // DEVICETAG
-                outputStream.writeBytes(lineEnd);
-                outputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-
-                inputStream = urlConnection.getInputStream();
-
-                int status = urlConnection.getResponseCode();
-                if (status == HttpsURLConnection.HTTP_OK) {
-                    displayNotification(fileZero.toString(), "Connected to server...", 100, 0);
-
-                    BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    String inputLine;
-                    StringBuffer response = new StringBuffer();
-
-                    while ((inputLine = in.readLine()) != null) {
-
-
-                        response.append(inputLine);
-                        displayNotification(fileZero.toString(), "Uploading...", 100, 0);
-                    }
-
-                    inputStream.close();
-                    urlConnection.disconnect();
-                    fileInputStream.close();
-                    outputStream.flush();
-                    outputStream.close();
-
-                    return response.toString();
-                }
-                return String.valueOf(status);
-
-            } else {
-                data = new Data.Builder()
-                        .putString("error", "Invalid Certificate")
-                        .build();
-
-                return "Invalid Certificate";
+            inputStream = urlConnection.getInputStream();
+            BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
             }
-        } catch (FileNotFoundException | ProtocolException e) {
-            e.printStackTrace();
-            data = new Data.Builder()
-                    .putString("error", "1 " + e.getMessage()).build();
-            errMsg = true;
-            return e.getMessage();
-        } catch (IOException e) {
-            e.printStackTrace();
-            data = new Data.Builder()
-                    .putString("error", "1 " + e.getMessage()).build();
-            errMsg = true;
 
-            return e.getMessage();
+            return response.toString();
         } catch (Exception e) {
             e.printStackTrace();
-            data = new Data.Builder()
-                    .putString("error", "1 " + e.getMessage()).build();
-            errMsg = true;
-
             return e.getMessage();
+        } finally {
+            try {
+                if (fileInputStream != null) fileInputStream.close();
+                if (outputStream != null) outputStream.flush();
+                if (outputStream != null) outputStream.close();
+                if (inputStream != null) inputStream.close();
+                if (urlConnection != null) urlConnection.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private byte[] getFileBytes(File file) throws IOException {
+        try (FileInputStream fis = new FileInputStream(file)) {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = fis.read(buffer)) != -1) {
+                bos.write(buffer, 0, bytesRead);
+            }
+            return bos.toByteArray();
+        }
+    }
+
+
+    private String encodeFileToBase64(File file) {
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+            byte[] fileBytes = new byte[(int) file.length()];
+            fileInputStream.read(fileBytes);
+            return Base64.encodeToString(fileBytes, Base64.NO_WRAP);
+        } catch (IOException e) {
+            Log.e(TAG, "encodeFileToBase64: " + e.getMessage());
+            return "";
         }
     }
 }
