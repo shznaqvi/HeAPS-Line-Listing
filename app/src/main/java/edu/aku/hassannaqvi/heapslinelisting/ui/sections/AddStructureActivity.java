@@ -83,6 +83,8 @@ public class AddStructureActivity extends AppCompatActivity {
         MainApp.maxstreet = db.maxStreetNumber(selectedCluster.getClusterCode());
         MainApp.maxStructure++;
         MainApp.hhid = 0;
+        MainApp.totalFloors = 0;
+        MainApp.currentFloor = 1;
 
 //        bi.bg07.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 //            @Override
@@ -185,6 +187,7 @@ public class AddStructureActivity extends AppCompatActivity {
             } else if (listings.getBg07().equals("1")) {
                 i = new Intent(this, FamilyListingActivity.class);
                 //MainApp.hhid = 0;
+                MainApp.totalFloors = Integer.parseInt(bi.bg09a.getText().toString());
 
             } else {
                 if (!insertNewRecord()) return;

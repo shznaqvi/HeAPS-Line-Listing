@@ -462,7 +462,7 @@
                         </LinearLayout>
 
                         <EditText
-                            android:id="@+id/etBG09a"
+                            android:id="@+id/bg09a"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="number"
@@ -508,7 +508,7 @@
                         </LinearLayout>
 
                         <EditText
-                            android:id="@+id/etBG10"
+                            android:id="@+id/bg10"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="number"

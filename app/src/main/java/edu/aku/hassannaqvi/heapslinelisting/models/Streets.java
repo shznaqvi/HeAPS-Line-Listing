@@ -36,7 +36,13 @@ public class Streets extends BaseObservable implements Observable {
     // FIELD VARIABLES for ST group (ST01 - ST12)
     public String st01 = _EMPTY_;
     public String st02 = _EMPTY_;
-    public String st03 = _EMPTY_;
+    public String st0301 = _EMPTY_;
+    public String st0302 = _EMPTY_;
+    public String st0303 = _EMPTY_;
+    public String st0304 = _EMPTY_;
+    public String st0305 = _EMPTY_;
+    public String st0306 = _EMPTY_;
+    public String st0307 = _EMPTY_;
     public String st04 = _EMPTY_;
     public String st05 = _EMPTY_;
     public String st0501 = _EMPTY_;
@@ -373,13 +379,73 @@ public class Streets extends BaseObservable implements Observable {
 
     // ST03
     @Bindable
-    public String getSt03() {
-        return st03;
+    public String getSt0301() {
+        return st0301;
     }
 
-    public void setSt03(String st03) {
-        this.st03 = st03;
-        notifyPropertyChanged(BR.st03);
+    public void setSt0301(String st0301) {
+        this.st0301 = st0301;
+        notifyPropertyChanged(BR.st0301);
+    }
+
+    @Bindable
+    public String getSt0302() {
+        return st0302;
+    }
+
+    public void setSt0302(String st0302) {
+        this.st0302 = st0302;
+        notifyPropertyChanged(BR.st0302);
+    }
+
+    @Bindable
+    public String getSt0303() {
+        return st0303;
+    }
+
+    public void setSt0303(String st0303) {
+        this.st0303 = st0303;
+        notifyPropertyChanged(BR.st0303);
+    }
+
+    @Bindable
+    public String getSt0304() {
+        return st0304;
+    }
+
+    public void setSt0304(String st0304) {
+        this.st0304 = st0304;
+        notifyPropertyChanged(BR.st0304);
+    }
+
+    @Bindable
+    public String getSt0305() {
+        return st0305;
+    }
+
+    public void setSt0305(String st0305) {
+        this.st0305 = st0305;
+        notifyPropertyChanged(BR.st0305);
+    }
+
+    @Bindable
+    public String getSt0306() {
+        return st0306;
+    }
+
+    public void setSt0306(String st0306) {
+        this.st0306 = st0306;
+        notifyPropertyChanged(BR.st0306);
+    }
+
+    @Bindable
+    public String getSt0307() {
+        return st0307;
+    }
+
+    public void setSt0307(String st0307) {
+        this.st0307 = st0307;
+        notifyPropertyChanged(BR.st0307);
     }
 
     // ST04
@@ -805,7 +871,13 @@ public class Streets extends BaseObservable implements Observable {
 
             this.st01 = json.optString("st01");
             this.st02 = json.optString("st02");
-            this.st03 = json.optString("st03");
+            this.st0301 = json.optString("st0301", _EMPTY_);
+            this.st0302 = json.optString("st0302", _EMPTY_);
+            this.st0303 = json.optString("st0303", _EMPTY_);
+            this.st0304 = json.optString("st0304", _EMPTY_);
+            this.st0305 = json.optString("st0305", _EMPTY_);
+            this.st0306 = json.optString("st0306", _EMPTY_);
+            this.st0307 = json.optString("st0307", _EMPTY_);
             this.st04 = json.optString("st04");
             this.st05 = json.optString("st05");
             this.st0501 = json.optString("st0501");
@@ -848,7 +920,13 @@ public class Streets extends BaseObservable implements Observable {
 
         json.put("st01", st01);
         json.put("st02", st02);
-        json.put("st03", st03);
+        json.put("st0301", st0301);
+        json.put("st0302", st0302);
+        json.put("st0303", st0303);
+        json.put("st0304", st0304);
+        json.put("st0305", st0305);
+        json.put("st0306", st0306);
+        json.put("st0307", st0307);
         json.put("st04", st04);
         json.put("st05", st05);
         json.put("st0501", st0501);

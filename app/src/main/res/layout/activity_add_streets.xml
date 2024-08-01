@@ -150,74 +150,176 @@
 
                         </LinearLayout>
 
-                        <RadioGroup
-                            android:id="@+id/radioGroupStreetDescription"
+                        <!--
+
+Straight Street
+•	A street that follows a linear path with no bends or curves.
+Curved Street
+•	A street that follows a smooth, continuous curve.
+Circular Street
+•	A street arranged in a circular or roundabout pattern.
+Meandering Street
+•	A street with winding, serpentine curves, not following a straight path.
+Street with Sharp Turns
+•	A street featuring abrupt or sharp changes in direction.
+Street with Multiple Twists and Turns
+•	A street with frequent and sharp bends or changes in direction.
+Dead-End Street
+•	A street with only one entry and exit point, ending in a cul-de-sac.
+Loop Street
+•	A street that forms a loop or ring, allowing vehicles to enter and exit from the same point.
+T-Shaped Street
+•	A street that forms a T-shape with a main road and a perpendicular street.
+Y-Shaped Street
+•	A street that forms a Y-shape with two diverging paths from a single point.
+Improvised Drainage Street
+•	A street with makeshift or rudimentary drainage solutions to manage runoff and prevent flooding.
+Morning Sun Exposure
+•	A street that primarily receives direct sunlight in the morning hours.
+Afternoon Sun Exposure
+•	A street that primarily receives direct sunlight in the afternoon hours.
+Shaded by Buildings
+•	The street is shaded by nearby buildings or structures.
+No Significant Shade
+•	A street with minimal or no shading features, leading to consistent exposure to direct sunlight.
+Vegetated or Green Street
+•	The street has significant vegetation or green features aimed at reducing heat and improving air quality.
+Flood-Prone
+•	The street frequently experiences flooding or water accumulation.
+Other (Specify)
+•	For streets with unique or atypical layouts not covered by the predefined options.
+
+================
+
+Street Layout and Shape
+Straight Street
+
+A street that follows a linear path with no bends or curves.
+Curved Street
+
+A street that follows a smooth, continuous curve.
+Meandering Street
+
+A street with winding, serpentine curves, not following a straight path.
+Street with Sharp Turns
+
+A street featuring abrupt or sharp changes in direction.
+Street with Multiple Twists and Turns
+
+A street with frequent and sharp bends or changes in direction.
+Circular Street
+
+A street arranged in a circular or roundabout pattern.
+Loop Street
+
+A street that forms a loop or ring, allowing vehicles to enter and exit from the same point.
+Dead-End Street
+
+A street with only one entry and exit point, ending in a cul-de-sac.
+T-Shaped Street
+
+A street that forms a T-shape with a main road and a perpendicular street.
+Y-Shaped Street
+
+A street that forms a Y-shape with two diverging paths from a single point.
+Sun Exposure and Shading
+Morning Sun Exposure
+
+A street that primarily receives direct sunlight in the morning hours.
+Afternoon Sun Exposure
+
+A street that primarily receives direct sunlight in the afternoon hours.
+Shaded by Buildings
+
+The street is shaded by nearby buildings or structures.
+No Significant Shade
+
+A street with minimal or no shading features, leading to consistent exposure to direct sunlight.
+Vegetated or Green Street
+
+The street has significant vegetation or green features aimed at reducing heat and improving air quality.
+Drainage and Flooding
+Improvised Drainage Street
+
+A street with makeshift or rudimentary drainage solutions to manage runoff and prevent flooding.
+Flood-Prone
+
+The street frequently experiences flooding or water accumulation.
+Miscellaneous
+Other (Specify)
+For streets with unique or atypical layouts not covered by the predefined options.
+                        -->
+
+                        <!-- For st0301 (Narrow) -->
+                        <CheckBox
+                            android:id="@+id/checkBoxSt0301"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:checked="@{streets.st0301.equals(`1`)}"
+                            android:onClick="@{() -> streets.setSt0301(streets.st0301.equals(`1`) ? `` : `1`)}"
+                            android:tag="-1"
+                            android:text="@string/st0301" />
 
-                            <!-- For st0301 (Narrow) -->
-                            <RadioButton
-                                android:id="@+id/st0301"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:checked="@{streets.st03.equals(`1`)}"
-                                android:onClick="@{()->streets.setSt03(`1`)}"
-                                android:text="@string/st0301" />
+                        <!-- For st0302 (Congested) -->
+                        <CheckBox
+                            android:id="@+id/checkBoxSt0302"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="@{streets.st0302.equals(`2`)}"
+                            android:onClick="@{() -> streets.setSt0302(streets.st0302.equals(`2`) ? `` : `2`)}"
+                            android:tag="-1"
+                            android:text="@string/st0302" />
 
-                            <!-- For st0302 (Congested) -->
-                            <RadioButton
-                                android:id="@+id/st0302"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:checked="@{streets.st03.equals(`2`)}"
-                                android:onClick="@{()->streets.setSt03(`2`)}"
-                                android:text="@string/st0302" />
+                        <!-- For st0303 (Connecting) -->
+                        <CheckBox
+                            android:id="@+id/checkBoxSt0303"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="@{streets.st0303.equals(`3`)}"
+                            android:onClick="@{() -> streets.setSt0303(streets.st0303.equals(`3`) ? `` : `3`)}"
+                            android:tag="-1"
+                            android:text="@string/st0303" />
 
-                            <!-- For st0303 (Connecting) -->
-                            <RadioButton
-                                android:id="@+id/st0303"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:checked="@{streets.st03.equals(`3`)}"
-                                android:onClick="@{()->streets.setSt03(`3`)}"
-                                android:text="@string/st0303" />
+                        <!-- For st0304 (Wide) -->
+                        <CheckBox
+                            android:id="@+id/checkBoxSt0304"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="@{streets.st0304.equals(`4`)}"
+                            android:onClick="@{() -> streets.setSt0304(streets.st0304.equals(`4`) ? `` : `4`)}"
+                            android:tag="-1"
+                            android:text="@string/st0304" />
 
-                            <!-- For st0304 (Wide) -->
-                            <RadioButton
-                                android:id="@+id/st0304"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:checked="@{streets.st03.equals(`4`)}"
-                                android:onClick="@{()->streets.setSt03(`4`)}"
-                                android:text="@string/st0304" />
+                        <!-- For st0305 (One Way) -->
+                        <CheckBox
+                            android:id="@+id/checkBoxSt0305"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="@{streets.st0305.equals(`5`)}"
+                            android:onClick="@{() -> streets.setSt0305(streets.st0305.equals(`5`) ? `` : `5`)}"
+                            android:tag="-1"
+                            android:text="@string/st0305" />
 
-                            <!-- For st0305 (One Way) -->
-                            <RadioButton
-                                android:id="@+id/st0305"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:checked="@{streets.st03.equals(`5`)}"
-                                android:onClick="@{()->streets.setSt03(`5`)}"
-                                android:text="@string/st0305" />
+                        <!-- For st0306 (Two Way) -->
+                        <CheckBox
+                            android:id="@+id/checkBoxSt0306"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="@{streets.st0306.equals(`6`)}"
+                            android:onClick="@{() -> streets.setSt0306(streets.st0306.equals(`6`) ? `` : `6`)}"
+                            android:tag="-1"
+                            android:text="@string/st0306" />
 
-                            <!-- For st0306 (Two Way) -->
-                            <RadioButton
-                                android:id="@+id/st0306"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:checked="@{streets.st03.equals(`6`)}"
-                                android:onClick="@{()->streets.setSt03(`6`)}"
-                                android:text="@string/st0306" />
+                        <!-- For st0307 (Other/Unknown) -->
+                        <CheckBox
+                            android:id="@+id/checkBoxSt0307"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="@{streets.st0307.equals(`7`)}"
+                            android:onClick="@{() -> streets.setSt0307(streets.st0307.equals(`7`) ? `` : `7`)}"
+                            android:tag="-1"
+                            android:text="@string/st0307" />
 
-                            <!-- For st0307 (Other/Unknown) -->
-                            <RadioButton
-                                android:id="@+id/st0307"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:checked="@{streets.st03.equals(`7`)}"
-                                android:onClick="@{()->streets.setSt03(`7`)}"
-                                android:text="@string/st0307" />
-                        </RadioGroup>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -259,86 +361,124 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <!-- For st0401 (S1 - North) -->
+                            <!-- For st0401 (North) -->
                             <RadioButton
                                 android:id="@+id/st0401"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:checked="@{streets.st04.equals(`1`)}"
-                                android:onClick="@{()->streets.setSt04(`1`)}"
+                                android:onClick="@{() -> streets.setSt04(`1`)}"
                                 android:text="@string/st0401" />
 
-                            <!-- For st0402 (S2 – 15° From North) -->
+                            <!-- For st0402 (15° From North) -->
                             <RadioButton
                                 android:id="@+id/st0402"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:checked="@{streets.st04.equals(`2`)}"
-                                android:onClick="@{()->streets.setSt04(`2`)}"
+                                android:onClick="@{() -> streets.setSt04(`2`)}"
                                 android:text="@string/st0402" />
 
-                            <!-- For st0403 (S3 – 30° From North) -->
+                            <!-- For st0403 (30° From North) -->
                             <RadioButton
                                 android:id="@+id/st0403"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:checked="@{streets.st04.equals(`3`)}"
-                                android:onClick="@{()->streets.setSt04(`3`)}"
+                                android:onClick="@{() -> streets.setSt04(`3`)}"
                                 android:text="@string/st0403" />
 
-                            <!-- For st0404 (S4 – 45° From North) -->
+                            <!-- For st0404 (45° From North) -->
                             <RadioButton
                                 android:id="@+id/st0404"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:checked="@{streets.st04.equals(`4`)}"
-                                android:onClick="@{()->streets.setSt04(`4`)}"
+                                android:onClick="@{() -> streets.setSt04(`4`)}"
                                 android:text="@string/st0404" />
 
-                            <!-- For st0405 (S5 – 60° From North) -->
+                            <!-- For st0405 (60° From North) -->
                             <RadioButton
                                 android:id="@+id/st0405"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:checked="@{streets.st04.equals(`5`)}"
-                                android:onClick="@{()->streets.setSt04(`5`)}"
+                                android:onClick="@{() -> streets.setSt04(`5`)}"
                                 android:text="@string/st0405" />
 
-                            <!-- For st0406 (S2 – 75° From North) -->
+                            <!-- For st0406 (75° From North) -->
                             <RadioButton
                                 android:id="@+id/st0406"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:checked="@{streets.st04.equals(`6`)}"
-                                android:onClick="@{()->streets.setSt04(`6`)}"
+                                android:onClick="@{() -> streets.setSt04(`6`)}"
                                 android:text="@string/st0406" />
 
-                            <!-- For st0407 (S2 – 90° From North (East - West)) -->
+                            <!-- For st0407 (90° From North (East - West)) -->
                             <RadioButton
                                 android:id="@+id/st0407"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:checked="@{streets.st04.equals(`7`)}"
-                                android:onClick="@{()->streets.setSt04(`7`)}"
+                                android:onClick="@{() -> streets.setSt04(`7`)}"
                                 android:text="@string/st0407" />
 
+                            <!-- For st0408 (Minus 15° From North) -->
+                            <RadioButton
+                                android:id="@+id/st0408"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st04.equals(`8`)}"
+                                android:onClick="@{() -> streets.setSt04(`8`)}"
+                                android:text="@string/st0408" />
 
-                            <!--               <RadioButton
-                                               android:id="@+id/St0498"
-                                               android:layout_width="match_parent"
-                                               android:layout_height="wrap_content"
-                                               android:checked="@{streets.st04.equals(`3`)}"
-                                               android:onClick="@{()->streets.setSt04(`3`)}"
-                                               android:text="@string/st0498" />
+                            <!-- For st0409 (Minus 30° From North) -->
+                            <RadioButton
+                                android:id="@+id/st0409"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st04.equals(`9`)}"
+                                android:onClick="@{() -> streets.setSt04(`9`)}"
+                                android:text="@string/st0409" />
 
-                                           <RadioButton
-                                               android:id="@+id/St0499"
-                                               android:layout_width="match_parent"
-                                               android:layout_height="wrap_content"
-                                               android:checked="@{streets.st04.equals(`99`)}"
-                                               android:onClick="@{()->streets.setSt04(`99`)}"
-                                               android:text="@string/st0499" />-->
+                            <!-- For st0410 (Minus 45° From North) -->
+                            <RadioButton
+                                android:id="@+id/st0410"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st04.equals(`10`)}"
+                                android:onClick="@{() -> streets.setSt04(`10`)}"
+                                android:text="@string/st0410" />
+
+                            <!-- For st0411 (Minus 60° From North) -->
+                            <RadioButton
+                                android:id="@+id/st0411"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st04.equals(`11`)}"
+                                android:onClick="@{() -> streets.setSt04(`11`)}"
+                                android:text="@string/st0411" />
+
+                            <!-- For st0412 (Minus 75° From North) -->
+                            <RadioButton
+                                android:id="@+id/st0412"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st04.equals(`12`)}"
+                                android:onClick="@{() -> streets.setSt04(`12`)}"
+                                android:text="@string/st0412" />
+
+                            <!-- For st0413 (Mixed) -->
+                            <RadioButton
+                                android:id="@+id/st0413"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="@{streets.st04.equals(`13`)}"
+                                android:onClick="@{() -> streets.setSt04(`13`)}"
+                                android:text="@string/st0413" />
                         </RadioGroup>
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -952,7 +1092,7 @@
                                 android:maxLength="3"
                                 android:text="@={streets.st0601}"
                                 app:maxValue="120"
-                                app:minValue="20"
+                                app:minValue="1"
                                 app:type="range" />
 
                             <View
@@ -970,7 +1110,7 @@
                                 android:maxLength="3"
                                 android:text="@={streets.st0602}"
                                 app:maxValue="120"
-                                app:minValue="20"
+                                app:minValue="1"
                                 app:type="range" />
 
                             <View
@@ -988,7 +1128,7 @@
                                 android:maxLength="3"
                                 android:text="@={streets.st0603}"
                                 app:maxValue="120"
-                                app:minValue="20"
+                                app:minValue="1"
                                 app:type="range" />
 
                             <View
@@ -1006,7 +1146,7 @@
                                 android:maxLength="3"
                                 android:text="@={streets.st0604}"
                                 app:maxValue="120"
-                                app:minValue="20"
+                                app:minValue="1"
                                 app:type="range" />
 
                             <View
@@ -1024,7 +1164,7 @@
                                 android:maxLength="3"
                                 android:text="@={streets.st0605}"
                                 app:maxValue="120"
-                                app:minValue="20"
+                                app:minValue="1"
                                 app:type="range" />
 
                             <!-- TextView for additional information -->

@@ -592,7 +592,7 @@ public class DataUpPeriodicWorkerALL extends Worker {
                 .setSmallIcon(R.drawable.app_icon)
                 .setContentTitle(title)
                 .setContentText(content)
-                .setSmallIcon(R.drawable.wellness_health_care)
+                .setSmallIcon(R.drawable.climatechange_app_logo)
                 .setColorized(true)
                 .setContentTitle(title);
 

@@ -165,13 +165,19 @@
 
 
     <string name="st04">Street Orientation</string>
-    <string name="st0401">S1 - North</string>
-    <string name="st0402">S2 – 15° From North</string>
-    <string name="st0403">S3 – 30° From North</string>
-    <string name="st0404">S4 – 45° From North</string>
-    <string name="st0405">S5 – 60° From North</string>
-    <string name="st0406">S2 – 75° From North</string>
-    <string name="st0407">S2 – 90° From North (East - West)</string>
+    <string name="st0401">North</string>
+    <string name="st0402">15° From North</string>
+    <string name="st0403">30° From North</string>
+    <string name="st0404">45° From North</string>
+    <string name="st0405">60° From North</string>
+    <string name="st0406">75° From North</string>
+    <string name="st0407">90° From North (East - West)</string>
+    <string name="st0408">Minus 15° From North</string>
+    <string name="st0409">Minus 30° From North</string>
+    <string name="st0410">Minus 45° From North</string>
+    <string name="st0411">Minus 60° From North</string>
+    <string name="st0412">Minus 75° From North</string>
+    <string name="st0413">Mixed</string>
 
     <string name="st05">Estimated Urban Canyon Height (m)</string>
 
@@ -257,30 +263,30 @@
     <string name="bg10">BG10 If yes, how many households are in the structure?</string>
 
 
+    <string name="hh10">Is there any household living in this apartment?</string>
     <string name="hh11">Name of the head of the household?</string>
 
     <string name="hh12">Total number of individuals living in the household, including children</string>
     <string name="hh12a">Number of males (including boys)</string>
     <string name="hh12b">Number of females (including girls)</string>
-    <string name="hh12c">How many married women are in the household?</string>
-
-    <string name="hh13">Are there children under the age of five in the household?</string>
-    <string name="hh1301">Yes</string>
-    <string name="hh1302">No</string>
-    <string name="hh13a">Number of children under the age of five</string>
-    <string name="hh14">Are there children aged 12 to 23 months in the household?</string>
-    <string name="hh1401">Yes</string>
-    <string name="hh1402">No</string>
-    <string name="hh14a">If yes, please specify the number of children aged 12 to 23 months</string>
-<!--    <string name="hh12d">Is there any pregnant woman in the household?</string>
-    <string name="hh12d1">Yes</string>
-    <string name="hh12d2">No</string>-->
+    <string name="hh12c">How many married women between 15–49 years old (MWRA) are in the household?</string>
     <string name="hh12d">Number of pregnant women in the household</string>
     <!--<string name="hh12d">Is there any elderly person >60 years in the household?</string>
     <string name="hh12d1">Yes</string>
     <string name="hh12d2">No</string>-->
-    <string name="hh12e">Number of elderly people in the household</string>
+    <string name="hh12e">Number of elderly people (above 65-year old) in the household</string>
+
+    <string name="hh13">Number of children under 5-years of age</string>
+    <string name="hh14">Are there any adults in the household who work outdoors, such as in farming, construction, or other outdoor activities (excluding office or factory work)?</string>
+    <string name="hh1401">Yes</string>
+    <string name="hh1402">No</string>
+    <string name="hh14a">If yes, please specify the number of children aged 12 to 23 months</string>
+    <!--    <string name="hh12d">Is there any pregnant woman in the household?</string>
+        <string name="hh12d1">Yes</string>
+        <string name="hh12d2">No</string>-->
+
     <string name="hh15">Is there any other family living in this household?</string>
+    <string name="hh16">Is there any more apartment on this floor?</string>
 
 
     <!--   <string name="iStatus">Result of Household Questionnaire Discuss any result not completed with supervisor. interview</string>
@@ -367,24 +373,21 @@
 
     <string name="Q_fl01" translatable="false">FL01</string>
     <string name="Q_fl02" translatable="false">FL02</string>
+    <string name="Q_hh10" translatable="false">HH10</string>
     <string name="Q_hh11" translatable="false">HH11</string>
     <string name="Q_hh12" translatable="false">HH12</string>
     <string name="Q_hh12a" translatable="false">HH12a</string>
     <string name="Q_hh12b" translatable="false">HH12b</string>
     <string name="Q_hh12c" translatable="false">HH12c</string>
     <string name="Q_hh13" translatable="false">HH13</string>
-    <string name="Q_hh1301" translatable="false">HH1301</string>
-    <string name="Q_hh1302" translatable="false">HH1302</string>
-    <string name="Q_hh13a" translatable="false">HH13a</string>
+
     <string name="Q_hh14" translatable="false">HH14</string>
-    <string name="Q_hh1401" translatable="false">HH1401</string>
-    <string name="Q_hh1402" translatable="false">HH1402</string>
-    <string name="Q_hh14a" translatable="false">HH14a</string>
     <string name="Q_hh12d" translatable="false">HH12d</string>
     <string name="Q_hh12d1" translatable="false">HH12d1</string>
     <string name="Q_hh12d2" translatable="false">HH12d2</string>
     <string name="Q_hh12e" translatable="false">HH12e</string>
     <string name="Q_hh15" translatable="false">HH15</string>
+    <string name="Q_hh16" translatable="false">HH16</string>
 
 
     <string name="open_lhw_form">OPEN LHW REGISTRATION FORM</string>

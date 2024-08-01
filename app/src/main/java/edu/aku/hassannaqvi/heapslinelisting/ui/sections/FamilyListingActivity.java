@@ -51,6 +51,7 @@ public class FamilyListingActivity extends AppCompatActivity {
         MainApp.hhid++;
 
         bi.btnEnd.setVisibility(MainApp.hhid == 1 ? View.GONE : View.VISIBLE);
+        bi.fl01.setHint(String.valueOf(MainApp.currentFloor));
 
 //        bi.hhid.setText("HFP-" + MainApp.listings.getHh01() + "\n" + MainApp.selectedTab + "-" + String.format("%04d", MainApp.maxStructure) + "-" + String.format("%03d", MainApp.hhid));
 
@@ -137,12 +138,25 @@ public class FamilyListingActivity extends AppCompatActivity {
 
 
             Intent i = null;
+            // More Households in apartment
             if (MainApp.listings.getHh15().equals("1")) {
                 i = new Intent(this, FamilyListingActivity.class);
-                //MainApp.hhid = 0;
+                // MainApp.hhid++; Done in onCreate of this activity
 
+            }
+            // More Appartments on the floor
+            else if (MainApp.listings.getHh16().equals("1")) {
+                i = new Intent(this, FamilyListingActivity.class);
+                MainApp.hhid = 0;
+
+            }
+            // More Floors in this structure
+            else if (MainApp.totalFloors >= ++MainApp.currentFloor) {
+                i = new Intent(this, FamilyListingActivity.class);
+                MainApp.hhid = 0;
             } else {
                 i = new Intent(this, AddStructureActivity.class);
+                MainApp.hhid = 0;
             }
 
             startActivity(i);
@@ -188,7 +202,7 @@ public class FamilyListingActivity extends AppCompatActivity {
     }
 
     public void btnEnd(View view) {
-        bi.hh11.setText("Deleted");
+        bi.hh11.setText("0000000");
 
 
         if (insertNewRecord()) {
@@ -201,22 +215,36 @@ public class FamilyListingActivity extends AppCompatActivity {
     private boolean formValidation() {
         if (!Validator.emptyCheckingContainer(this, bi.GrpName)) return false;
 
-        if (!bi.hh12.getText().toString().equals("")) {
-            if (Integer.parseInt(bi.hh12c.getText().toString()) > Integer.parseInt(bi.hh12b.getText().toString())) {
-                Validator.emptyCustomTextBox(this, bi.hh12c, "Total maried women cannot be more than Total Females");
-                return false;
-            } else if (MainApp.listings.getHh12().equals("0")) {
-                Validator.emptyCustomTextBox(this, bi.hh12, "Total members cannot be 0");
-                return false;
-            }
+
+        int totalMem = Integer.parseInt(bi.hh12.getText().toString());
+        int totalMale = Integer.parseInt(bi.hh12a.getText().toString());
+        int totalFemale = Integer.parseInt(bi.hh12b.getText().toString());
+        int totalMWRA = Integer.parseInt(bi.hh12c.getText().toString());
+        int totalPreg = Integer.parseInt(bi.hh12d.getText().toString());
+
+
+        int calTotalMembers = totalMale + totalFemale;
+
+        if (totalMem != calTotalMembers) {
+            Validator.emptyCustomTextBox(this, bi.hh12, "Total members do not match Male and Female count");
+            return false;
         }
 
-        if (!bi.hh12e.getText().toString().equals("")) {
-            if (Integer.parseInt(bi.hh12e.getText().toString()) > Integer.parseInt(bi.hh12b.getText().toString())) {
-                Validator.emptyCustomTextBox(this, bi.hh12e, "Total pregnant women cannot be more than Total Females");
-                return false;
-            }
+        if (totalMWRA > totalFemale) {
+            Validator.emptyCustomTextBox(this, bi.hh12c, "Total MWRA cannot be more than Total Females in the household");
+            return false;
         }
+
+        if (totalPreg > totalFemale) {
+            Validator.emptyCustomTextBox(this, bi.hh12e, "Total pregnant women cannot be more than Total Females in the household");
+            return false;
+        }
+
+        if (totalPreg > totalMWRA) {
+            Validator.emptyCustomTextBox(this, bi.hh12e, "Total pregnant women cannot be more than Total MWRA");
+            return false;
+        }
+
         return true;
     }
 

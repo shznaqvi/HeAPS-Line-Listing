@@ -52,6 +52,7 @@ public class LocationService extends Service {
         return builder.build();
     }
 
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {

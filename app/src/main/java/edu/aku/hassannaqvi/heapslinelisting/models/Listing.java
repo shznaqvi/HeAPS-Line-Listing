@@ -52,24 +52,22 @@ public class Listing extends BaseObservable implements Observable {
 
     public String fl01 = _EMPTY_;
     public String fl02 = _EMPTY_;
+    public String hh10 = _EMPTY_;
     public String hh11 = _EMPTY_;
     public String hh12 = _EMPTY_;
     public String hh12a = _EMPTY_;
     public String hh12b = _EMPTY_;
     public String hh12c = _EMPTY_;
-    public String hh13 = _EMPTY_;
-    public String hh1301 = _EMPTY_;
-    public String hh1302 = _EMPTY_;
-    public String hh13a = _EMPTY_;
-    public String hh14 = _EMPTY_;
-    public String hh1401 = _EMPTY_;
-    public String hh1402 = _EMPTY_;
-    public String hh14a = _EMPTY_;
     public String hh12d = _EMPTY_;
-    public String hh12d1 = _EMPTY_;
-    public String hh12d2 = _EMPTY_;
     public String hh12e = _EMPTY_;
-    public String hh15 = _EMPTY_;
+    public String hh13 = _EMPTY_;
+
+
+    public String hh14 = _EMPTY_;
+
+
+    public String hh15 = _EMPTY_; // Household
+    public String hh16 = _EMPTY_; // Apartments on the floor
 
 
     // APP VARIABLES
@@ -227,7 +225,7 @@ public class Listing extends BaseObservable implements Observable {
         setHh05(streetNum);
         notifyPropertyChanged(BR.streetNum);
     }
-    
+
     // ClusterCode
     @Bindable
     public String getClusterCode() {
@@ -654,6 +652,26 @@ public class Listing extends BaseObservable implements Observable {
         notifyPropertyChanged(BR.fl02);
     }
 
+    // HH10
+    @Bindable
+    public String getHh10() {
+        return hh10;
+    }
+
+    public void setHh10(String hh10) {
+        this.hh10 = hh10;
+        setHh11(hh10.equals("2") ? "" : hh11);
+        setHh12(hh10.equals("2") ? "" : hh12);
+        setHh12a(hh10.equals("2") ? "" : hh12a);
+        setHh12b(hh10.equals("2") ? "" : hh12b);
+        setHh12c(hh10.equals("2") ? "" : hh12c);
+        setHh12d(hh10.equals("2") ? "" : hh12d);
+        setHh12e(hh10.equals("2") ? "" : hh12e);
+        setHh13(hh10.equals("2") ? "" : hh13);
+        setHh14(hh10.equals("2") ? "" : hh14);
+        notifyPropertyChanged(BR.hh10);
+    }
+
     // HH11
     @Bindable
     public String getHh11() {
@@ -709,94 +727,6 @@ public class Listing extends BaseObservable implements Observable {
         notifyPropertyChanged(BR.hh12c);
     }
 
-    // HH13
-    @Bindable
-    public String getHh13() {
-        return hh13;
-    }
-
-    public void setHh13(String hh13) {
-        this.hh13 = hh13;
-        notifyPropertyChanged(BR.hh13);
-    }
-
-    // HH1301
-    @Bindable
-    public String getHh1301() {
-        return hh1301;
-    }
-
-    public void setHh1301(String hh1301) {
-        this.hh1301 = hh1301;
-        notifyPropertyChanged(BR.hh1301);
-    }
-
-    // HH1302
-    @Bindable
-    public String getHh1302() {
-        return hh1302;
-    }
-
-    public void setHh1302(String hh1302) {
-        this.hh1302 = hh1302;
-        notifyPropertyChanged(BR.hh1302);
-    }
-
-    // HH13a
-    @Bindable
-    public String getHh13a() {
-        return hh13a;
-    }
-
-    public void setHh13a(String hh13a) {
-        this.hh13a = hh13a;
-        notifyPropertyChanged(BR.hh13a);
-    }
-
-    // HH14
-    @Bindable
-    public String getHh14() {
-        return hh14;
-    }
-
-    public void setHh14(String hh14) {
-        this.hh14 = hh14;
-        notifyPropertyChanged(BR.hh14);
-    }
-
-    // HH1401
-    @Bindable
-    public String getHh1401() {
-        return hh1401;
-    }
-
-    public void setHh1401(String hh1401) {
-        this.hh1401 = hh1401;
-        notifyPropertyChanged(BR.hh1401);
-    }
-
-    // HH1402
-    @Bindable
-    public String getHh1402() {
-        return hh1402;
-    }
-
-    public void setHh1402(String hh1402) {
-        this.hh1402 = hh1402;
-        notifyPropertyChanged(BR.hh1402);
-    }
-
-    // HH14a
-    @Bindable
-    public String getHh14a() {
-        return hh14a;
-    }
-
-    public void setHh14a(String hh14a) {
-        this.hh14a = hh14a;
-        notifyPropertyChanged(BR.hh14a);
-    }
-
     // HH12d
     @Bindable
     public String getHh12d() {
@@ -806,28 +736,6 @@ public class Listing extends BaseObservable implements Observable {
     public void setHh12d(String hh12d) {
         this.hh12d = hh12d;
         notifyPropertyChanged(BR.hh12d);
-    }
-
-    // HH12d1
-    @Bindable
-    public String getHh12d1() {
-        return hh12d1;
-    }
-
-    public void setHh12d1(String hh12d1) {
-        this.hh12d1 = hh12d1;
-        notifyPropertyChanged(BR.hh12d1);
-    }
-
-    // HH12d2
-    @Bindable
-    public String getHh12d2() {
-        return hh12d2;
-    }
-
-    public void setHh12d2(String hh12d2) {
-        this.hh12d2 = hh12d2;
-        notifyPropertyChanged(BR.hh12d2);
     }
 
     // HH12e
@@ -841,6 +749,34 @@ public class Listing extends BaseObservable implements Observable {
         notifyPropertyChanged(BR.hh12e);
     }
 
+    // HH13
+    @Bindable
+    public String getHh13() {
+        return hh13;
+    }
+
+    public void setHh13(String hh13) {
+        this.hh13 = hh13;
+        notifyPropertyChanged(BR.hh13);
+    }
+
+
+
+    // HH14
+    @Bindable
+    public String getHh14() {
+        return hh14;
+    }
+
+    public void setHh14(String hh14) {
+        this.hh14 = hh14;
+        notifyPropertyChanged(BR.hh14);
+    }
+
+
+
+
+
     // HH15
     @Bindable
     public String getHh15() {
@@ -849,7 +785,19 @@ public class Listing extends BaseObservable implements Observable {
 
     public void setHh15(String hh15) {
         this.hh15 = hh15;
+        setHh16(hh15.equals('1') ? "" : hh16);
         notifyPropertyChanged(BR.hh15);
+    }
+
+    // HH16
+    @Bindable
+    public String getHh16() {
+        return hh16;
+    }
+
+    public void setHh16(String hh16) {
+        this.hh16 = hh16;
+        notifyPropertyChanged(BR.hh16);
     }
 
     public Listing hydrate(Cursor cursor) throws JSONException {
@@ -912,24 +860,21 @@ public class Listing extends BaseObservable implements Observable {
             // HH (11-15 and subcolumns)
             this.fl01 = json.getString("fl01");
             this.fl02 = json.getString("fl02");
+            this.hh10 = json.getString("hh10");
             this.hh11 = json.getString("hh11");
             this.hh12 = json.getString("hh12");
             this.hh12a = json.getString("hh12a");
             this.hh12b = json.getString("hh12b");
             this.hh12c = json.getString("hh12c");
             this.hh13 = json.getString("hh13");
-            this.hh1301 = json.getString("hh1301");
-            this.hh1302 = json.getString("hh1302");
-            this.hh13a = json.getString("hh13a");
+
             this.hh14 = json.getString("hh14");
-            this.hh1401 = json.getString("hh1401");
-            this.hh1402 = json.getString("hh1402");
-            this.hh14a = json.getString("hh14a");
+
             this.hh12d = json.getString("hh12d");
-            this.hh12d1 = json.getString("hh12d1");
-            this.hh12d2 = json.getString("hh12d2");
+
             this.hh12e = json.getString("hh12e");
             this.hh15 = json.getString("hh15");
+            this.hh16 = json.getString("hh16");
         }
     }
 
@@ -1008,6 +953,7 @@ public class Listing extends BaseObservable implements Observable {
         json.put("hh05", hh05);
         json.put("hh06", hh06);
 
+        json.put("hh10", hh10);
         json.put("hh11", hh11);
         json.put("fl01", fl01);
         json.put("fl02", fl02);
@@ -1016,18 +962,14 @@ public class Listing extends BaseObservable implements Observable {
         json.put("hh12b", hh12b);
         json.put("hh12c", hh12c);
         json.put("hh13", hh13);
-        json.put("hh1301", hh1301);
-        json.put("hh1302", hh1302);
-        json.put("hh13a", hh13a);
+
         json.put("hh14", hh14);
-        json.put("hh1401", hh1401);
-        json.put("hh1402", hh1402);
-        json.put("hh14a", hh14a);
+
         json.put("hh12d", hh12d);
-        json.put("hh12d1", hh12d1);
-        json.put("hh12d2", hh12d2);
+
         json.put("hh12e", hh12e);
         json.put("hh15", hh15);
+        json.put("hh16", hh16);
 
         return json.toString();
     }
@@ -1086,23 +1028,20 @@ public class Listing extends BaseObservable implements Observable {
         this.hh06 = "";
         this.fl01 = "";
         this.fl02 = "";
+        this.hh10 = "";
         this.hh11 = "";
         this.hh12 = "";
         this.hh12a = "";
         this.hh12b = "";
         this.hh12c = "";
         this.hh13 = "";
-        this.hh1301 = "";
-        this.hh1302 = "";
-        this.hh13a = "";
+
         this.hh14 = "";
-        this.hh1401 = "";
-        this.hh1402 = "";
-        this.hh14a = "";
+
         this.hh12d = "";
-        this.hh12d1 = "";
-        this.hh12d2 = "";
+
         this.hh12e = "";
         this.hh15 = "";
+        this.hh16 = "";
     }
 }

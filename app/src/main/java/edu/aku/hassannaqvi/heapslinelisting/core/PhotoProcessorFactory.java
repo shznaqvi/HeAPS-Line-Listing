@@ -95,4 +95,6 @@ public class PhotoProcessorFactory {
 
         return new PointF(nx, ny);
     }
+
+
 }
