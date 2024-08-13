@@ -277,7 +277,7 @@
     <string name="hh12e">Number of elderly people (above 65-year old) in the household</string>
 
     <string name="hh13">Number of children under 5-years of age</string>
-    <string name="hh14">Are there any adults in the household who work outdoors, such as in farming, construction, or other outdoor activities (excluding office or factory work)?</string>
+    <string name="hh14">Number of adults working outdoors (e.g., farming, construction) excluding office or factory work</string>
     <string name="hh1401">Yes</string>
     <string name="hh1402">No</string>
     <string name="hh14a">If yes, please specify the number of children aged 12 to 23 months</string>
@@ -394,6 +394,8 @@
 
     <string name="lang">English</string>
     <string name="sttitle">Add Streets</string>
+    <string name="bgtitle">Add Building Structure</string>
+    <string name="hhtitle">Add Household Information</string>
     <string name="Q_bl04">BL04</string>
     <string name="bl04">Is this the first tablet being used for the line listing of this PSU?</string>
     <string name="bl0401">Yes (Tablet A)</string>

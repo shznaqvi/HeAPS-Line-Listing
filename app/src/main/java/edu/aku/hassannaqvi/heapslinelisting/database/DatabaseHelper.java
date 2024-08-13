@@ -53,9 +53,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_PASSWORD = IBAHC;
     private static final int DATABASE_VERSION = 1;
     private final String TAG = "DatabaseHelper";
+    private final Context context;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -110,7 +112,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(ListingTable.COLUMN_DISTRICT_ID, listing.getDistrictID());
         values.put(ListingTable.COLUMN_AREA, listing.getArea());
         values.put(ListingTable.COLUMN_CLUSTER_CODE, listing.getClusterCode());
-        values.put(ListingTable.COLUMN_STREET_NUMBER, listing.getStreetNum()); // Include street number if applicable
+        values.put(ListingTable.COLUMN_STREET_NUMBER, listing.getStreetNum());
+        values.put(ListingTable.COLUMN_TAB_NUMBER, listing.getTabNo());
         values.put(ListingTable.COLUMN_STRUCTURE_NUMBER, listing.getStructureNo());
         values.put(ListingTable.COLUMN_HHID, listing.getHhid());
         values.put(ListingTable.COLUMN_USERNAME, listing.getUserName());
@@ -123,7 +126,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(ListingTable.COLUMN_ISTATUS, listing.getiStatus());
         values.put(ListingTable.COLUMN_DEVICEID, listing.getDeviceId());
         values.put(ListingTable.COLUMN_APPVERSION, listing.getAppver());
-
+        values.put(ListingTable.COLUMN_SYNCED, listing.getSynced());
+        values.put(ListingTable.COLUMN_SYNC_DATE, listing.getSyncDate());
         values.put(ListingTable.COLUMN_SHH, listing.sHHtoString());
 
 
@@ -440,14 +444,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         JSONObject jsonObjectVersion = ((JSONArray) VersionList.getJSONObject(0).get("elements")).getJSONObject(0);
 
+
         String appPath = jsonObjectVersion.getString("outputFile");
         String versionCode = jsonObjectVersion.getString("versionCode");
+        String versionName = jsonObjectVersion.getString("versionName");
+        String applicationId = VersionList.getJSONObject(0).getString("applicationId");
 
-        MainApp.editor.putString("outputFile", jsonObjectVersion.getString("outputFile"));
-        MainApp.editor.putString("versionCode", jsonObjectVersion.getString("versionCode"));
-        MainApp.editor.putString("versionName", jsonObjectVersion.getString("versionName") + ".");
-        MainApp.editor.apply();
-        count++;
+
+        // Get the application's package name
+
+        String packageName = context.getPackageName();
+        Log.d(TAG, "syncversionApp(applicationId): " + applicationId);
+        Log.d(TAG, "syncversionApp(packageName): " + packageName);
+
+
+        if (applicationId.equals(packageName)) {
+
+            MainApp.editor.putString("outputFile", jsonObjectVersion.getString("outputFile"));
+            MainApp.editor.putString("versionCode", jsonObjectVersion.getString("versionCode"));
+            MainApp.editor.putString("versionName", jsonObjectVersion.getString("versionName") + ".");
+            MainApp.editor.putString("applicationId", jsonObjectVersion.getString("applicationId") + ".");
+            MainApp.editor.apply();
+            count++;
           /*  VersionApp Vc = new VersionApp();
             Vc.sync(jsonObjectVersion);
 
@@ -464,7 +482,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } finally {
             db.close();
         }*/
-
+        }
         return (int) count;
     }
 
@@ -526,15 +544,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //get UnSyncedTables
-    public JSONArray getUnsyncedFormHH() throws JSONException {
+   /* public JSONArray getUnsyncedListing() throws JSONException {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = null;
         String[] columns = null;
 
         String whereClause;
         //whereClause = null;
-        whereClause = ListingTable.COLUMN_SYNCED + " = '' AND " +
-                ListingTable.COLUMN_ISTATUS + "!= ''";
+        whereClause = ListingTable.COLUMN_SYNCED + " = '' ";
 
         String[] whereArgs = null;
 
@@ -554,12 +571,107 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 orderBy                    // The sort order
         );
         while (c.moveToNext()) {
+            */
+
+    /**
+     * WorkManager Upload
+     * /*Listing fc = new Listing();
+     * allFC.add(fc.Hydrate(c));
+     *//*
+            Log.d(TAG, "getUnsyncedFormHH: " + c.getCount());
+            Listing listing = new Listing();
+            allForms.put(listing.hydrate(c).toJSONObject());
+
+
+        }
+
+        if (c != null && !c.isClosed()) {
+            c.close();
+        }
+
+        Log.d(TAG, "getUnsyncedFormHH: " + allForms.toString().length());
+        Log.d(TAG, "getUnsyncedFormHH: " + allForms);
+        return allForms;
+    }*/
+    public JSONArray getUnsyncedListing() throws JSONException {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = null;
+        String[] columns = null;
+
+        String whereClause;
+        //whereClause = null;
+        whereClause = ListingTable.COLUMN_SYNCED + " = '' ";
+
+        String[] whereArgs = null;
+
+        String groupBy = null;
+        String having = null;
+
+        String orderBy = ListingTable._ID + " ASC";
+
+        JSONArray allForms = new JSONArray();
+        c = db.query(
+                ListingTable.TABLE_NAME,  // The table to query
+                columns,                   // The columns to return
+                whereClause,               // The columns for the WHERE clause
+                whereArgs,                 // The values for the WHERE clause
+                groupBy,                   // don't group the rows
+                having,                    // don't filter by row groups
+                orderBy                    // The sort order
+        );
+        while (c.moveToNext()) {
             /** WorkManager Upload
              /*Listing fc = new Listing();
              allFC.add(fc.Hydrate(c));*/
             Log.d(TAG, "getUnsyncedFormHH: " + c.getCount());
             Listing listing = new Listing();
             allForms.put(listing.hydrate(c).toJSONObject());
+
+
+        }
+
+        if (c != null && !c.isClosed()) {
+            c.close();
+        }
+
+        Log.d(TAG, "getUnsyncedFormHH: " + allForms.toString().length());
+        Log.d(TAG, "getUnsyncedFormHH: " + allForms);
+        return allForms;
+    }
+
+    public JSONArray getUnsyncedStreets() throws JSONException {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = null;
+        String[] columns = null;
+
+        String whereClause;
+        //whereClause = null;
+        whereClause = StreetsTable.COLUMN_SYNCED + " = '' ";
+
+        String[] whereArgs = null;
+
+        String groupBy = null;
+        String having = null;
+
+        String orderBy = StreetsTable._ID + " ASC";
+
+        JSONArray allForms = new JSONArray();
+        c = db.query(
+                StreetsTable.TABLE_NAME,  // The table to query
+                columns,                   // The columns to return
+                whereClause,               // The columns for the WHERE clause
+                whereArgs,                 // The values for the WHERE clause
+                groupBy,                   // don't group the rows
+                having,                    // don't filter by row groups
+                orderBy                    // The sort order
+        );
+        while (c.moveToNext()) {
+            /** WorkManager Upload
+             /*Streets fc = new Streets();
+             allFC.add(fc.Hydrate(c));*/
+            Log.d(TAG, "getUnsyncedFormHH: " + c.getCount());
+            Streets streets = new Streets();
+            allForms.put(streets.hydrate(c).toJSONObject());
 
 
         }
@@ -683,9 +795,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //update SyncedTables
-    public void updateSyncedForms(String id) {
+    public void updateSyncedListing(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Log.d(TAG, "updateSyncedForms: "+ id);
+        Log.d(TAG, "updateSyncedListing: " + id);
 // New value for one column
         ContentValues values = new ContentValues();
         values.put(ListingTable.COLUMN_SYNCED, true);
@@ -702,9 +814,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 whereArgs);
     }
 
+    //update SyncedTables
+    public void updateSyncedStreets(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Log.d(TAG, "updateSyncedStreets: " + id);
+// New value for one column
+        ContentValues values = new ContentValues();
+        values.put(StreetsTable.COLUMN_SYNCED, true);
+        values.put(StreetsTable.COLUMN_SYNC_DATE, new Date().toString());
+
+// Which row to update, based on the title
+        String where = StreetsTable._ID + " = ?";
+        String[] whereArgs = {id};
+
+        int count = db.update(
+                StreetsTable.TABLE_NAME,
+                values,
+                where,
+                whereArgs);
+    }
+
     public void updateSyncedFamilyMember(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Log.d(TAG, "updateSyncedForms: "+ id);
+        Log.d(TAG, "updateSyncedForms: " + id);
 
 // New value for one column
         ContentValues values = new ContentValues();

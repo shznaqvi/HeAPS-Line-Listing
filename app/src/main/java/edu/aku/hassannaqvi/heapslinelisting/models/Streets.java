@@ -139,6 +139,36 @@ public class Streets extends BaseObservable implements Observable {
         setProjectName(projectName); // Ensure this is properly set in your application
         setDistrictID(selectedCluster.getDistId()); // Ensure this is properly set in your application
         setClusterCode(selectedCluster.getClusterCode()); // Ensure this is properly set in your application
+        setGPS();
+    }
+
+    private void setGPS() {
+        String latitude = MainApp.sharedPref.getString("latitude", "0");
+        String longitude = MainApp.sharedPref.getString("longitude", "0");
+        String accuracy = String.valueOf(MainApp.sharedPref.getFloat("accuracy", 0));
+        long datetime = MainApp.sharedPref.getLong("datetime", 0);
+        //String provider = MainApp.sharedPref.getString("provider", "");
+
+        // Convert timestamp to formatted date string
+        String formattedDateTime = getFormattedDateTime(datetime);
+
+        // Display formatted date time in the db
+        setGpsLat(latitude);
+        setGpsLng(longitude);
+        setGpsAcc(accuracy);
+        setGpsDT(formattedDateTime);
+    }
+
+    private String getFormattedDateTime(long timestamp) {
+        if (timestamp == 0) return "0";
+        // Create a SimpleDateFormat object with desired date format
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+        // Convert timestamp to Date object
+        Date date = new Date(timestamp);
+
+        // Format the Date object to desired format
+        return sdf.format(date);
     }
 
     // Getters and Setters for basic fields
@@ -813,8 +843,8 @@ public class Streets extends BaseObservable implements Observable {
         json.put(StreetsTable.COLUMN_SYSDATE, this.sysDate);
         json.put(StreetsTable.COLUMN_DEVICEID, this.deviceId);
         json.put(StreetsTable.COLUMN_ISTATUS, this.iStatus);
-        json.put(StreetsTable.COLUMN_SYNCED, this.synced);
-        json.put(StreetsTable.COLUMN_SYNC_DATE, this.syncDate);
+//        json.put(StreetsTable.COLUMN_SYNCED, this.synced);
+//        json.put(StreetsTable.COLUMN_SYNC_DATE, this.syncDate);
         json.put(StreetsTable.COLUMN_APPVERSION, this.appver);
         json.put(StreetsTable.COLUMN_GPSLAT, this.gpsLat);
         json.put(StreetsTable.COLUMN_GPSLNG, this.gpsLng);

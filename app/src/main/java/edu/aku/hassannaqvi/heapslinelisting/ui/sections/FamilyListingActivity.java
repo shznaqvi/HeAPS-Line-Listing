@@ -40,6 +40,14 @@ public class FamilyListingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Get the Intent that started this activity
+        Intent intent = getIntent();
+
+        // Check if the extras are set
+        boolean hasFloorExtra = intent.hasExtra("floor");
+        boolean hasAptExtra = intent.hasExtra("apt");
+
         bi = DataBindingUtil.setContentView(this, R.layout.activity_family_listing);
         bi.setCallback(this);
         bi.setListings(MainApp.listings);
@@ -49,9 +57,20 @@ public class FamilyListingActivity extends AppCompatActivity {
         listings.setHHClear();
 
         MainApp.hhid++;
+        listings.setHhid(String.valueOf(MainApp.hhid));
 
         bi.btnEnd.setVisibility(MainApp.hhid == 1 ? View.GONE : View.VISIBLE);
-        bi.fl01.setHint(String.valueOf(MainApp.currentFloor));
+        //bi.fl01.setHint(String.valueOf(MainApp.currentFloor));
+        if (hasFloorExtra) {
+            listings.setFl01(intent.getStringExtra("floor"));
+            bi.fl01.setEnabled(false);
+        }
+        if (hasAptExtra) {
+            listings.setFl02(intent.getStringExtra("apt"));
+            bi.fl02.setEnabled(false);
+            setID();
+
+        }
 
 //        bi.hhid.setText("HFP-" + MainApp.listings.getHh01() + "\n" + MainApp.selectedTab + "-" + String.format("%04d", MainApp.maxStructure) + "-" + String.format("%03d", MainApp.hhid));
 
@@ -71,14 +90,7 @@ public class FamilyListingActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
-                //Cluster—Street—Structure—Floors—Apartment—Houehold
-                bi.hhid.setVisibility(View.GONE);
-                String floor = listings.getFl01();
-                bi.fl02.setText("");
-                String apartment = listings.getFl02();
-                MainApp.civilID2 = MainApp.civilID + "-" + floor + "-" + apartment + "-" + String.format("%02d", hhid) + MainApp.listings.getBg08();
-
-                bi.hhid.setText(MainApp.civilID2);
+                setID();
 
 
             }
@@ -112,6 +124,19 @@ public class FamilyListingActivity extends AppCompatActivity {
 
     }
 
+    private void setID() {
+        //Cluster—Street—Structure—Floors—Apartment—Houehold
+        bi.hhid.setVisibility(View.GONE);
+        String floor = listings.getFl01();
+        bi.fl02.setText("");
+        String apartment = listings.getFl02();
+        MainApp.civilID2 = MainApp.civilID + "-" + floor + "-" + apartment + "-" + String.format("%02d", hhid) + MainApp.listings.getBg08();
+        MainApp.civilID2 = MainApp.civilID + "-" + floor + "-" + apartment + "-" + String.format("%02d", hhid) + MainApp.listings.getBg08();
+
+        bi.hhid.setText(MainApp.civilID2);
+
+    }
+
     private boolean updateDB() {
         long updcount = 0;
         try {
@@ -133,6 +158,7 @@ public class FamilyListingActivity extends AppCompatActivity {
 
     public void btnContinue(View view) {
         if (formValidation()) {
+            listings.setFullid(MainApp.civilID2);
 
             if (!insertNewRecord()) return;
 
@@ -141,12 +167,16 @@ public class FamilyListingActivity extends AppCompatActivity {
             // More Households in apartment
             if (MainApp.listings.getHh15().equals("1")) {
                 i = new Intent(this, FamilyListingActivity.class);
+                i.putExtra("floor", bi.fl01.getText().toString());
+                i.putExtra("apt", bi.fl02.getText().toString());
                 // MainApp.hhid++; Done in onCreate of this activity
 
             }
             // More Appartments on the floor
             else if (MainApp.listings.getHh16().equals("1")) {
                 i = new Intent(this, FamilyListingActivity.class);
+                i.putExtra("floor", bi.fl01.getText().toString());
+
                 MainApp.hhid = 0;
 
             }
@@ -174,8 +204,11 @@ public class FamilyListingActivity extends AppCompatActivity {
     private boolean insertNewRecord() {
 
         MainApp.listings.populateMeta();
+
         long rowId = 0;
         try {
+            listings.setStructureNo(String.format("%03d", MainApp.maxStructure));
+
             rowId = db.addListing(MainApp.listings);
         } catch (JSONException | SQLiteException e) {
             e.printStackTrace();
@@ -215,34 +248,35 @@ public class FamilyListingActivity extends AppCompatActivity {
     private boolean formValidation() {
         if (!Validator.emptyCheckingContainer(this, bi.GrpName)) return false;
 
+        if (bi.hh10.equals("1")) {
+            int totalMem = Integer.parseInt(bi.hh12.getText().toString());
+            int totalMale = Integer.parseInt(bi.hh12a.getText().toString());
+            int totalFemale = Integer.parseInt(bi.hh12b.getText().toString());
+            int totalMWRA = Integer.parseInt(bi.hh12c.getText().toString());
+            int totalPreg = Integer.parseInt(bi.hh12d.getText().toString());
 
-        int totalMem = Integer.parseInt(bi.hh12.getText().toString());
-        int totalMale = Integer.parseInt(bi.hh12a.getText().toString());
-        int totalFemale = Integer.parseInt(bi.hh12b.getText().toString());
-        int totalMWRA = Integer.parseInt(bi.hh12c.getText().toString());
-        int totalPreg = Integer.parseInt(bi.hh12d.getText().toString());
 
+            int calTotalMembers = totalMale + totalFemale;
 
-        int calTotalMembers = totalMale + totalFemale;
+            if (totalMem != calTotalMembers) {
+                Validator.emptyCustomTextBox(this, bi.hh12, "Total members do not match Male and Female count");
+                return false;
+            }
 
-        if (totalMem != calTotalMembers) {
-            Validator.emptyCustomTextBox(this, bi.hh12, "Total members do not match Male and Female count");
-            return false;
-        }
+            if (totalMWRA > totalFemale) {
+                Validator.emptyCustomTextBox(this, bi.hh12c, "Total MWRA cannot be more than Total Females in the household");
+                return false;
+            }
 
-        if (totalMWRA > totalFemale) {
-            Validator.emptyCustomTextBox(this, bi.hh12c, "Total MWRA cannot be more than Total Females in the household");
-            return false;
-        }
+            if (totalPreg > totalFemale) {
+                Validator.emptyCustomTextBox(this, bi.hh12e, "Total pregnant women cannot be more than Total Females in the household");
+                return false;
+            }
 
-        if (totalPreg > totalFemale) {
-            Validator.emptyCustomTextBox(this, bi.hh12e, "Total pregnant women cannot be more than Total Females in the household");
-            return false;
-        }
-
-        if (totalPreg > totalMWRA) {
-            Validator.emptyCustomTextBox(this, bi.hh12e, "Total pregnant women cannot be more than Total MWRA");
-            return false;
+            if (totalPreg > totalMWRA) {
+                Validator.emptyCustomTextBox(this, bi.hh12e, "Total pregnant women cannot be more than Total MWRA");
+                return false;
+            }
         }
 
         return true;
@@ -250,8 +284,7 @@ public class FamilyListingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
+
     }
 
 

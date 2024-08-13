@@ -85,6 +85,7 @@ public class Listing extends BaseObservable implements Observable {
     String tabNo = _EMPTY_;
     String structureNo = _EMPTY_;
     String hhid = _EMPTY_;
+    String fullid = _EMPTY_;
     String deviceId = _EMPTY_;
     String appver = _EMPTY_;
     String endTime = _EMPTY_;
@@ -117,7 +118,9 @@ public class Listing extends BaseObservable implements Observable {
         listings.setArea(MainApp.selectedArea);
         listings.setClusterCode(MainApp.selectedCluster.getClusterCode());
         listings.setStreetNum(MainApp.streets.getstreetNum());
+        listings.setStuid(MainApp.streets.getUid());
         listings.setTabNo(MainApp.selectedTab);
+        //listings.setStructureNo(String.valueOf(MainApp.maxStructure));
         setGPS();
     }
 
@@ -260,6 +263,18 @@ public class Listing extends BaseObservable implements Observable {
         this.hhid = hhid;
         notifyPropertyChanged(BR.hhid);
     }
+
+    // Full_id
+    @Bindable
+    public String getFullid() {
+        return fullid;
+    }
+
+    public void setFullid(String fullid) {
+        this.fullid = fullid;
+        notifyPropertyChanged(BR.fullid);
+    }
+
     // DistrictName
     @Bindable
     public String getDistrictName() {
@@ -488,6 +503,10 @@ public class Listing extends BaseObservable implements Observable {
     public void setBg06(String bg06) {
         this.bg06 = bg06;
         setBg07(bg06.equals("8") || bg06.equals("9") ? "" : bg07);
+        setBg09a(bg06.equals("8") || bg06.equals("9") ? "" : bg09a);
+        setBg11(bg06.equals("8") || bg06.equals("9") ? "" : bg11);
+        setBg12(bg06.equals("8") || bg06.equals("9") ? "" : bg12);
+
         notifyPropertyChanged(BR.bg06);
     }
 
@@ -813,6 +832,7 @@ public class Listing extends BaseObservable implements Observable {
         this.area = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_AREA));
         this.clusterCode = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_CLUSTER_CODE));
         this.streetNum = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_STREET_NUMBER));
+        this.tabNo = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_TAB_NUMBER));
         this.structureNo = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_STRUCTURE_NUMBER));
         this.hhid = cursor.getString(cursor.getColumnIndexOrThrow(ListingTable.COLUMN_HHID));
 
@@ -897,6 +917,7 @@ public class Listing extends BaseObservable implements Observable {
             this.bg10 = json.getString("bg10");
             this.bg11 = json.getString("bg11");
             this.bg12 = json.getString("bg12");
+            this.fullid = json.getString("full_id");
         }
     }
 
@@ -912,14 +933,15 @@ public class Listing extends BaseObservable implements Observable {
         json.put(ListingTable.COLUMN_AREA, this.area);
         json.put(ListingTable.COLUMN_CLUSTER_CODE, this.clusterCode);
         json.put(ListingTable.COLUMN_STREET_NUMBER, this.streetNum);
+        json.put(ListingTable.COLUMN_TAB_NUMBER, this.tabNo);
         json.put(ListingTable.COLUMN_STRUCTURE_NUMBER, this.structureNo);
         json.put(ListingTable.COLUMN_HHID, this.hhid);
         json.put(ListingTable.COLUMN_USERNAME, this.userName);
         json.put(ListingTable.COLUMN_SYSDATE, this.sysDate);
         json.put(ListingTable.COLUMN_DEVICEID, this.deviceId);
         json.put(ListingTable.COLUMN_ISTATUS, this.iStatus);
-        json.put(ListingTable.COLUMN_SYNCED, this.synced);
-        json.put(ListingTable.COLUMN_SYNC_DATE, this.syncDate);
+//        json.put(ListingTable.COLUMN_SYNCED, this.synced);
+//        json.put(ListingTable.COLUMN_SYNC_DATE, this.syncDate);
         json.put(ListingTable.COLUMN_APPVERSION, this.appver);
         json.put(ListingTable.COLUMN_GPSLAT, this.gpsLat);
         json.put(ListingTable.COLUMN_GPSLNG, this.gpsLng);
@@ -991,13 +1013,14 @@ public class Listing extends BaseObservable implements Observable {
         json.put("bg10", bg10);
         json.put("bg11", bg11);
         json.put("bg12", bg12);
+        json.put("full_id", fullid);
 
         return json.toString();
     }
 
     public void setBGClear() {
         // BG (1-10)
-        setHhid(String.valueOf(MainApp.hhid));
+        // setHhid(String.valueOf(MainApp.hhid));
 
         this.uid = "";
         this.bg01 = "";
@@ -1017,7 +1040,7 @@ public class Listing extends BaseObservable implements Observable {
 
     public void setHHClear() {
         // BG (1-10)
-        setHhid(String.valueOf(MainApp.hhid));
+        setHhid("");
 
         this.uid = "";
         this.hh01 = "";

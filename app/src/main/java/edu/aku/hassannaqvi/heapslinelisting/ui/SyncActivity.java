@@ -55,6 +55,7 @@ import edu.aku.hassannaqvi.heapslinelisting.adapters.SyncListAdapter;
 import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts;
 import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts.EntryLogTable;
 import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts.ListingTable;
+import edu.aku.hassannaqvi.heapslinelisting.contracts.TableContracts.StreetsTable;
 import edu.aku.hassannaqvi.heapslinelisting.core.MainApp;
 import edu.aku.hassannaqvi.heapslinelisting.database.DatabaseHelper;
 import edu.aku.hassannaqvi.heapslinelisting.databinding.ActivitySyncBinding;
@@ -150,10 +151,20 @@ public class SyncActivity extends AppCompatActivity {
             uploadTables.clear();
             MainApp.uploadData.clear();
 
-            // Forms
+            // Listing
             uploadTables.add(new SyncModel(ListingTable.TABLE_NAME));
             try {
-                MainApp.uploadData.add(db.getUnsyncedFormHH());
+                MainApp.uploadData.add(db.getUnsyncedListing());
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.d(TAG, "ProcessStart: JSONException(Forms): " + e.getMessage());
+                Toast.makeText(this, "JSONException(Forms): " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            // Streets
+            uploadTables.add(new SyncModel(StreetsTable.TABLE_NAME));
+            try {
+                MainApp.uploadData.add(db.getUnsyncedStreets());
             } catch (JSONException e) {
                 e.printStackTrace();
                 Log.d(TAG, "ProcessStart: JSONException(Forms): " + e.getMessage());

@@ -153,11 +153,11 @@ public class AddStructureActivity extends AppCompatActivity {
                     String street = String.format("%02d", Integer.parseInt(listings.getStreetNum()));
                     String structure = listings.getTabNo() + String.format("%03d", MainApp.maxStructure);
 
-                    MainApp.civilID = cluster + "-" + street + "\n" + structure;
-
-
+                    MainApp.civilID = cluster + "-" + street + "-" + structure;
+                    listings.setFullid(MainApp.civilID);
                     // set label in layout
-                    bi.hhid.setText(listings.getClusterCode() + "-" + String.format("%02d", Integer.parseInt(streetNum.get(bi.street.getSelectedItemPosition()))) + "\n" + listings.getTabNo() + String.format("%03d", MainApp.maxStructure));
+                    bi.hhid.setText(MainApp.civilID);
+                    //bi.hhid.setText(listings.getClusterCode() + "-" + String.format("%02d", Integer.parseInt(streetNum.get(bi.street.getSelectedItemPosition()))) + "\n" + listings.getTabNo() + String.format("%03d", MainApp.maxStructure));
                     bi.hhid.setVisibility(View.VISIBLE);
                 }
             }
@@ -197,8 +197,7 @@ public class AddStructureActivity extends AppCompatActivity {
 
             startActivity(i);
 
-        } else
-            Toast.makeText(this, R.string.fail_db_upd, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private boolean updateDB() {

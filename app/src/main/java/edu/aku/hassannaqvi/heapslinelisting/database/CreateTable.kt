@@ -25,6 +25,7 @@ object CreateTable {
             + ListingTable.COLUMN_CLUSTER_CODE + " TEXT,"
             + ListingTable.COLUMN_STREET_NUMBER + " TEXT,"
             + ListingTable.COLUMN_STRUCTURE_NUMBER + " TEXT,"
+            + ListingTable.COLUMN_TAB_NUMBER + " TEXT,"
             + ListingTable.COLUMN_HHID + " TEXT,"
             + ListingTable.COLUMN_USERNAME + " TEXT,"
             + ListingTable.COLUMN_SYSDATE + " TEXT,"

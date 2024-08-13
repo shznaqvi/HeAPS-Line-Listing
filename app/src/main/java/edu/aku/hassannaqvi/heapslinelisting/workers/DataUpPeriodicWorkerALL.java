@@ -100,7 +100,7 @@ public class DataUpPeriodicWorkerALL extends Worker {
             // Forms
             case TableContracts.ListingTable.TABLE_NAME:
                 try {
-                    uploadData = db.getUnsyncedFormHH();
+                    uploadData = db.getUnsyncedListing();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.d(TAG, "ProcessStart: JSONException(Forms): " + e.getMessage());

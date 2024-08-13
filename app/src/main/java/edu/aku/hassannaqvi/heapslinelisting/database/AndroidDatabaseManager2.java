@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AndroidManager extends Activity implements OnItemClickListener {
+public class AndroidDatabaseManager2 extends Activity implements OnItemClickListener {
 
     //in the below line Change the text 'yourCustomSqlHelper' with your custom sqlitehelper class name.
     //Do not change the variable name dbm
@@ -233,8 +233,8 @@ public class AndroidManager extends Activity implements OnItemClickListener {
 
 
         // Define layout parameters for table rows
-        tableRowParams = new TableRow.LayoutParams(
-                TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+        tableRowParams = new LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         tableRowParams.setMargins(0, 0, 2, 0);
 
 
@@ -397,7 +397,7 @@ public class AndroidManager extends Activity implements OnItemClickListener {
 
 
     private void confirmAndDropTable() {
-        new AlertDialog.Builder(AndroidManager.this)
+        new AlertDialog.Builder(AndroidDatabaseManager2.this)
                 .setTitle("Are you sure?")
                 .setMessage("Pressing yes will remove " + IndexInfo.tableName + " table from database")
                 .setPositiveButton("Yes", (dialog, which) -> {
@@ -409,7 +409,7 @@ public class AndroidManager extends Activity implements OnItemClickListener {
     }
 
     private void confirmAndDeleteTable() {
-        new AlertDialog.Builder(AndroidManager.this)
+        new AlertDialog.Builder(AndroidDatabaseManager2.this)
                 .setTitle("Are you sure?")
                 .setMessage("Clicking on yes will delete all the contents of " + IndexInfo.tableName + " table from database")
                 .setPositiveButton("Yes", (dialog, which) -> {
@@ -423,7 +423,7 @@ public class AndroidManager extends Activity implements OnItemClickListener {
     private void showAddRowDialog() {
         final LinkedList<TextView> addNewRowNames = new LinkedList<>();
         final LinkedList<EditText> addNewRowValues = new LinkedList<>();
-        final ScrollView addRowScrollView = new ScrollView(AndroidManager.this);
+        final ScrollView addRowScrollView = new ScrollView(AndroidDatabaseManager2.this);
 
         Cursor cursor = IndexInfo.mainCursor;
         if (IndexInfo.isEmpty) {
@@ -446,7 +446,7 @@ public class AndroidManager extends Activity implements OnItemClickListener {
             addNewRowValues.add(et);
         }
 
-        final RelativeLayout addNewLayout = new RelativeLayout(AndroidManager.this);
+        final RelativeLayout addNewLayout = new RelativeLayout(AndroidDatabaseManager2.this);
         RelativeLayout.LayoutParams addNewParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         addNewParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
@@ -464,7 +464,7 @@ public class AndroidManager extends Activity implements OnItemClickListener {
             et.setTextColor(Color.BLACK);
             et.setId(k);
 
-            final LinearLayout ll = new LinearLayout(AndroidManager.this);
+            final LinearLayout ll = new LinearLayout(AndroidDatabaseManager2.this);
             LinearLayout.LayoutParams tvl = new LinearLayout.LayoutParams(0, 100);
             tvl.weight = 1;
             ll.addView(tv, tvl);
@@ -481,7 +481,7 @@ public class AndroidManager extends Activity implements OnItemClickListener {
         addNewLayout.setBackgroundColor(Color.WHITE);
         addRowScrollView.addView(addNewLayout);
 
-        new AlertDialog.Builder(AndroidManager.this)
+        new AlertDialog.Builder(AndroidDatabaseManager2.this)
                 .setTitle("Values")
                 .setCancelable(false)
                 .setView(addRowScrollView)
@@ -657,7 +657,7 @@ public class AndroidManager extends Activity implements OnItemClickListener {
         }
 
         // Layout setup
-        final RelativeLayout layout = new RelativeLayout(AndroidManager.this);
+        final RelativeLayout layout = new RelativeLayout(AndroidDatabaseManager2.this);
         layout.setBackgroundColor(Color.WHITE);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -665,13 +665,13 @@ public class AndroidManager extends Activity implements OnItemClickListener {
         );
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 
-        final ScrollView scrollView = new ScrollView(AndroidManager.this);
-        LinearLayout linearLayout = new LinearLayout(AndroidManager.this);
+        final ScrollView scrollView = new ScrollView(AndroidDatabaseManager2.this);
+        LinearLayout linearLayout = new LinearLayout(AndroidDatabaseManager2.this);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
         // Spinner setup
         final Spinner spinner = new Spinner(getApplicationContext());
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(AndroidManager.this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(AndroidDatabaseManager2.this,
                 android.R.layout.simple_spinner_item, spinnerOptions) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -704,7 +704,7 @@ public class AndroidManager extends Activity implements OnItemClickListener {
             TextView columnNameView = columnNames.get(i);
             EditText columnValueView = columnValues.get(i);
 
-            LinearLayout rowLayout = new LinearLayout(AndroidManager.this);
+            LinearLayout rowLayout = new LinearLayout(AndroidDatabaseManager2.this);
             rowLayout.setOrientation(LinearLayout.HORIZONTAL);
             rowLayout.setBackgroundColor(Color.WHITE);
 
@@ -728,7 +728,7 @@ public class AndroidManager extends Activity implements OnItemClickListener {
         // Show alert dialog
         runOnUiThread(() -> {
             if (!isFinishing()) {
-                new AlertDialog.Builder(AndroidManager.this)
+                new AlertDialog.Builder(AndroidDatabaseManager2.this)
                         .setTitle("Update/Delete Row")
                         .setView(layout)
                         .setCancelable(false)

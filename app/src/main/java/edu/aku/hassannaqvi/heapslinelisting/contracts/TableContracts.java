@@ -46,6 +46,7 @@ public class TableContracts {
         public static final String COLUMN_AREA = "area";
         public static final String COLUMN_CLUSTER_CODE = "clusterCode";
         public static final String COLUMN_STREET_NUMBER = "streetNum";
+        public static final String COLUMN_TAB_NUMBER = "tabno";
         public static final String COLUMN_STRUCTURE_NUMBER = "structureNum";
         public static final String COLUMN_HHID = "hhid";
         public static final String COLUMN_USERNAME = "username";
@@ -56,7 +57,7 @@ public class TableContracts {
         public static final String COLUMN_GPSDATE = "xdt";
         public static final String COLUMN_GPSACC = "xac";
         public static final String COLUMN_SYNCED = "synced";
-        public static final String COLUMN_SYNC_DATE = "sync_date";
+        public static final String COLUMN_SYNC_DATE = "syncdate";
         public static final String COLUMN_APPVERSION = "appversion";
         public static final String COLUMN_ISTATUS = "iStatus";
         public static final String COLUMN_DEVICEID = "deviceid";
@@ -80,8 +81,8 @@ public class TableContracts {
 
         public static final String COLUMN_UID = "uid";
         public static final String COLUMN_USERNAME = "userName";
-        public static final String COLUMN_SYSDATE = "sysDate";
-        public static final String COLUMN_DEVICEID = "deviceId";
+        public static final String COLUMN_SYSDATE = "sysdate";
+        public static final String COLUMN_DEVICEID = "deviceid";
         public static final String COLUMN_APPVERSION = "appver";
         public static final String COLUMN_END_TIME = "endTime";
         public static final String COLUMN_SYNCED = "synced";

@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.location.LocationManager;
+import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -143,6 +144,7 @@ public class MainApp extends Application implements LifecycleObserver {
     private Runnable inactivityCallback;
     private CountDownTimer countDownTimer;
     private ToneGenerator toneGen1;
+
 
     public static void hideSystemUI(View decorView) {
         // Enables regular immersive mode.
@@ -338,6 +340,10 @@ public class MainApp extends Application implements LifecycleObserver {
         };
 
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
+
+        toneGen1 = new ToneGenerator(AudioManager.STREAM_ALARM, 50);
+
+
         resetInactivityTimer();
 
     }

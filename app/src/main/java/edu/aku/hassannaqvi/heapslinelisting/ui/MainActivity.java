@@ -29,7 +29,7 @@ import java.util.Locale;
 
 import edu.aku.hassannaqvi.heapslinelisting.R;
 import edu.aku.hassannaqvi.heapslinelisting.core.MainApp;
-import edu.aku.hassannaqvi.heapslinelisting.database.AndroidManager;
+import edu.aku.hassannaqvi.heapslinelisting.database.AndroidDatabaseManager;
 import edu.aku.hassannaqvi.heapslinelisting.databinding.ActivityMainBinding;
 import edu.aku.hassannaqvi.heapslinelisting.models.Listing;
 import edu.aku.hassannaqvi.heapslinelisting.ui.lists.FormsReportDate;
@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
             MainApp.listings = new Listing();
             startActivity(new Intent(this, EndingActivity.class));*//*
         } */else if (view.getId() == R.id.dbManager) {
-            startActivity(new Intent(this, AndroidManager.class));
+            startActivity(new Intent(this, AndroidDatabaseManager.class));
         }
 
     }
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
         int itemId = item.getItemId();
 
         if (itemId == R.id.action_database) {
-            intent = new Intent(MainActivity.this, AndroidManager.class);
+            intent = new Intent(MainActivity.this, AndroidDatabaseManager.class);
             startActivity(intent);
         }  else if (itemId == R.id.action_checkWorker) {
         intent = new Intent(MainActivity.this, CheckWorkerActivity.class);

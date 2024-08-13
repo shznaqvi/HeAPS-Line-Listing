@@ -259,10 +259,12 @@ public class LoginActivity extends AppCompatActivity {
 
         String latestVersionName = sharedPref.getString("versionName", "");
         int latestVersionCode = Integer.parseInt(sharedPref.getString("versionCode", "0"));
+        String applicationId = sharedPref.getString("applicationId", "");
 
         bi.newApp.setText("Available on Server: " + latestVersionName + latestVersionCode);
+        String packageName = this.getPackageName();
 
-        if (MainApp.appInfo.getVersionCode() < latestVersionCode) {
+        if (MainApp.appInfo.getVersionCode() < latestVersionCode && applicationId.equals(packageName)) {
             new AlertDialog.Builder(this)
                     .setTitle("New Update Available")
                     .setMessage("There is a newer version of this app available (" + latestVersionName + latestVersionCode + "). \nPlease download and update the app now.")
@@ -496,7 +498,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void recordEntry(String entryType) {
-
         EntryLog entryLog = new EntryLog();
         entryLog.setProjectName(PROJECT_NAME);
         entryLog.setUserName(username);
@@ -519,8 +520,6 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "SQLiteException(EntryLog)" + e.getMessage(), Toast.LENGTH_SHORT).show();
             Log.d(TAG, "recordEntry: " + e.getMessage());
         }
-
-
     }
 
     public void resetPassword(View view) {

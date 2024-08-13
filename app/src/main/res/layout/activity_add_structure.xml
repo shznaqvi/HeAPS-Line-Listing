@@ -30,7 +30,7 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ToolbarTheme"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:subtitle="@string/sttitle"
+            app:subtitle="@string/bgtitle"
             app:subtitleTextAppearance="@style/Toolbar.SubtitleText"
             app:subtitleTextColor="@color/grayLight"
             app:theme="@style/ActionBarTheme"
@@ -41,6 +41,33 @@
             android:layout_width="match_parent"
             android:layout_height="24dp"
             android:background="@color/rose_angina_color" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/fldGrpCVhhid"
+            style="@style/cardView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!--// [K-C01-S01-B001]-A/H-HH001-->
+                <TextView
+                    android:id="@+id/hhid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/redLight"
+                    android:fontFamily="@font/allerta_stencil"
+                    android:gravity="center"
+                    android:text="1010-234"
+                    android:textColor="@color/white"
+                    android:textSize="56sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -91,32 +118,7 @@
                      </LinearLayout>
                  </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/fldGrpCVhhid"
-                    style="@style/cardView">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <!--// [K-C01-S01-B001]-A/H-HH001-->
-                        <TextView
-                            android:id="@+id/hhid"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/redLight"
-                            android:fontFamily="@font/allerta_stencil"
-                            android:gravity="center"
-                            android:text="1010-234"
-                            android:textColor="@color/white"
-                            android:textSize="56sp"
-                            android:textStyle="bold"
-                            android:visibility="gone"
-                            tools:visibility="visible" />
-
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
 
                 <TextView
                     style="@style/quesNum"
@@ -223,7 +225,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:checked="@{listings.bg06.equals(`8`)}"
-                                android:onClick="@{()->listings.setBg06(`8`) + bg07.clearCheck()}"
+                                android:onClick="@{()->listings.setBg06(`8`) + bg07.clearCheck() +  + bg08.clearCheck() +  + bg09.clearCheck()}"
                                 android:text="@string/bg0608" />
 
                             <!-- For bg0609 (Temporarily Stop Listings) -->
@@ -232,7 +234,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:checked="@{listings.bg06.equals(`9`) }"
-                                android:onClick="@{()->listings.setBg06(`9`) + bg07.clearCheck()}"
+                                android:onClick="@{()->listings.setBg06(`9`) + bg07.clearCheck() +  + bg08.clearCheck() +  + bg09.clearCheck()}"
                                 android:text="@string/bg0609" />
 
                         </RadioGroup>
@@ -298,7 +300,7 @@
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:checked="@{listings.bg07.equals(`2`)}"
-                                android:onClick="@{()->listings.setBg07(`2`) + bg08.clearCheck()}"
+                                android:onClick="@{()->listings.setBg07(`2`) + bg08.clearCheck()+ bg09.clearCheck()}"
                                 android:text="@string/bg0702" />
 
                         </RadioGroup>
@@ -360,7 +362,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:checked="@{listings.bg08.equals(`A`)}"
-                                android:onClick="@{()->listings.setBg08(`A`)}"
+                                android:onClick="@{()->listings.setBg08(`A`)  + bg09.clearCheck()}"
                                 android:text="@string/bg0802" />
                         </RadioGroup>
                     </LinearLayout>
@@ -413,7 +415,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:checked="@{listings.bg09.equals(`1`)}"
-                                android:onClick="@{()->listings.setBg09(`1`)}"
+                                android:onClick="@{()->listings.setBg09(`1`) + listings.setBg09a(`1`) + bg09a.setEnabled(false)}"
                                 android:text="@string/bg0901" />
 
                             <RadioButton
@@ -422,7 +424,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:checked="@{listings.bg09.equals(`2`)}"
-                                android:onClick="@{()->listings.setBg09(`2`)}"
+                                android:onClick="@{()->listings.setBg09(`2`) + listings.setBg09a(``) + bg09a.setEnabled(true)}"
                                 android:text="@string/bg0902" />
                         </RadioGroup>
                     </LinearLayout>
@@ -441,6 +443,7 @@
                     android:id="@+id/fldGrpCVbg09a"
                     style="@style/cardView"
                     android:layout_width="match_parent"
+                    android:visibility="@{listings.bg06.equals(`8`) || listings.bg06.equals(`9`)? View.GONE : View.VISIBLE}"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
@@ -529,6 +532,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVbg11"
                     style="@style/cardView"
+                    android:visibility="@{listings.bg06.equals(`8`) || listings.bg06.equals(`9`)? View.GONE : View.VISIBLE}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -557,7 +561,6 @@
                             android:id="@+id/bg11"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/bg11"
                             android:inputType="number"
                             android:maxLength="3"
                             android:text="@={listings.bg11}"
@@ -581,6 +584,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVbg12"
+                    android:visibility="@{listings.bg06.equals(`8`) || listings.bg06.equals(`9`)? View.GONE : View.VISIBLE}"
                     style="@style/cardView">
 
                     <LinearLayout
