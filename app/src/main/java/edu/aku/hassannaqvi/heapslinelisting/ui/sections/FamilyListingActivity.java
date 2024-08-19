@@ -59,9 +59,15 @@ public class FamilyListingActivity extends AppCompatActivity {
         MainApp.hhid++;
         listings.setHhid(String.valueOf(MainApp.hhid));
 
+
+        bi.fl01.setEnabled(false);
+        bi.fl02.setEnabled(false);
+        listings.setFl01(String.valueOf(MainApp.currentFloor));
+        listings.setFl02(String.valueOf(MainApp.currentApartment));
+
         bi.btnEnd.setVisibility(MainApp.hhid == 1 ? View.GONE : View.VISIBLE);
         //bi.fl01.setHint(String.valueOf(MainApp.currentFloor));
-        if (hasFloorExtra) {
+/*        if (hasFloorExtra) {
             listings.setFl01(intent.getStringExtra("floor"));
             bi.fl01.setEnabled(false);
         }
@@ -70,7 +76,7 @@ public class FamilyListingActivity extends AppCompatActivity {
             bi.fl02.setEnabled(false);
             setID();
 
-        }
+        }*/
 
 //        bi.hhid.setText("HFP-" + MainApp.listings.getHh01() + "\n" + MainApp.selectedTab + "-" + String.format("%04d", MainApp.maxStructure) + "-" + String.format("%03d", MainApp.hhid));
 
@@ -112,7 +118,7 @@ public class FamilyListingActivity extends AppCompatActivity {
                 if (!listings.getFl02().equals("")) {
                     String floor = listings.getFl01();
                     String apartment = listings.getFl02();
-                    MainApp.civilID2 = MainApp.civilID + "-" + floor + "-" + apartment + "-" + String.format("%02d", hhid) + MainApp.listings.getBg08();
+                    MainApp.civilID2 = MainApp.civilID + "-" + floor + "-" + apartment + "-" + String.format("%02d", hhid);
 
                     bi.hhid.setText(MainApp.civilID2);
                     bi.hhid.setVisibility(View.VISIBLE);
@@ -130,8 +136,7 @@ public class FamilyListingActivity extends AppCompatActivity {
         String floor = listings.getFl01();
         bi.fl02.setText("");
         String apartment = listings.getFl02();
-        MainApp.civilID2 = MainApp.civilID + "-" + floor + "-" + apartment + "-" + String.format("%02d", hhid) + MainApp.listings.getBg08();
-        MainApp.civilID2 = MainApp.civilID + "-" + floor + "-" + apartment + "-" + String.format("%02d", hhid) + MainApp.listings.getBg08();
+        MainApp.civilID2 = MainApp.civilID + "-" + floor + "-" + apartment + "-" + String.format("%02d", hhid);
 
         bi.hhid.setText(MainApp.civilID2);
 
@@ -174,6 +179,7 @@ public class FamilyListingActivity extends AppCompatActivity {
             }
             // More Appartments on the floor
             else if (MainApp.listings.getHh16().equals("1")) {
+                MainApp.currentApartment++;
                 i = new Intent(this, FamilyListingActivity.class);
                 i.putExtra("floor", bi.fl01.getText().toString());
 
@@ -182,10 +188,14 @@ public class FamilyListingActivity extends AppCompatActivity {
             }
             // More Floors in this structure
             else if (MainApp.totalFloors >= ++MainApp.currentFloor) {
+                MainApp.currentApartment = 0;
+
                 i = new Intent(this, FamilyListingActivity.class);
                 MainApp.hhid = 0;
             } else {
                 i = new Intent(this, AddStructureActivity.class);
+                MainApp.currentApartment = 0;
+
                 MainApp.hhid = 0;
             }
 
@@ -236,12 +246,24 @@ public class FamilyListingActivity extends AppCompatActivity {
 
     public void btnEnd(View view) {
         bi.hh11.setText("0000000");
+        if (formValidation()) {
 
+            if (insertNewRecord()) {
+                Intent i;
+                finish();
+                MainApp.currentApartment = 1;
 
-        if (insertNewRecord()) {
-            finish();
-            startActivity(new Intent(this, AddStructureActivity.class));
-        } else Toast.makeText(this, "Failed to Update Database!", Toast.LENGTH_SHORT).show();
+                if (MainApp.totalFloors >= ++MainApp.currentFloor) {
+                    i = new Intent(this, FamilyListingActivity.class);
+                    MainApp.hhid = 0;
+                } else {
+                    i = new Intent(this, AddStructureActivity.class);
+                    MainApp.hhid = 0;
+                }
+                startActivity(i);
+
+            } else Toast.makeText(this, "Failed to Update Database!", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

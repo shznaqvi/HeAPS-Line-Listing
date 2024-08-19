@@ -151,6 +151,7 @@ object CreateTable {
                     + ");"
             )
 
+
     const val SQL_CREATE_DISTRICTS = ("CREATE TABLE "
             + TableDistricts.TABLE_NAME + "("
             + TableDistricts.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"

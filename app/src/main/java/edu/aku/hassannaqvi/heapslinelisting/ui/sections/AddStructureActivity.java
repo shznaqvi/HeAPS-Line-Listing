@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -85,6 +86,7 @@ public class AddStructureActivity extends AppCompatActivity {
         MainApp.hhid = 0;
         MainApp.totalFloors = 0;
         MainApp.currentFloor = 1;
+        MainApp.currentApartment = 1;
 
 //        bi.bg07.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 //            @Override
@@ -101,6 +103,16 @@ public class AddStructureActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
+
+        bi.bg08.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+                MainApp.civilID = MainApp.civilID + listings.getBg08();
+                listings.setFullid(MainApp.civilID);
+                bi.hhid.setText(MainApp.civilID);
+            }
+        });
 
     }
 
@@ -151,7 +163,7 @@ public class AddStructureActivity extends AppCompatActivity {
 
                     String cluster = selectedCluster.getClusterCode();
                     String street = String.format("%02d", Integer.parseInt(listings.getStreetNum()));
-                    String structure = listings.getTabNo() + String.format("%03d", MainApp.maxStructure);
+                    String structure = listings.getTabNo() + String.format("%03d", MainApp.maxStructure) + MainApp.listings.getBg08();
 
                     MainApp.civilID = cluster + "-" + street + "-" + structure;
                     listings.setFullid(MainApp.civilID);

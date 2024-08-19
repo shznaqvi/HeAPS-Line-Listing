@@ -139,6 +139,8 @@ public class MainApp extends Application implements LifecycleObserver {
     public static int maxstreet;
     public static int totalFloors = 0;
     public static int currentFloor = 1;
+    public static int currentApartment = 1;
+
     protected static LocationManager locationManager;
     private Handler inactivityHandler;
     private Runnable inactivityCallback;

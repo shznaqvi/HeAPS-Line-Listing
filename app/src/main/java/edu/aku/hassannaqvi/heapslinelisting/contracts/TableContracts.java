@@ -169,6 +169,7 @@ public class TableContracts {
 
     }
 
+
     public static abstract class RandomHHTable implements BaseColumns {
         public static final String COLUMN_NAME_NULLABLE = "NULLHACK";
         public static final String TABLE_NAME = "Randomised";
